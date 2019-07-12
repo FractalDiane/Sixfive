@@ -1,0 +1,110 @@
+[gd_resource type="SpriteFrames" load_steps=20 format=2]
+
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpDL2.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpDR2.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo UR.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpDR1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpDL1.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkUL1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkUL2.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo UL.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkDL1.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkDL2.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo DL.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkDR1.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkDR2.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo DR.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkUR1.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo WalkUR2.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpUR1.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpUL2.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/Characters/Lippo/Lippo JumpUL1.png" type="Texture" id=19]
+
+[resource]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "dl_jumpdown",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "dr_jumpdown",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "ur",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "dr_jumpup",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "dl_jumpup",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "ul_walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "dl_walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "dr_walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "ur_walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "ul",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "dr",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ) ],
+"loop": true,
+"name": "ur_jumpup",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 18 ) ],
+"loop": true,
+"name": "ul_jumpdown",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 19 ) ],
+"loop": true,
+"name": "ul_jumpup",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 18 ) ],
+"loop": true,
+"name": "ur_jumpdown",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "dl_talk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "dl",
+"speed": 5.0
+} ]
+
