@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Sixfive"
+config/name="String Theory"
 run/main_scene="res://Scenes/LippoHouse.tscn"
 config/icon="res://icon.png"
 
