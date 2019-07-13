@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Sprites/Battle UI/CardSpade.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Battle/Card.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/Battle UI/CardClub.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Battle UI/CardHeart.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Battle UI/CardDiamond.png" type="Texture" id=5]
+[ext_resource path="res://Fonts/EthBlackEthon.TTF" type="DynamicFontData" id=6]
+[ext_resource path="res://Sprites/Battle UI/Mana.png" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 100, 150 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 150
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 6 )
+
+[node name="Card" type="Sprite"]
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+spadeCard = ExtResource( 1 )
+clubCard = ExtResource( 3 )
+heartCard = ExtResource( 4 )
+diamondCard = ExtResource( 5 )
+
+[node name="Hoverbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hoverbox"]
+shape = SubResource( 1 )
+
+[node name="Number" type="Label" parent="."]
+margin_left = -66.0
+margin_top = -111.0
+margin_right = 66.0
+margin_bottom = 194.0
+custom_fonts/font = SubResource( 2 )
+text = "10"
+align = 1
+
+[node name="Cost" type="Label" parent="."]
+margin_left = -40.0
+margin_top = -150.0
+margin_right = 92.0
+margin_bottom = 155.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "5"
+align = 2
+
+[node name="Desc" type="Label" parent="."]
+margin_left = -113.0
+margin_top = 21.0
+margin_right = 113.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 3 )
+text = "Descdesc"
+align = 1
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 45.375, -127.375 )
+scale = Vector2( 0.678571, 0.678571 )
+texture = ExtResource( 7 )
+
+[connection signal="mouse_entered" from="Hoverbox" to="." method="HoverStart"]
+[connection signal="mouse_exited" from="Hoverbox" to="." method="HoverEnd"]

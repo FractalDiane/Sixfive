@@ -50,7 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Battle\BattleNumber.cs" />
     <Compile Include="Scripts\Battle\BattleUI.cs" />
+    <Compile Include="Scripts\Battle\Card.cs" />
+    <Compile Include="Scripts\Battle\Enemies\EnemyBlob.cs" />
+    <Compile Include="Scripts\Battle\Enemy.cs" />
     <Compile Include="Scripts\Door.cs" />
     <Compile Include="Scripts\Globals\Controller.cs" />
     <Compile Include="Scripts\Globals\MainCamera.cs" />

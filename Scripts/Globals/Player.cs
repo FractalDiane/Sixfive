@@ -29,7 +29,7 @@ public class Player : KinematicBody
 	private float sightStartX;
 	private float sightStartZ;
 
-	public enum ST { Move, NoInput };
+	public enum ST { Move, Battle, NoInput };
 	private ST state = ST.Move;
 
 	// Refs
@@ -37,11 +37,13 @@ public class Player : KinematicBody
 	private Area sight;
 	private Camera camera;
 	private Sprite3D interact;
+	private Timer timerShowUI;
 
 	// ================================================================
 
 	public static ST State { get => Player.singleton.state; set => Player.singleton.state = value; }
 	public static Vector2 Face { get => Player.singleton.face; set => Player.singleton.face = value; }
+	public static Vector3 Vel { get => Player.singleton.vel; set => Player.singleton.vel = value; }
 
 	// ================================================================
 	
@@ -49,9 +51,9 @@ public class Player : KinematicBody
 	{
 		spr = GetNode<AnimatedSprite3D>("Sprite");
 		sight = GetNode<Area>("Sight");
-		//camera = GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<Camera>("Camera");
 		camera = MainCamera.singleton;
 		interact = GetNode<Sprite3D>("Interaction");
+		timerShowUI = GetNode<Timer>("TimerShowUI");
 
 		sightStartX = sight.Translation.x;
 		sightStartZ = sight.Translation.z;
@@ -68,13 +70,28 @@ public class Player : KinematicBody
 				walking = vel.x != 0 || vel.z != 0;
 				break;
 			}
+
+			case ST.Battle:
+			{
+				spr.Play("dr_walk");
+				break;
+			}
 		}
+
+		if (walking)
+		{
+			BattleUI.ShowUI(false);
+			timerShowUI.Start();
+		}
+			
 
 		jumping = !IsOnFloor();
 		vel.y += GRAVITY * delta * 60f;
 		spr.RotationDegrees = new Vector3(spr.RotationDegrees.x, Mathf.Clamp(spr.RotationDegrees.y + rotSpeed * Mathf.Abs(spr.RotationDegrees.y - targetAngle) * rotDir, 0, 179), spr.RotationDegrees.z);
 	
-		SpriteAnimation();
+		if (state != ST.Battle)
+			SpriteAnimation();
+
 		SightMovement();
 		vel = MoveAndSlide(vel * WALKSPEED, new Vector3(0, 1, 0));
 
@@ -261,5 +278,11 @@ public class Player : KinematicBody
 	{
 		if (area.IsInGroup("InteractibleSight"))
 			interact.Hide();
+	}
+
+
+	private void ShowUI()
+	{
+		BattleUI.ShowUI(true);
 	}
 }

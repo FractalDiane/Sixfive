@@ -4,5 +4,6 @@
 
 [node name="Camera" type="Camera"]
 transform = Transform( 1, 0, 0, 0, 0.958651, 0.284584, 0, -0.284584, 0.958651, 0, 1, 1.4 )
+current = true
 script = ExtResource( 1 )
 

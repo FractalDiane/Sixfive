@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Controller : Node
 {
@@ -10,6 +11,12 @@ public class Controller : Node
 		singleton = this;
 	}
 
+	private Dictionary<string, int> flag = new Dictionary<string, int>()
+	{
+
+	};
+
+
 	// Refs
 	private PackedScene soundBurstRef = GD.Load<PackedScene>("res://Instances/SoundBurst.tscn");
 
@@ -19,6 +26,7 @@ public class Controller : Node
 	
 	public override void _Ready()
 	{
+		GD.Randomize();
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
