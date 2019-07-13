@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Instances/BattleUI.tscn" type="PackedScene" id=1]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+fog_sun_color = Color( 0, 0, 0, 1 )
+glow_strength = 2.0
+adjustment_enabled = true
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.345098, 0.290196, 0.380392, 1 )
+
+[sub_resource type="CylinderMesh" id=2]
+material = SubResource( 3 )
+radial_segments = 5
+
+[sub_resource type="CylinderShape" id=4]
+
+[node name="Battle" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Platform1" type="StaticBody" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Platform1"]
+transform = Transform( 0.669669, 0, 0.118081, 0, 0.05, 0, -0.118081, 0, 0.669669, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Platform1"]
+transform = Transform( 0.669669, 0, 0.118081, 0, 0.05, 0, -0.118081, 0, 0.669669, 0, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="Platform2" type="StaticBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Platform2"]
+transform = Transform( 0.437096, 0, -0.52091, 0, 0.05, 0, 0.52091, 0, 0.437096, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Platform2"]
+transform = Transform( 0.669669, 0, 0.118081, 0, 0.05, 0, -0.118081, 0, 0.669669, 0, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.632287, 0.774734, 0, -0.774734, 0.632287, 1, 2.16, 2.295 )
+light_energy = 2.0
+shadow_enabled = true
+shadow_bias = 0.1
+spot_angle = 55.0
+spot_angle_attenuation = 0.554785
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.990268, 0.139173, 0, -0.139173, 0.990268, 1, 0.443083, 1.70827 )
+
+[node name="BattleUI" parent="." instance=ExtResource( 1 )]
+

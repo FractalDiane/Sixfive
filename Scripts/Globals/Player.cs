@@ -4,6 +4,13 @@ using System.Runtime.CompilerServices;
 
 public class Player : KinematicBody
 {
+	public static Player singleton;
+
+	Player()
+	{
+		singleton = this;
+	}
+
 	private Vector3 vel = new Vector3(0, 0, 0);
 	private float rotSpeed = 0f;
 	private int rotDir = 1;
@@ -19,24 +26,35 @@ public class Player : KinematicBody
 
 	private int sound = -1;
 
-	private int sightStartX;
-	private int sightStartY;
+	private float sightStartX;
+	private float sightStartZ;
 
 	public enum ST { Move, NoInput };
 	private ST state = ST.Move;
 
 	// Refs
 	private AnimatedSprite3D spr;
-	private CollisionShape sight;
+	private Area sight;
 	private Camera camera;
+	private Sprite3D interact;
+
+	// ================================================================
+
+	public static ST State { get => Player.singleton.state; set => Player.singleton.state = value; }
+	public static Vector2 Face { get => Player.singleton.face; set => Player.singleton.face = value; }
 
 	// ================================================================
 	
 	public override void _Ready()
 	{
 		spr = GetNode<AnimatedSprite3D>("Sprite");
-		sight = GetNode<CollisionShape>("CollisionShape");
-		camera = GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<Camera>("Camera");
+		sight = GetNode<Area>("Sight");
+		//camera = GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<Camera>("Camera");
+		camera = MainCamera.singleton;
+		interact = GetNode<Sprite3D>("Interaction");
+
+		sightStartX = sight.Translation.x;
+		sightStartZ = sight.Translation.z;
 	}
 
 
@@ -66,12 +84,24 @@ public class Player : KinematicBody
 
 	// ================================================================
 
-	public void Stop()
+	public static void Stop()
 	{
-		state = ST.NoInput;
-		vel.x = 0;
-		vel.z = 0;
-		walking = false;
+		Player.singleton.state = ST.NoInput;
+		Player.singleton.vel.x = 0;
+		Player.singleton.vel.z = 0;
+		Player.singleton.walking = false;
+	}
+
+
+	public static void SnapCamera()
+	{
+		Player.singleton.camera.Translation = new Vector3(Player.singleton.Translation.x, Player.singleton.camera.Translation.y, Player.singleton.camera.Translation.z + 1.5f);
+	}
+
+
+	public static void PlayAnimation(string anim)
+	{
+		Player.singleton.spr.Play(anim);
 	}
 
 	// ================================================================
@@ -191,5 +221,45 @@ public class Player : KinematicBody
 			camera.Translation = new Vector3(camera.Translation.x, camera.Translation.y, Mathf.Min(camera.Translation.z + (0.05f * Mathf.Abs(Translation.z + 1.5f - camera.Translation.z)), Translation.z + 1.5f));
 		else if (camera.Translation.z > Translation.z + 1.5f)
 			camera.Translation = new Vector3(camera.Translation.x, camera.Translation.y, Mathf.Max(camera.Translation.z - (0.05f * Mathf.Abs(Translation.z + 1.5f - camera.Translation.z)), Translation.z + 1.5f));
+	}
+
+
+	private void BodyAreaEntered(Area area)
+	{
+		if (area.IsInGroup("Interactible"))
+			interact.Show();
+
+		if (area.IsInGroup("Door"))
+		{
+			var doorCast = (Door)area;
+			doorCast.InArea = true;
+		}
+	}
+
+
+	private void BodyAreaExited(Area area)
+	{
+		if (area.IsInGroup("Interactible"))
+			interact.Hide();
+
+		if (area.IsInGroup("Door"))
+		{
+			var doorCast = (Door)area;
+			doorCast.InArea = false;
+		}
+	}
+
+
+	private void SightAreaEntered(Area area)
+	{
+		if (area.IsInGroup("InteractibleSight"))
+			interact.Show();
+	}
+
+
+	private void SightAreaExited(Area area)
+	{
+		if (area.IsInGroup("InteractibleSight"))
+			interact.Hide();
 	}
 }

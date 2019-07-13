@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Globals/MainCamera.cs" type="Script" id=1]
+
+[node name="Camera" type="Camera"]
+transform = Transform( 1, 0, 0, 0, 0.958651, 0.284584, 0, -0.284584, 0.958651, 0, 1, 1.4 )
+script = ExtResource( 1 )
+
