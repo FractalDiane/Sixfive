@@ -9,6 +9,11 @@ public class Enemy : KinematicBody
 	[Export]
 	protected SpriteFrames spriteFrames;
 
+	[Export]
+	protected int maxHP = 5;
+
+	protected int hp;
+
 	private Vector3 vel = new Vector3(0, 0, 0);
 
 	private const float GRAVITY = -0.2f;
@@ -17,7 +22,7 @@ public class Enemy : KinematicBody
 	
 	public override void _Ready()
 	{
-		
+		hp = maxHP;
 	}
 
 

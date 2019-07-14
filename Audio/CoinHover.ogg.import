@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/CoinHover.ogg-330a88f259404cb504d021d34afa1f84.oggstr"
+
+[deps]
+
+source_file="res://Audio/CoinHover.ogg"
+dest_files=[ "res://.import/CoinHover.ogg-330a88f259404cb504d021d34afa1f84.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
