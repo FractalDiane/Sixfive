@@ -67,7 +67,8 @@ text = "Descdesc"
 align = 1
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 45.375, -127.375 )
+self_modulate = Color( 0.705882, 0.705882, 0.705882, 1 )
+position = Vector2( 48, -126 )
 scale = Vector2( 0.678571, 0.678571 )
 texture = ExtResource( 10 )
 

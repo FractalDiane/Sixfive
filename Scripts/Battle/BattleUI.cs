@@ -14,6 +14,12 @@ public class BattleUI : Node2D
 	}
 
 	[Export]
+	private Texture textureBlack;
+
+	[Export]
+	private Texture textureRed;
+
+	[Export]
 	private AudioStream soundCoinHover;
 
 	[Export]
@@ -24,6 +30,12 @@ public class BattleUI : Node2D
 
 	[Export]
 	private AudioStream soundDrawClick;
+
+	[Export]
+	private AudioStream soundPassHover;
+
+	[Export]
+	private AudioStream soundPassClick;
 	
 	public enum Opponent { Blob };
 
@@ -37,6 +49,7 @@ public class BattleUI : Node2D
 	private int playerHP = 20;
 	private int playerMPCap = 5;
 	private int playerMP = 0;
+	private int playerDefense = 0;
 
 	private const string BATTLE_SCENE = "res://Scenes/Battle.tscn";
 	private const float ENEMY_X = 2f;
@@ -85,6 +98,7 @@ public class BattleUI : Node2D
 	// Hovers
 	private bool hoverJoker = false;
 	private bool hoverDraw = false;
+	private bool hoverPass = false;
 
 	private List<Tuple<CardStruct, int>> hand = new List<Tuple<CardStruct, int>>();
 
@@ -101,17 +115,23 @@ public class BattleUI : Node2D
 	// Refs
 	private AnimationPlayer animPlayerJoker;
 	private AnimationPlayer animPlayerDraw;
+	private AnimationPlayer animPlayerPass;
 	private AnimationPlayer animPlayerUI;
 	private AnimationPlayer animPlayerSixfive;
 	private Timer timerSetup;
 	private Timer timerUIBuffer;
+	private Timer timerEndPlayerTurn;
 	private Sprite sprJoker;
 	private Sprite sprDraw;
+	private Sprite sprPass;
 	private Sprite sprFive;
 	private Sprite sprSix;
 	private Label jokerLabel;
 	private Label hpLabel;
 	private Label mpLabel;
+	private Label defenseLabel;
+
+	private MeshInstance battleBackground;
 
 	private PackedScene cardRef = GD.Load<PackedScene>("res://Instances/Battle/Card.tscn");
 	private PackedScene battleNumberRef = GD.Load<PackedScene>("res://Instances/Battle/BattleNumber.tscn");
@@ -132,23 +152,28 @@ public class BattleUI : Node2D
 	{
 		animPlayerJoker = GetNode<AnimationPlayer>("AnimationPlayerJoker");
 		animPlayerDraw = GetNode<AnimationPlayer>("AnimationPlayerDraw");
+		animPlayerPass = GetNode<AnimationPlayer>("AnimationPlayerPass");
 		animPlayerSixfive = GetNode<AnimationPlayer>("AnimationPlayerSixfive");
 		animPlayerUI = GetNode<AnimationPlayer>("AnimationPlayerUI");
 		timerSetup = GetNode<Timer>("TimerBattleSetup");
 		timerUIBuffer = GetNode<Timer>("TimerUIBuffer");
+		timerEndPlayerTurn = GetNode<Timer>("TimerEndPlayerTurn");
 		sprJoker = GetNode<Sprite>("Joker");
 		sprDraw = GetNode<Sprite>("DrawButton");
+		sprPass = GetNode<Sprite>("PassButton");
 		sprFive = GetNode<Sprite>("Five");
 		sprSix = GetNode<Sprite>("Six");
 		jokerLabel = GetNode<Label>("JokerLabel");
 		hpLabel = GetNode<Sprite>("Healthbar").GetNode<Label>("Label");
 		mpLabel = GetNode<Sprite>("Manabar").GetNode<Label>("Label");
+		defenseLabel = GetNode<Sprite>("Defensebar").GetNode<Label>("Label");
 	}
 
 
 	public override void _Process(float delta)
 	{
 		sprDraw.Visible = battleMode;
+		sprPass.Visible = battleMode;
 		sprFive.Visible = battleMode;
 		sprSix.Visible = battleMode;
 
@@ -196,12 +221,23 @@ public class BattleUI : Node2D
 				drawnThisTurn = true;
 				hoverDraw = false;
 			}
+
+			if (hoverPass) // Pass
+			{
+				Controller.PlaySoundBurst(soundPassClick);
+				foreach (var card in BattleUI.singleton.instancedCards)
+					card.Discarded = true;
+
+				ShowUI(false);
+				timerEndPlayerTurn.Start();
+			}
 		}
 
 		// UI update stuff
 		jokerLabel.Text = $"x {numJokersCurrent.ToString()}";
 		hpLabel.Text = playerHP.ToString();
 		mpLabel.Text = $"{playerMP.ToString()}/{playerMPCap}";
+		defenseLabel.Text = playerDefense.ToString();
 
 		if (Input.IsActionJustPressed("debug_1"))
 			BattleStart(Opponent.Blob);
@@ -256,6 +292,9 @@ public class BattleUI : Node2D
 	{
 		BattleUI.singleton.five ^= true;
 		BattleUI.singleton.animPlayerSixfive.Play(BattleUI.singleton.five ? "Switch to Five" : "Switch to Six");
+
+		var mat = (SpatialMaterial)BattleUI.singleton.battleBackground.GetSurfaceMaterial(0);
+		mat.AlbedoTexture = BattleUI.singleton.five ? BattleUI.singleton.textureRed : BattleUI.singleton.textureBlack;
 	}
 
 
@@ -294,11 +333,13 @@ public class BattleUI : Node2D
 
 			case Suit.Club: // Defend
 			{
+				BattleUI.singleton.playerDefense = number;
 				break;
 			}
 
 			case Suit.Heart: // Heal
 			{
+				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + number, BattleUI.singleton.playerHPCap);
 				break;
 			}
 
@@ -313,6 +354,7 @@ public class BattleUI : Node2D
 
 	private void BattleSetup()
 	{
+		battleBackground = GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<MeshInstance>("Background");
 		MainCamera.singleton.Current = false;
 		ShowUI(true);
 		cardStashCurrentBattle = new List<CardStruct>(cardStash);
@@ -365,6 +407,20 @@ public class BattleUI : Node2D
 	}
 
 
+	private void EnemyTurn()
+	{
+		GD.Print("TEST");
+	}
+
+
+	private void PlayerTurn()
+	{
+		playerMP = Mathf.Min(++playerMP, playerMPCap);
+		playerDefense = 0;
+		SwapDimension();
+	}
+
+
 	private void DeallocateCards()
 	{
 		foreach (var card in instancedCards)
@@ -408,9 +464,28 @@ public class BattleUI : Node2D
 		}
 	}
 
+
 	private void DrawHoverEnd()
 	{
 		if (battleMode && !drawnThisTurn && uiVisible && handSize < 3)
 			BattleUI.singleton.hoverDraw = false;
+	}
+
+
+	private void PassHoverStart()
+	{
+		if (battleMode && uiVisible)
+		{
+			Controller.PlaySoundBurst(soundPassHover);
+			animPlayerPass.Play("Pass Hover");
+			BattleUI.singleton.hoverPass = true;
+		}
+	}
+
+
+	private void PassHoverEnd()
+	{
+		if (battleMode && uiVisible)
+			BattleUI.singleton.hoverPass = false;
 	}
 }
