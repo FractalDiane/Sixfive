@@ -38,6 +38,8 @@ public class BattleUI : Node2D
 	private AudioStream soundPassClick;
 	
 	public enum Opponent { Blob };
+	private Opponent currentOpponent;
+	private int enemyAttackIndex;
 
 	private bool five = false;
 	private bool battleMode = false;
@@ -121,6 +123,7 @@ public class BattleUI : Node2D
 	private Timer timerSetup;
 	private Timer timerUIBuffer;
 	private Timer timerEndPlayerTurn;
+	private Timer timerEndEnemyTurn;
 	private Sprite sprJoker;
 	private Sprite sprDraw;
 	private Sprite sprPass;
@@ -130,6 +133,9 @@ public class BattleUI : Node2D
 	private Label hpLabel;
 	private Label mpLabel;
 	private Label defenseLabel;
+	private Label enemyHpLabel;
+
+	private Enemy enemyRef;
 
 	private MeshInstance battleBackground;
 
@@ -158,6 +164,7 @@ public class BattleUI : Node2D
 		timerSetup = GetNode<Timer>("TimerBattleSetup");
 		timerUIBuffer = GetNode<Timer>("TimerUIBuffer");
 		timerEndPlayerTurn = GetNode<Timer>("TimerEndPlayerTurn");
+		timerEndEnemyTurn = GetNode<Timer>("TimerEndEnemyTurn");
 		sprJoker = GetNode<Sprite>("Joker");
 		sprDraw = GetNode<Sprite>("DrawButton");
 		sprPass = GetNode<Sprite>("PassButton");
@@ -167,6 +174,7 @@ public class BattleUI : Node2D
 		hpLabel = GetNode<Sprite>("Healthbar").GetNode<Label>("Label");
 		mpLabel = GetNode<Sprite>("Manabar").GetNode<Label>("Label");
 		defenseLabel = GetNode<Sprite>("Defensebar").GetNode<Label>("Label");
+		enemyHpLabel = GetNode<Sprite>("EnemyHealthbar").GetNode<Label>("Label");
 	}
 
 
@@ -228,7 +236,8 @@ public class BattleUI : Node2D
 				foreach (var card in BattleUI.singleton.instancedCards)
 					card.Discarded = true;
 
-				ShowUI(false);
+				ShowUIMin(false);
+				hoverPass = false;
 				timerEndPlayerTurn.Start();
 			}
 		}
@@ -238,6 +247,9 @@ public class BattleUI : Node2D
 		hpLabel.Text = playerHP.ToString();
 		mpLabel.Text = $"{playerMP.ToString()}/{playerMPCap}";
 		defenseLabel.Text = playerDefense.ToString();
+
+		if (battleMode)
+			enemyHpLabel.Text = enemyRef.Hp.ToString();
 
 		if (Input.IsActionJustPressed("debug_1"))
 			BattleStart(Opponent.Blob);
@@ -258,19 +270,22 @@ public class BattleUI : Node2D
 		Controller.GotoScene(BATTLE_SCENE);
 		Player.singleton.Translation = new Vector3(0, 0.35f, 0);
 		Player.Vel = Vector3.Zero;
-		BattleUI.singleton.battleMode = true;
+		BattleUI.singleton.currentOpponent = opponent;
 
 		switch (opponent)
 		{
 			case Opponent.Blob:
 			{
 				var e = (EnemyBlob)BattleUI.singleton.enemyBlob.Instance();
+				e.Initialize();
 				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
 				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
+				BattleUI.singleton.enemyRef = e;
 				break;
 			}
 		}
 
+		BattleUI.singleton.battleMode = true;
 		BattleUI.singleton.timerSetup.Start();
 	}
 
@@ -322,24 +337,28 @@ public class BattleUI : Node2D
 
 		PlayerMP -= cost;
 
-		ShowUI(false);
+		BattleUI.singleton.ShowUIMin(false);
 
 		switch (suit)
 		{
 			case Suit.Spade: // Attack
 			{
+				BattleUI.singleton.enemyRef.Hp = Mathf.Max(BattleUI.singleton.enemyRef.Hp - number, 0);
+				BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
 			case Suit.Club: // Defend
 			{
 				BattleUI.singleton.playerDefense = number;
+				BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
 			case Suit.Heart: // Heal
 			{
 				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + number, BattleUI.singleton.playerHPCap);
+				BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
@@ -358,6 +377,8 @@ public class BattleUI : Node2D
 		MainCamera.singleton.Current = false;
 		ShowUI(true);
 		cardStashCurrentBattle = new List<CardStruct>(cardStash);
+		enemyAttackIndex = EnemySelectAttack();
+		GD.Print($"Selected enemy attack index {enemyAttackIndex}");
 		RandomizeHand();
 		InstantiateCardsInHand();
 	}
@@ -399,17 +420,58 @@ public class BattleUI : Node2D
 			cardInst.SetNumber(hand[i].Item1.number);
 			cardInst.SetCost(hand[i].Item1.manaCost);
 			cardInst.HandIndex = hand[i].Item2;
-			//cardInst.Position = new Vector2(360 + 212 * i, 695);
-			cardInst.Position = new Vector2(360 + 212 * i, 900);
+			cardInst.Position = new Vector2(360 + 212 * hand[i].Item2, 900);
 			instancedCards.Add(cardInst);
 			GetTree().GetRoot().AddChild(cardInst);
 		}
 	}
 
 
+	private int EnemySelectAttack()
+	{
+		switch (currentOpponent)
+		{
+			case Opponent.Blob:
+				return Mathf.RoundToInt((float)GD.RandRange(0, 2));
+
+			default:
+				return 0;
+		}
+	}
+
+
+	private void EnemyAttack(int power)
+	{
+		playerHP = Mathf.Max(playerHP - power, 0);
+	}
+
+
 	private void EnemyTurn()
 	{
-		GD.Print("TEST");
+		DeallocateCards();
+		
+		switch (currentOpponent)
+		{
+			case Opponent.Blob:
+			{
+				switch (enemyAttackIndex)
+				{
+					case 0:
+						EnemyAttack(2);
+						break;
+					case 1:
+						EnemyAttack(2);
+						break;
+					case 2:
+						EnemyAttack(3);
+						break;
+				}
+
+				break;
+			}
+		}
+
+		timerEndEnemyTurn.Start();
 	}
 
 
@@ -418,6 +480,9 @@ public class BattleUI : Node2D
 		playerMP = Mathf.Min(++playerMP, playerMPCap);
 		playerDefense = 0;
 		SwapDimension();
+		ShowUIMin(true);
+		InstantiateCardsInHand();
+		enemyAttackIndex = EnemySelectAttack();
 	}
 
 
@@ -426,6 +491,21 @@ public class BattleUI : Node2D
 		foreach (var card in instancedCards)
 		{
 			card.QueueFree();
+		}
+
+		instancedCards.Clear();
+	}
+
+
+	private void ShowUIMin(bool show)
+	{
+		if (!BattleUI.singleton.uiBuffer && BattleUI.singleton.uiVisible != show)
+		{
+			BattleUI.singleton.animPlayerUI.Play(show ? "Show UI Min" : "Hide UI Min");
+			BattleUI.singleton.uiVisible = show;
+
+		//	BattleUI.singleton.uiBuffer = true;
+	//		BattleUI.singleton.timerUIBuffer.Start();
 		}
 	}
 

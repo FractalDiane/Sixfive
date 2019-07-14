@@ -30,6 +30,13 @@ public class Controller : Node
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
+
+	public override void _Process(float delta)
+	{
+		if (Input.IsActionJustPressed("sys_fullscreen"))
+			OS.WindowFullscreen ^= true;
+	}
+
 	// ================================================================
 
 	public static void PlaySoundBurst(AudioStream sound, float volume = 0f, float pitch = 1f)

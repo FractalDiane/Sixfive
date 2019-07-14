@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scripts/Battle/BattleUI.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Backgrounds/Six background.png" type="Texture" id=2]
@@ -13,9 +13,10 @@
 [ext_resource path="res://Fonts/EthBlackEthon.TTF" type="DynamicFontData" id=11]
 [ext_resource path="res://Sprites/Battle UI/LippoMP.png" type="Texture" id=12]
 [ext_resource path="res://Sprites/Battle UI/LippoDEF.png" type="Texture" id=13]
-[ext_resource path="res://Sprites/Battle UI/DrawButton.png" type="Texture" id=14]
-[ext_resource path="res://Sprites/Battle UI/JokerToken.png" type="Texture" id=15]
-[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Battle UI/EnemyHP.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Battle UI/DrawButton.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Battle UI/JokerToken.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=17]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -130,6 +131,69 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Vector2( 368, 86 ), Vector2( 368, -132 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("EnemyHealthbar:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 1055, 90 ), Vector2( 1055, -140 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Hide UI Min"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Joker:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 82.1204, 455.863 ), Vector2( -133.88, 455.863 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("JokerLabel:margin_left")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ 152.79, -80 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("DrawButton:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 125, 563 ), Vector2( 125, 810 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PassButton:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 125, 658 ), Vector2( 125, 905 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Show UI"
@@ -216,6 +280,69 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 0.5, 1 ),
 "update": 0,
 "values": [ Vector2( 368, -132 ), Vector2( 368, 86 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("EnemyHealthbar:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 1055, -140 ), Vector2( 1055, 90 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "Show UI Min"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Joker:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( -133.88, 455.863 ), Vector2( 82.1204, 455.863 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("JokerLabel:margin_left")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ -80, 152.79 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("DrawButton:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 125, 810 ), Vector2( 125, 563 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PassButton:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 125, 905 ), Vector2( 125, 658 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -423,7 +550,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1, 1.4, 1.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1.86607, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 15 ) ]
+"values": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 16 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Joker:rotation_degrees")
@@ -517,10 +644,27 @@ custom_fonts/font = SubResource( 1 )
 text = "0"
 align = 1
 
+[node name="EnemyHealthbar" type="Sprite" parent="."]
+position = Vector2( 1055, -140 )
+texture = ExtResource( 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="EnemyHealthbar"]
+margin_left = -76.6579
+margin_top = -39.1815
+margin_right = 13.3421
+margin_bottom = 24.8185
+rect_rotation = 6.95466
+custom_fonts/font = SubResource( 1 )
+text = "100"
+align = 1
+
 [node name="DrawButton" type="Sprite" parent="."]
 position = Vector2( 125, 810 )
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -536,7 +680,7 @@ text = "Draw"
 [node name="PassButton" type="Sprite" parent="."]
 position = Vector2( 125, 905 )
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -552,7 +696,7 @@ text = "Pass"
 [node name="Joker" type="Sprite" parent="."]
 position = Vector2( -133.88, 455.863 )
 scale = Vector2( 0.53, 0.53 )
-texture = ExtResource( 15 )
+texture = ExtResource( 16 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -595,7 +739,9 @@ text = "x 1"
 [node name="AnimationPlayerUI" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
 "anims/Hide UI" = SubResource( 7 )
+"anims/Hide UI Min" = SubResource( 15 )
 "anims/Show UI" = SubResource( 8 )
+"anims/Show UI Min" = SubResource( 16 )
 
 [node name="AnimationPlayerDraw" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
@@ -624,6 +770,9 @@ one_shot = true
 [node name="TimerEndPlayerTurn" type="Timer" parent="."]
 one_shot = true
 
+[node name="TimerEndEnemyTurn" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="mouse_entered" from="HoverAreaJoker" to="." method="JokerHoverStart"]
 [connection signal="mouse_exited" from="HoverAreaJoker" to="." method="JokerHoverEnd"]
 [connection signal="mouse_entered" from="HoverAreaDraw" to="." method="DrawHoverStart"]
@@ -633,3 +782,4 @@ one_shot = true
 [connection signal="timeout" from="TimerBattleSetup" to="." method="BattleSetup"]
 [connection signal="timeout" from="TimerUIBuffer" to="." method="ResetBuffer"]
 [connection signal="timeout" from="TimerEndPlayerTurn" to="." method="EnemyTurn"]
+[connection signal="timeout" from="TimerEndEnemyTurn" to="." method="PlayerTurn"]

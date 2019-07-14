@@ -31,6 +31,7 @@ BattleUI="*res://Globals/BattleUI.tscn"
 window/size/width=1280
 window/size/height=720
 window/size/resizable=false
+window/stretch/mode="2d"
 
 [importer_defaults]
 
@@ -95,6 +96,11 @@ click_right={
 debug_2={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+sys_fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777247,"unicode":0,"echo":false,"script":null)
  ]
 }
 

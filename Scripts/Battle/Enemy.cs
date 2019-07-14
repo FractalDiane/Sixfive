@@ -7,9 +7,6 @@ public class Enemy : KinematicBody
 	protected string name = string.Empty;
 
 	[Export]
-	protected SpriteFrames spriteFrames;
-
-	[Export]
 	protected int maxHP = 5;
 
 	protected int hp;
@@ -19,10 +16,14 @@ public class Enemy : KinematicBody
 	private const float GRAVITY = -0.2f;
 
 	// ================================================================
+
+	public int Hp { get => hp; set => hp = value; }
+
+	// ================================================================
 	
 	public override void _Ready()
 	{
-		hp = maxHP;
+		
 	}
 
 
@@ -31,5 +32,12 @@ public class Enemy : KinematicBody
 		vel.y += GRAVITY * delta * 60f;
 
 		vel = MoveAndSlide(vel, new Vector3(0, 1, 0));
+	}
+
+	// ================================================================
+
+	public void Initialize()
+	{
+		hp = maxHP;
 	}
 }
