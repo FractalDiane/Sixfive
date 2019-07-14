@@ -186,7 +186,7 @@ public class BattleUI : Node2D
 		sprSix.Visible = battleMode;
 
 		sprDraw.Modulate = handSize < 3 && !drawnThisTurn ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.4f);
-		sprJoker.Modulate = !jokerThisTurn ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.4f);
+		sprJoker.Modulate = !jokerThisTurn && numJokersCurrent > 0 ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.4f);
 
 		// Clicks
 		if (Input.IsActionJustPressed("click_left") && battleMode)
@@ -442,7 +442,7 @@ public class BattleUI : Node2D
 
 	private void EnemyAttack(int power)
 	{
-		playerHP = Mathf.Max(playerHP - power, 0);
+		playerHP = Mathf.Max(playerHP - Mathf.Max(power - playerDefense, 0), 0);
 	}
 
 
@@ -479,6 +479,8 @@ public class BattleUI : Node2D
 	{
 		playerMP = Mathf.Min(++playerMP, playerMPCap);
 		playerDefense = 0;
+		jokerThisTurn = false;
+		drawnThisTurn = false;
 		SwapDimension();
 		ShowUIMin(true);
 		InstantiateCardsInHand();
