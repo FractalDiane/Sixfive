@@ -114,21 +114,27 @@ public class BattleUI : Node2D
 	private bool drawnThisTurn = false;
 	private bool jokerThisTurn = false;
 
+	private bool victory = false;
+	private bool gameover = false;
+
 	// Refs
 	private AnimationPlayer animPlayerJoker;
 	private AnimationPlayer animPlayerDraw;
 	private AnimationPlayer animPlayerPass;
 	private AnimationPlayer animPlayerUI;
 	private AnimationPlayer animPlayerSixfive;
+	private AnimationPlayer animPlayerVictory;
 	private Timer timerSetup;
 	private Timer timerUIBuffer;
 	private Timer timerEndPlayerTurn;
 	private Timer timerEndEnemyTurn;
+	private Timer timerEndBattle;
 	private Sprite sprJoker;
 	private Sprite sprDraw;
 	private Sprite sprPass;
 	private Sprite sprFive;
 	private Sprite sprSix;
+	private Sprite sprEnemyHealth;
 	private Label jokerLabel;
 	private Label hpLabel;
 	private Label mpLabel;
@@ -161,15 +167,18 @@ public class BattleUI : Node2D
 		animPlayerPass = GetNode<AnimationPlayer>("AnimationPlayerPass");
 		animPlayerSixfive = GetNode<AnimationPlayer>("AnimationPlayerSixfive");
 		animPlayerUI = GetNode<AnimationPlayer>("AnimationPlayerUI");
+		animPlayerVictory = GetNode<AnimationPlayer>("AnimationPlayerVictory");
 		timerSetup = GetNode<Timer>("TimerBattleSetup");
 		timerUIBuffer = GetNode<Timer>("TimerUIBuffer");
 		timerEndPlayerTurn = GetNode<Timer>("TimerEndPlayerTurn");
 		timerEndEnemyTurn = GetNode<Timer>("TimerEndEnemyTurn");
+		timerEndBattle = GetNode<Timer>("TimerEndBattle");
 		sprJoker = GetNode<Sprite>("Joker");
 		sprDraw = GetNode<Sprite>("DrawButton");
 		sprPass = GetNode<Sprite>("PassButton");
 		sprFive = GetNode<Sprite>("Five");
 		sprSix = GetNode<Sprite>("Six");
+		sprEnemyHealth = GetNode<Sprite>("EnemyHealthbar");
 		jokerLabel = GetNode<Label>("JokerLabel");
 		hpLabel = GetNode<Sprite>("Healthbar").GetNode<Label>("Label");
 		mpLabel = GetNode<Sprite>("Manabar").GetNode<Label>("Label");
@@ -184,6 +193,7 @@ public class BattleUI : Node2D
 		sprPass.Visible = battleMode;
 		sprFive.Visible = battleMode;
 		sprSix.Visible = battleMode;
+		sprEnemyHealth.Visible = battleMode;
 
 		sprDraw.Modulate = handSize < 3 && !drawnThisTurn ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.4f);
 		sprJoker.Modulate = !jokerThisTurn && numJokersCurrent > 0 ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.4f);
@@ -249,7 +259,16 @@ public class BattleUI : Node2D
 		defenseLabel.Text = playerDefense.ToString();
 
 		if (battleMode)
+		{
 			enemyHpLabel.Text = enemyRef.Hp.ToString();
+
+			if (victory && (Input.IsActionJustPressed("click_left" ) || Input.IsActionJustPressed("action") || Input.IsActionJustPressed("move_jump")))
+			{
+				animPlayerVictory.Play("Victory Fade");
+				timerEndBattle.Start();
+			}
+		}
+			
 
 		if (Input.IsActionJustPressed("debug_1"))
 			BattleStart(Opponent.Blob);
@@ -265,6 +284,10 @@ public class BattleUI : Node2D
 
 	public static void BattleStart(Opponent opponent)
 	{
+		Controller.PreBattlePosition = Player.singleton.Translation;
+		Controller.PreBattleFace = new Vector2(1, 1);
+		Controller.PreBattleScene = BattleUI.singleton.GetTree().CurrentScene.Filename;
+
 		Player.State = Player.ST.Battle;
 		PlayerMP = Mathf.FloorToInt((float)BattleUI.singleton.playerMPCap / 2f);
 		Controller.GotoScene(BATTLE_SCENE);
@@ -344,21 +367,31 @@ public class BattleUI : Node2D
 			case Suit.Spade: // Attack
 			{
 				BattleUI.singleton.enemyRef.Hp = Mathf.Max(BattleUI.singleton.enemyRef.Hp - number, 0);
-				BattleUI.singleton.timerEndPlayerTurn.Start();
+				if (BattleUI.singleton.enemyRef.Hp <= 0)
+				{
+					BattleUI.singleton.Victory();
+				}
+
+				if (!BattleUI.singleton.victory)
+					BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
 			case Suit.Club: // Defend
 			{
 				BattleUI.singleton.playerDefense = number;
-				BattleUI.singleton.timerEndPlayerTurn.Start();
+
+				//if (!BattleUI.singleton.victory)
+					BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
 			case Suit.Heart: // Heal
 			{
 				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + number, BattleUI.singleton.playerHPCap);
-				BattleUI.singleton.timerEndPlayerTurn.Start();
+				
+			//	if (!BattleUI.singleton.victory)
+					BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
@@ -443,6 +476,12 @@ public class BattleUI : Node2D
 	private void EnemyAttack(int power)
 	{
 		playerHP = Mathf.Max(playerHP - Mathf.Max(power - playerDefense, 0), 0);
+		if (playerHP <= 0)
+		{
+			gameover = true;
+			GetNode<Timer>("TimerGameOver").Start();
+		}
+			
 	}
 
 
@@ -471,7 +510,8 @@ public class BattleUI : Node2D
 			}
 		}
 
-		timerEndEnemyTurn.Start();
+		if (!gameover)
+			timerEndEnemyTurn.Start();
 	}
 
 
@@ -485,6 +525,7 @@ public class BattleUI : Node2D
 		ShowUIMin(true);
 		InstantiateCardsInHand();
 		enemyAttackIndex = EnemySelectAttack();
+		GD.Print($"Player has {cardStashCurrentBattle.Count} cards left");
 	}
 
 
@@ -496,6 +537,13 @@ public class BattleUI : Node2D
 		}
 
 		instancedCards.Clear();
+	}
+
+	
+	private void Victory()
+	{
+		BattleUI.singleton.animPlayerVictory.Play("Victory Appear");
+		victory = true;
 	}
 
 
@@ -569,5 +617,42 @@ public class BattleUI : Node2D
 	{
 		if (battleMode && uiVisible)
 			BattleUI.singleton.hoverPass = false;
+	}
+
+
+	private void EndBattle()
+	{
+		DeallocateCards();
+		Controller.Fade(true, 0.5f);
+		GetNode<Timer>("TimerEndBattle2").Start();
+	}
+
+
+	private void EndBattle2()
+	{
+		enemyRef.QueueFree();
+		victory = false;
+		ShowUI(false);
+		Controller.GotoScene(Controller.PreBattleScene);
+		Player.singleton.Translation = Controller.PreBattlePosition;
+		numJokersCurrent = numJokers;
+		// set player face
+		Player.State = Player.ST.Move;
+		battleMode = false;
+		Controller.Fade(false, 0.5f);
+	}
+
+
+	private void GameOver()
+	{
+		Controller.Fade(true, 1);
+		GetNode<Timer>("TimerGameOver2").Start();
+	}
+
+
+	private void GameOver2()
+	{
+		Controller.GotoScene("res://Scenes/GameOver.tscn");
+		Controller.Fade(false, 1.5f);
 	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Scripts/Battle/BattleUI.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Backgrounds/Six background.png" type="Texture" id=2]
@@ -16,7 +16,8 @@
 [ext_resource path="res://Sprites/Battle UI/EnemyHP.png" type="Texture" id=14]
 [ext_resource path="res://Sprites/Battle UI/DrawButton.png" type="Texture" id=15]
 [ext_resource path="res://Sprites/Battle UI/JokerToken.png" type="Texture" id=16]
-[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=17]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=17]
+[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=18]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -44,6 +45,10 @@ size = 50
 use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=17]
+size = 200
+font_data = ExtResource( 17 )
 
 [sub_resource type="Animation" id=7]
 resource_name = "Hide UI"
@@ -144,7 +149,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1055, 90 ), Vector2( 1055, -140 ) ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=8]
 resource_name = "Hide UI Min"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:position")
@@ -195,8 +200,7 @@ tracks/3/keys = {
 "values": [ Vector2( 125, 658 ), Vector2( 125, 905 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Show UI"
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Healthbar:position")
 tracks/0/interp = 2
@@ -294,7 +298,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1055, -140 ), Vector2( 1055, 90 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=10]
 resource_name = "Show UI Min"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:position")
@@ -345,8 +349,7 @@ tracks/3/keys = {
 "values": [ Vector2( 125, 905 ), Vector2( 125, 658 ) ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "Draw Hover"
+[sub_resource type="Animation" id=11]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("DrawButton:rotation_degrees")
@@ -361,7 +364,7 @@ tracks/0/keys = {
 "values": [ 0.0, 10.0, -12.0, 10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=12]
 resource_name = "Pass Hover"
 length = 0.7
 tracks/0/type = "value"
@@ -377,7 +380,7 @@ tracks/0/keys = {
 "values": [ 0.0, 10.0, -12.0, 10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=13]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Six:position")
 tracks/0/interp = 2
@@ -451,7 +454,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=14]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Six:position")
 tracks/0/interp = 2
@@ -525,8 +528,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.392157 ) ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "Flip Joker"
+[sub_resource type="Animation" id=15]
 length = 2.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:scale")
@@ -550,7 +552,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1, 1.4, 1.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1.86607, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 16 ) ]
+"values": [ ExtResource( 16 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 18 ), ExtResource( 16 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Joker:rotation_degrees")
@@ -565,8 +567,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=13]
-resource_name = "Joker Hover"
+[sub_resource type="Animation" id=16]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:rotation_degrees")
@@ -581,8 +582,65 @@ tracks/0/keys = {
 "values": [ 0.0, 15.0, -20.0, 15.0, 0.0 ]
 }
 
+[sub_resource type="Animation" id=18]
+resource_name = "Victory Appear"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Victory:margin_top")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ 0.0, 160 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Victory:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "Victory Fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Victory:margin_top")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ 160, 250 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Victory:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="BattleUI" type="Node2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [ 640.345 ]
+}
 textureBlack = ExtResource( 2 )
 textureRed = ExtResource( 3 )
 soundCoinHover = ExtResource( 4 )
@@ -736,29 +794,48 @@ margin_bottom = 519.748
 custom_fonts/font = SubResource( 6 )
 text = "x 1"
 
+[node name="Victory" type="Label" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 366.0
+margin_top = 250.0
+margin_right = 1050.0
+margin_bottom = 400.0
+rect_scale = Vector2( 0.8, 0.8 )
+custom_fonts/font = SubResource( 17 )
+text = "VICTORY"
+align = 1
+
 [node name="AnimationPlayerUI" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
 "anims/Hide UI" = SubResource( 7 )
-"anims/Hide UI Min" = SubResource( 15 )
-"anims/Show UI" = SubResource( 8 )
-"anims/Show UI Min" = SubResource( 16 )
+"anims/Hide UI Min" = SubResource( 8 )
+"anims/Show UI" = SubResource( 9 )
+"anims/Show UI Min" = SubResource( 10 )
 
 [node name="AnimationPlayerDraw" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Draw Hover" = SubResource( 9 )
+"anims/Draw Hover" = SubResource( 11 )
 
 [node name="AnimationPlayerPass" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Pass Hover" = SubResource( 14 )
+"anims/Pass Hover" = SubResource( 12 )
 
 [node name="AnimationPlayerSixfive" type="AnimationPlayer" parent="."]
-"anims/Switch to Five" = SubResource( 10 )
-"anims/Switch to Six" = SubResource( 11 )
+"anims/Switch to Five" = SubResource( 13 )
+"anims/Switch to Six" = SubResource( 14 )
 
 [node name="AnimationPlayerJoker" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Flip Joker" = SubResource( 12 )
-"anims/Joker Hover" = SubResource( 13 )
+"anims/Flip Joker" = SubResource( 15 )
+"anims/Joker Hover" = SubResource( 16 )
+
+[node name="AnimationPlayerVictory" type="AnimationPlayer" parent="."]
+"anims/Victory Appear" = SubResource( 18 )
+"anims/Victory Fade" = SubResource( 19 )
 
 [node name="TimerBattleSetup" type="Timer" parent="."]
 wait_time = 0.03
@@ -773,6 +850,22 @@ one_shot = true
 [node name="TimerEndEnemyTurn" type="Timer" parent="."]
 one_shot = true
 
+[node name="TimerEndBattle" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="TimerEndBattle2" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="TimerGameOver" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="TimerGameOver2" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
 [connection signal="mouse_entered" from="HoverAreaJoker" to="." method="JokerHoverStart"]
 [connection signal="mouse_exited" from="HoverAreaJoker" to="." method="JokerHoverEnd"]
 [connection signal="mouse_entered" from="HoverAreaDraw" to="." method="DrawHoverStart"]
@@ -783,3 +876,7 @@ one_shot = true
 [connection signal="timeout" from="TimerUIBuffer" to="." method="ResetBuffer"]
 [connection signal="timeout" from="TimerEndPlayerTurn" to="." method="EnemyTurn"]
 [connection signal="timeout" from="TimerEndEnemyTurn" to="." method="PlayerTurn"]
+[connection signal="timeout" from="TimerEndBattle" to="." method="EndBattle"]
+[connection signal="timeout" from="TimerEndBattle2" to="." method="EndBattle2"]
+[connection signal="timeout" from="TimerGameOver" to="." method="GameOver"]
+[connection signal="timeout" from="TimerGameOver2" to="." method="GameOver2"]

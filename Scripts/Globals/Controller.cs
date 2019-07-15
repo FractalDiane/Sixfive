@@ -13,14 +13,24 @@ public class Controller : Node
 
 	private Dictionary<string, int> flag = new Dictionary<string, int>()
 	{
-
+		
 	};
+
+	private Vector3 preBattlePosition;
+	private Vector2 preBattleFace;
+	private string preBattleScene;
 
 
 	// Refs
 	private PackedScene soundBurstRef = GD.Load<PackedScene>("res://Instances/SoundBurst.tscn");
 
 	private AnimationPlayer animPlayer;
+
+	// ================================================================
+
+	public static Vector3 PreBattlePosition { get => Controller.singleton.preBattlePosition; set => Controller.singleton.preBattlePosition = value; }
+	public static Vector2 PreBattleFace { get => Controller.singleton.preBattleFace; set => Controller.singleton.preBattleFace = value; }
+	public static string PreBattleScene { get => Controller.singleton.preBattleScene; set => Controller.singleton.preBattleScene = value; }
 
 	// ================================================================
 	
