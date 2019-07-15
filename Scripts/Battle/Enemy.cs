@@ -15,6 +15,9 @@ public class Enemy : KinematicBody
 
 	private const float GRAVITY = -0.2f;
 
+	// Refs
+	private Particles partsAttack;
+
 	// ================================================================
 
 	public int Hp { get => hp; set => hp = value; }
@@ -23,7 +26,7 @@ public class Enemy : KinematicBody
 	
 	public override void _Ready()
 	{
-		
+		partsAttack = GetNode<Particles>("PartsAttack");
 	}
 
 

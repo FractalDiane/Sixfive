@@ -15,7 +15,7 @@ animations = [ {
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.184867, 0.140005, 0.0365649 )
 
-[node name="Enemy" instance=ExtResource( 1 )]
+[node name="Enemy" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 name = "Dark Blob"
 maxHP = 10

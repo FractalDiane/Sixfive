@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 
 public class BattleUI : Node2D
@@ -147,6 +148,7 @@ public class BattleUI : Node2D
 
 	private PackedScene cardRef = GD.Load<PackedScene>("res://Instances/Battle/Card.tscn");
 	private PackedScene battleNumberRef = GD.Load<PackedScene>("res://Instances/Battle/BattleNumber.tscn");
+	private PackedScene partsAttackRef = GD.Load<PackedScene>("res://Instances/Particles/PartsAttack.tscn");
 
 	private PackedScene enemyBlob = GD.Load<PackedScene>("res://Instances/Enemies/EnemyBlob.tscn");
 
@@ -367,6 +369,8 @@ public class BattleUI : Node2D
 			case Suit.Spade: // Attack
 			{
 				BattleUI.singleton.enemyRef.Hp = Mathf.Max(BattleUI.singleton.enemyRef.Hp - number, 0);
+				BattleUI.singleton.SpawnParticles(BattleUI.singleton.partsAttackRef, BattleUI.singleton.enemyRef.Translation);
+				BattleUI.singleton.SpawnDamageNumber(number, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(BattleUI.singleton.enemyRef.Translation).x, 400), false);
 				if (BattleUI.singleton.enemyRef.Hp <= 0)
 				{
 					BattleUI.singleton.Victory();
@@ -381,17 +385,16 @@ public class BattleUI : Node2D
 			{
 				BattleUI.singleton.playerDefense = number;
 
-				//if (!BattleUI.singleton.victory)
-					BattleUI.singleton.timerEndPlayerTurn.Start();
+				BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
 			case Suit.Heart: // Heal
 			{
 				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + number, BattleUI.singleton.playerHPCap);
-				
-			//	if (!BattleUI.singleton.victory)
-					BattleUI.singleton.timerEndPlayerTurn.Start();
+				BattleUI.singleton.SpawnDamageNumber(number, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), true);
+
+				BattleUI.singleton.timerEndPlayerTurn.Start();
 				break;
 			}
 
@@ -475,7 +478,11 @@ public class BattleUI : Node2D
 
 	private void EnemyAttack(int power)
 	{
-		playerHP = Mathf.Max(playerHP - Mathf.Max(power - playerDefense, 0), 0);
+		int finalPower = Mathf.Max(power - playerDefense, 0);
+		playerHP = Mathf.Max(playerHP - finalPower, 0);
+
+		SpawnDamageNumber(finalPower, new Vector2(GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), false);
+
 		if (playerHP <= 0)
 		{
 			gameover = true;
@@ -553,9 +560,6 @@ public class BattleUI : Node2D
 		{
 			BattleUI.singleton.animPlayerUI.Play(show ? "Show UI Min" : "Hide UI Min");
 			BattleUI.singleton.uiVisible = show;
-
-		//	BattleUI.singleton.uiBuffer = true;
-	//		BattleUI.singleton.timerUIBuffer.Start();
 		}
 	}
 
@@ -563,6 +567,32 @@ public class BattleUI : Node2D
 	private void ResetBuffer()
 	{
 		uiBuffer = false;
+	}
+
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private Camera GetBattleCamera()
+	{
+		return GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<Camera>("BattleCamera");
+	}
+
+
+	private void SpawnDamageNumber(int power, Vector2 position, bool healing)
+	{
+		var damageNum = (BattleNumber)battleNumberRef.Instance();
+		damageNum.Position = position;
+		damageNum.SetNumber(power);
+		damageNum.SetHealing(healing);
+		GetTree().GetRoot().AddChild(damageNum);
+	}
+
+
+	private void SpawnParticles(PackedScene partsRef, Vector3 position)
+	{
+		var parts = (Particles)partsRef.Instance();
+		parts.Translation = position;
+		parts.Emitting = true;
+		GetTree().GetRoot().AddChild(parts);
 	}
 
 

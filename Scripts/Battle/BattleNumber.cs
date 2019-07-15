@@ -24,6 +24,8 @@ public class BattleNumber : Node2D
 	{
 		vel.y += GRAVITY * delta;
 		Translate(vel * delta);
+
+		
 	}
 
 	// ================================================================
@@ -31,5 +33,11 @@ public class BattleNumber : Node2D
 	public void SetNumber(int number)
 	{
 		GetNode<Label>("Label").Text = number.ToString();
+	}
+
+
+	public void SetHealing(bool value)
+	{
+		GetNode<Label>("Label").AddColorOverride("font_color", value ? new Color("#70f7bb") : new Color("#ffffff"));
 	}
 }

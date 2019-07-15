@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MagicImpact.ogg-4f22a6c132b51d54d502230e9d19d750.oggstr"
+
+[deps]
+
+source_file="res://Audio/MagicImpact.ogg"
+dest_files=[ "res://.import/MagicImpact.ogg-4f22a6c132b51d54d502230e9d19d750.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

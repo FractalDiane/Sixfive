@@ -13,7 +13,7 @@ public class Controller : Node
 
 	private Dictionary<string, int> flag = new Dictionary<string, int>()
 	{
-		
+		{"read_note", 0}
 	};
 
 	private Vector3 preBattlePosition;
