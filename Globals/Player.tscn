@@ -52,7 +52,9 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0 )
 shape = SubResource( 1 )
 
-[node name="Sight" type="Area" parent="."]
+[node name="Sight" type="Area" parent="." groups=[
+"PlayerSight",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.387906, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Sight"]

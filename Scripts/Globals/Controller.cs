@@ -23,6 +23,7 @@ public class Controller : Node
 
 	// Refs
 	private PackedScene soundBurstRef = GD.Load<PackedScene>("res://Instances/SoundBurst.tscn");
+	private PackedScene dialogueRef = GD.Load<PackedScene>("res://Instances/Dialogue.tscn");
 
 	private AnimationPlayer animPlayer;
 
@@ -72,6 +73,17 @@ public class Controller : Node
 	{
 		Controller.singleton.animPlayer.PlaybackSpeed = 1f / time;
 		Controller.singleton.animPlayer.Play(fadeout ? "Fadeout" : "Fadein");
+	}
+
+
+	public static void DisplayDialogue(string[] text, Spatial host)
+	{
+		Player.State = Player.ST.NoInput;
+		var dlg = (Dialogue)Controller.singleton.dialogueRef.Instance();
+		dlg.LoadDialogue(text);
+		dlg.Target = host;
+		dlg.Connect("dialogue_ended", host, "DialogueEnd");
+		dlg.Start();
 	}
 
 	// ================================================================

@@ -121,6 +121,12 @@ public class Player : KinematicBody
 		Player.singleton.spr.Play(anim);
 	}
 
+
+	public static void ShowInteract(bool show)
+	{
+		Player.singleton.interact.Visible = show;
+	}
+
 	// ================================================================
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

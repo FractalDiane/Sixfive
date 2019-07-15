@@ -60,6 +60,7 @@
     <Compile Include="Scripts\Globals\Controller.cs" />
     <Compile Include="Scripts\Globals\MainCamera.cs" />
     <Compile Include="Scripts\Globals\Player.cs" />
+    <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Utility\FollowCursor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
