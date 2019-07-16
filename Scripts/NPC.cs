@@ -35,7 +35,7 @@ public class NPC : KinematicBody
 			if (isObject)
 				Player.ShowInteract(false);
 
-			Controller.DisplayDialogue(new string[] {"TEST", "TEST 2"}, this);
+			Controller.DisplayDialogue(dialogue[dialogueSet], this);
 		}
 	}
 

@@ -42,7 +42,9 @@ public class Card : Sprite
 	private float discardPosition;
 	private float selectPosition;
 
-	private const float LERP_WEIGHT = 0.075f;
+	private const float LERP_WEIGHT = 0.1f / 60;
+	private const float LERP_WEIGHT_2 = 0.08f / 60;
+	private const float LERP_WEIGHT_3 = 0.075f / 60;
 	private const int IDLE_Y = 695;
 
 	// Refs
@@ -69,13 +71,13 @@ public class Card : Sprite
 		discardPosition = startPosition.y + 440;
 		selectPosition = startPosition.y - 500;
 	}
+	
 
-
-	public override void _Process(float delta)
+	public override void _PhysicsProcess(float delta)
 	{
 		if (hover && !discarded && !selected)
 		{
-			Position = new Vector2(Position.x, Mathf.Lerp(Position.y, hoverPosition, LERP_WEIGHT));
+			Position = new Vector2(Position.x, Mathf.Lerp(Position.y, hoverPosition, 1 - Mathf.Pow(LERP_WEIGHT, delta)));
 
 			if (Input.IsActionJustPressed("click_left") && Clickable())
 			{
@@ -94,17 +96,17 @@ public class Card : Sprite
 			}
 		}
 		else
-			Position = new Vector2(Position.x, Mathf.Lerp(Position.y, startPosition.y, LERP_WEIGHT));
+			Position = new Vector2(Position.x, Mathf.Lerp(Position.y, startPosition.y, 1 - Mathf.Pow(LERP_WEIGHT, delta)));
 
 		if (discarded)
-			Position = new Vector2(Position.x, Mathf.Lerp(Position.y, discardPosition, 0.05f));
+			Position = new Vector2(Position.x, Mathf.Lerp(Position.y, discardPosition, 1 - Mathf.Pow(LERP_WEIGHT_3, delta)));
 
 		if (selected)
 		{
 			if (Scale.x > 0.01f)
 			{
-				Position = new Vector2(Position.x, Mathf.Lerp(Position.y, selectPosition, 0.08f));
-				float newScale = Mathf.Lerp(Scale.x, 0, 0.08f);
+				Position = new Vector2(Position.x, Mathf.Lerp(Position.y, selectPosition, 1 - Mathf.Pow(LERP_WEIGHT_2, delta)));
+				float newScale = Mathf.Lerp(Scale.x, 0, 1 - Mathf.Pow(LERP_WEIGHT_2, delta));
 				Scale = new Vector2(newScale, newScale);
 			}
 			else

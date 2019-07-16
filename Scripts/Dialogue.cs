@@ -122,6 +122,7 @@ public class Dialogue : Sprite
 				else
 				{
 					// sound end play
+					animPlayer.Play("Disappear");
 					disp = 0;
 					active = false;
 					timerDestroy.Start();

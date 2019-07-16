@@ -12,15 +12,15 @@ font_data = ExtResource( 3 )
 resource_name = "Appear"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 0.5, 1 ),
 "update": 0,
-"values": [ Vector2( 1e-005, 1e-005 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:modulate")
@@ -38,8 +38,8 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "Disappear"
 tracks/0/type = "value"
-tracks/0/path = NodePath("DialogueBox:scale")
-tracks/0/interp = 2
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -47,11 +47,11 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1e-005, 1e-005 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("DialogueBox:modulate")
-tracks/1/interp = 2
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
@@ -63,23 +63,30 @@ tracks/1/keys = {
 }
 
 [node name="Dialogue" type="Sprite"]
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 600, 150 )
+scale = Vector2( 1e-005, 1e-005 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Text" type="Label" parent="."]
 margin_left = -340.0
 margin_top = -115.0
-margin_right = 327.0
+margin_right = 325.0
 margin_bottom = 98.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Green eggs and spam"
+autowrap = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 3.5
 anims/Appear = SubResource( 2 )
 anims/Disappear = SubResource( 3 )
+
+[node name="TimerStartRoll" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [node name="TimerRollText" type="Timer" parent="."]
 
@@ -95,9 +102,8 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="TimerStartRoll" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
-
+[connection signal="timeout" from="TimerStartRoll" to="." method="StartRoll"]
 [connection signal="timeout" from="TimerRollText" to="." method="RollText"]
-[connection signal="timeout" from="TimerStartRoll" to="." method="Test"]
+[connection signal="timeout" from="TimerChangePage" to="." method="ChangePage"]
+[connection signal="timeout" from="TimerBuffer" to="." method="ResetBuffer"]
+[connection signal="timeout" from="TimerDestroy" to="." method="Destroy"]

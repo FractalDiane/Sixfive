@@ -84,6 +84,7 @@ public class Controller : Node
 		dlg.Target = host;
 		dlg.Connect("dialogue_ended", host, "DialogueEnd");
 		dlg.Start();
+		Controller.singleton.GetTree().GetRoot().AddChild(dlg);
 	}
 
 	// ================================================================
