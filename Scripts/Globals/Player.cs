@@ -67,7 +67,7 @@ public class Player : KinematicBody
 			case ST.Move:
 			{
 				Movement(delta);
-				walking = vel.x != 0 || vel.z != 0;
+				walking = (vel.x != 0 || vel.z != 0) && state == ST.Move;
 				break;
 			}
 
@@ -78,7 +78,7 @@ public class Player : KinematicBody
 			}
 		}
 
-		if (walking)
+		if (walking && !BattleUI.BattleMode)
 		{
 			BattleUI.ShowUI(false);
 			timerShowUI.Start();
@@ -289,6 +289,7 @@ public class Player : KinematicBody
 
 	private void ShowUI()
 	{
-		BattleUI.ShowUI(true);
+		if (!BattleUI.BattleMode)
+			BattleUI.ShowUI(true);
 	}
 }

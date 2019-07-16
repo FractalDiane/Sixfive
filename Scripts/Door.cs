@@ -37,6 +37,7 @@ public class Door : Area
 		if (Input.IsActionJustPressed("action") && inArea)
 		{
 			Player.State = Player.ST.NoInput;
+			Player.Stop();
 			Controller.PlaySoundBurst(doorSound);
 			Controller.Fade(true, 0.5f);
 			timer.Start();

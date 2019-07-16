@@ -1,6 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
+[ext_resource path="res://Textures/Transition.png" type="Texture" id=2]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float cutoff : hint_range(0f, 1f);
+uniform sampler2D transition : hint_albedo;
+
+void fragment() {
+	float value = texture(transition, UV).r;
+	COLOR = value < cutoff ? vec4(COLOR.rgb, 0) : vec4(COLOR.rgb, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/cutoff = 1.0
+shader_param/transition = ExtResource( 2 )
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fadein"
@@ -31,6 +49,21 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "Transition"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
 [node name="Controller" type="Node"]
 script = ExtResource( 1 )
 
@@ -45,7 +78,18 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Transition" type="ColorRect" parent="CanvasLayer"]
+visible = false
+material = SubResource( 4 )
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fadein = SubResource( 1 )
 anims/Fadeout = SubResource( 2 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+anims/Transition = SubResource( 5 )
 

@@ -46,12 +46,11 @@ use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 11 )
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=7]
 size = 200
 font_data = ExtResource( 17 )
 
-[sub_resource type="Animation" id=7]
-resource_name = "Hide UI"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Healthbar:position")
 tracks/0/interp = 2
@@ -149,8 +148,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1055, 90 ), Vector2( 1055, -140 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Hide UI Min"
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:position")
 tracks/0/interp = 2
@@ -200,7 +198,7 @@ tracks/3/keys = {
 "values": [ Vector2( 125, 658 ), Vector2( 125, 905 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Healthbar:position")
 tracks/0/interp = 2
@@ -298,8 +296,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1055, -140 ), Vector2( 1055, 90 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "Show UI Min"
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:position")
 tracks/0/interp = 2
@@ -349,7 +346,7 @@ tracks/3/keys = {
 "values": [ Vector2( 125, 905 ), Vector2( 125, 658 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("DrawButton:rotation_degrees")
@@ -364,8 +361,7 @@ tracks/0/keys = {
 "values": [ 0.0, 10.0, -12.0, 10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "Pass Hover"
+[sub_resource type="Animation" id=13]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("PassButton:rotation_degrees")
@@ -380,7 +376,7 @@ tracks/0/keys = {
 "values": [ 0.0, 10.0, -12.0, 10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Six:position")
 tracks/0/interp = 2
@@ -454,7 +450,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Six:position")
 tracks/0/interp = 2
@@ -528,7 +524,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.392157 ) ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 length = 2.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:scale")
@@ -567,7 +563,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:rotation_degrees")
@@ -805,33 +801,33 @@ margin_top = 250.0
 margin_right = 1050.0
 margin_bottom = 400.0
 rect_scale = Vector2( 0.8, 0.8 )
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 7 )
 text = "VICTORY"
 align = 1
 
 [node name="AnimationPlayerUI" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Hide UI" = SubResource( 7 )
-"anims/Hide UI Min" = SubResource( 8 )
-"anims/Show UI" = SubResource( 9 )
-"anims/Show UI Min" = SubResource( 10 )
+"anims/Hide UI" = SubResource( 8 )
+"anims/Hide UI Min" = SubResource( 9 )
+"anims/Show UI" = SubResource( 10 )
+"anims/Show UI Min" = SubResource( 11 )
 
 [node name="AnimationPlayerDraw" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Draw Hover" = SubResource( 11 )
+"anims/Draw Hover" = SubResource( 12 )
 
 [node name="AnimationPlayerPass" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Pass Hover" = SubResource( 12 )
+"anims/Pass Hover" = SubResource( 13 )
 
 [node name="AnimationPlayerSixfive" type="AnimationPlayer" parent="."]
-"anims/Switch to Five" = SubResource( 13 )
-"anims/Switch to Six" = SubResource( 14 )
+"anims/Switch to Five" = SubResource( 14 )
+"anims/Switch to Six" = SubResource( 15 )
 
 [node name="AnimationPlayerJoker" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Flip Joker" = SubResource( 15 )
-"anims/Joker Hover" = SubResource( 16 )
+"anims/Flip Joker" = SubResource( 16 )
+"anims/Joker Hover" = SubResource( 17 )
 
 [node name="AnimationPlayerVictory" type="AnimationPlayer" parent="."]
 "anims/Victory Appear" = SubResource( 18 )

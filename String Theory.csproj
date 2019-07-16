@@ -54,12 +54,15 @@
     <Compile Include="Scripts\Battle\BattleUI.cs" />
     <Compile Include="Scripts\Battle\Card.cs" />
     <Compile Include="Scripts\Battle\Enemies\EnemyBlob.cs" />
+    <Compile Include="Scripts\Battle\Enemies\EnemyTensor.cs" />
     <Compile Include="Scripts\Battle\Enemy.cs" />
     <Compile Include="Scripts\Dialogue.cs" />
     <Compile Include="Scripts\Door.cs" />
+    <Compile Include="Scripts\FieldEnemy.cs" />
     <Compile Include="Scripts\Globals\Controller.cs" />
     <Compile Include="Scripts\Globals\MainCamera.cs" />
     <Compile Include="Scripts\Globals\Player.cs" />
+    <Compile Include="Scripts\LoadingZone.cs" />
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Utility\FollowCursor.cs" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Textures/Props/Wall.png" type="Texture" id=1]
 [ext_resource path="res://Textures/Props/RoofBorder.png" type="Texture" id=2]
@@ -6,21 +6,22 @@
 [ext_resource path="res://Textures/Props/Door.png" type="Texture" id=4]
 [ext_resource path="res://Instances/Door.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Audio/Door.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Instances/LoadingZone.tscn" type="PackedScene" id=7]
 
-[sub_resource type="Environment" id=5]
+[sub_resource type="Environment" id=4]
 background_mode = 1
 fog_sun_color = Color( 0, 0, 0, 1 )
 glow_strength = 2.0
 adjustment_enabled = true
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.203922, 0.168627, 0.34902, 1 )
 
-[sub_resource type="SpatialMaterial" id=44]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( -1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=45]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_texture = ExtResource( 2 )
 uv1_scale = Vector3( 10, 1, 1 )
 
@@ -39,20 +40,20 @@ uv1_offset = Vector3( 0, -0.01, 0 )
 [sub_resource type="BoxShape" id=10]
 extents = Vector3( 0.157627, 0.418401, 0.267439 )
 
-[sub_resource type="SpatialMaterial" id=39]
+[sub_resource type="SpatialMaterial" id=11]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 albedo_color = Color( 1, 0.878431, 0.619608, 1 )
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=12]
 offsets = PoolRealArray( 0, 0.508197, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 11 )
+[sub_resource type="GradientTexture" id=13]
+gradient = SubResource( 12 )
 
-[sub_resource type="ParticlesMaterial" id=40]
+[sub_resource type="ParticlesMaterial" id=14]
 emission_shape = 2
 emission_box_extents = Vector3( 2, 2, 2 )
 spread = 180.0
@@ -61,15 +62,15 @@ initial_velocity = 0.5
 initial_velocity_random = 0.25
 scale = 0.01
 scale_random = 0.3
-color_ramp = SubResource( 12 )
+color_ramp = SubResource( 13 )
 
-[sub_resource type="QuadMesh" id=41]
+[sub_resource type="QuadMesh" id=15]
 size = Vector2( 0.5, 0.5 )
 
-[sub_resource type="SpatialMaterial" id=42]
+[sub_resource type="SpatialMaterial" id=16]
 albedo_color = Color( 0.643137, 0.643137, 0.643137, 1 )
 
-[sub_resource type="SpatialMaterial" id=43]
+[sub_resource type="SpatialMaterial" id=17]
 albedo_color = Color( 0.721569, 0.721569, 0.721569, 1 )
 emission_enabled = true
 emission = Color( 1, 0.74902, 0, 1 )
@@ -77,20 +78,23 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="SpatialMaterial" id=37]
+[sub_resource type="SpatialMaterial" id=18]
 emission_enabled = true
 emission = Color( 1, 1, 1, 1 )
 emission_energy = 0.75
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="SpatialMaterial" id=38]
+[sub_resource type="SpatialMaterial" id=19]
 albedo_color = Color( 0.517647, 0, 0.168627, 1 )
+
+[sub_resource type="BoxShape" id=20]
+extents = Vector3( 0.5, 2, 0.4 )
 
 [node name="Scene" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 5 )
+environment = SubResource( 4 )
 
 [node name="Walls" type="CSGCombiner" parent="."]
 use_collision = true
@@ -99,14 +103,14 @@ use_collision = true
 width = 7.0
 height = 0.3
 depth = 4.0
-material = SubResource( 6 )
+material = SubResource( 3 )
 
 [node name="CSGBox2" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
 width = 1.0
 height = 0.3
 depth = 0.75
-material = SubResource( 6 )
+material = SubResource( 3 )
 
 [node name="House" type="CSGCombiner" parent="."]
 use_collision = true
@@ -115,14 +119,14 @@ use_collision = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.804689, -0.5 )
 width = 3.5
 height = 1.4
-material = SubResource( 44 )
+material = SubResource( 5 )
 
 [node name="CSGBox2" type="CSGBox" parent="House"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.30469, -0.526018 )
 width = 3.74906
 height = 0.15
 depth = 2.35463
-material = SubResource( 45 )
+material = SubResource( 6 )
 
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.632287, 0.774734, 0, -0.774734, 0.632287, 0, 2.16012, 2.29462 )
@@ -175,11 +179,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.55651e-006, 0, 0 )
 shape = SubResource( 10 )
 
 [node name="Particles" type="Particles" parent="."]
-material_override = SubResource( 39 )
+material_override = SubResource( 11 )
 amount = 12
 lifetime = 3.0
-process_material = SubResource( 40 )
-draw_pass_1 = SubResource( 41 )
+process_material = SubResource( 14 )
+draw_pass_1 = SubResource( 15 )
 
 [node name="Window" type="CSGCombiner" parent="."]
 editor/display_folded = true
@@ -189,49 +193,49 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox2" type="CSGBox" parent="Window"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox3" type="CSGBox" parent="Window"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.400276, 0.920021, 0.5 )
 width = 0.0602187
 height = 0.459334
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox4" type="CSGBox" parent="Window"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.400276, 0.47996, 0.5 )
 width = 0.0602187
 height = 0.459334
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox5" type="CSGBox" parent="Window"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox6" type="CSGBox" parent="Window"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.4, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox7" type="CSGBox" parent="Window"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.4, 0.7, 0.482802 )
 width = 0.390237
 height = 0.38
 depth = 0.0350854
-material = SubResource( 43 )
+material = SubResource( 17 )
 
 [node name="Window2" type="CSGCombiner" parent="."]
 editor/display_folded = true
@@ -242,49 +246,49 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox2" type="CSGBox" parent="Window2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox3" type="CSGBox" parent="Window2"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.400276, 0.920021, 0.5 )
 width = 0.0602187
 height = 0.459334
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox4" type="CSGBox" parent="Window2"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.400276, 0.47996, 0.5 )
 width = 0.0602187
 height = 0.459334
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox5" type="CSGBox" parent="Window2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox6" type="CSGBox" parent="Window2"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.4, 0.7, 0.5 )
 width = 0.0602187
 height = 0.38
 depth = 0.0350854
-material = SubResource( 42 )
+material = SubResource( 16 )
 
 [node name="CSGBox7" type="CSGBox" parent="Window2"]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, -0.4, 0.7, 0.482802 )
 width = 0.390237
 height = 0.38
 depth = 0.0350854
-material = SubResource( 43 )
+material = SubResource( 17 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.7, 0.6 )
@@ -305,14 +309,14 @@ use_collision = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0528393, 0 )
 radius = 0.07
 rings = 12
-material = SubResource( 37 )
+material = SubResource( 18 )
 
 [node name="CSGBox" type="CSGBox" parent="Lamp2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0364322, 0 )
 width = 0.03
 height = 0.15
 depth = 0.03
-material = SubResource( 38 )
+material = SubResource( 19 )
 
 [node name="Lamp3" type="CSGCombiner" parent="."]
 editor/display_folded = true
@@ -323,14 +327,14 @@ use_collision = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0528393, 0 )
 radius = 0.07
 rings = 12
-material = SubResource( 37 )
+material = SubResource( 18 )
 
 [node name="CSGBox" type="CSGBox" parent="Lamp3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0364322, 0 )
 width = 0.03
 height = 0.15
 depth = 0.03
-material = SubResource( 38 )
+material = SubResource( 19 )
 
 [node name="OmniLight3" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.932451, 0.89834, 0.14494 )
@@ -340,5 +344,14 @@ omni_range = 2.1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.932451, 0.89834, -1.05506 )
 omni_range = 2.1122
 
+[node name="LoadingZone" parent="." instance=ExtResource( 7 )]
+targetScene = "res://Scenes/Path2.tscn"
+targetPosition = Vector3( -5.762, 0.4, 0 )
+
+[node name="CollisionShape" parent="LoadingZone" index="0"]
+shape = SubResource( 20 )
+
 
 [editable path="DoorArea"]
+
+[editable path="LoadingZone"]

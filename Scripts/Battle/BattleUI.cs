@@ -38,7 +38,7 @@ public class BattleUI : Node2D
 	[Export]
 	private AudioStream soundPassClick;
 	
-	public enum Opponent { Blob };
+	public enum Opponent { Blob, Tensor, Magma };
 	private Opponent currentOpponent;
 	private int enemyAttackIndex;
 
@@ -151,6 +151,7 @@ public class BattleUI : Node2D
 	private PackedScene partsAttackRef = GD.Load<PackedScene>("res://Instances/Particles/PartsAttack.tscn");
 
 	private PackedScene enemyBlob = GD.Load<PackedScene>("res://Instances/Enemies/EnemyBlob.tscn");
+	private PackedScene enemyTensor = GD.Load<PackedScene>("res://Instances/Enemies/EnemyTensor.tscn");
 
 	// ================================================================
 
@@ -158,6 +159,7 @@ public class BattleUI : Node2D
 	public static int PlayerMP { get => BattleUI.singleton.playerMP; set => BattleUI.singleton.playerMP = value; }
 	public static bool Five { get => BattleUI.singleton.five; }
 	public static int HandSize { get => BattleUI.singleton.handSize; set => BattleUI.singleton.handSize = value; }
+	public static bool BattleMode { get => BattleUI.singleton.battleMode; }
 	//public static bool UiVisible { get => BattleUI.singleton.uiVisible; }
 
 	// ================================================================
@@ -302,6 +304,16 @@ public class BattleUI : Node2D
 			case Opponent.Blob:
 			{
 				var e = (EnemyBlob)BattleUI.singleton.enemyBlob.Instance();
+				e.Initialize();
+				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
+				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
+				BattleUI.singleton.enemyRef = e;
+				break;
+			}
+
+			case Opponent.Tensor:
+			{
+				var e = (EnemyTensor)BattleUI.singleton.enemyTensor.Instance();
 				e.Initialize();
 				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
 				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
