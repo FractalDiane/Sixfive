@@ -4,6 +4,9 @@ using System;
 
 public class NPC : KinematicBody
 {
+	[Signal]
+	public delegate void dialogue_ended();
+
 	[Export]
 	private bool isObject = false;
 
@@ -68,6 +71,8 @@ public class NPC : KinematicBody
 
 	private void DialogueEnd()
 	{
+		EmitSignal(nameof(dialogue_ended));
+		
 		if (advanceSet)
 			dialogueSet = Mathf.Min(++dialogueSet, maxSet);
 

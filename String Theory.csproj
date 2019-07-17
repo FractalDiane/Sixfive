@@ -64,6 +64,7 @@
     <Compile Include="Scripts\Globals\Player.cs" />
     <Compile Include="Scripts\LoadingZone.cs" />
     <Compile Include="Scripts\NPC.cs" />
+    <Compile Include="Scripts\Scenes\LippoHouse.cs" />
     <Compile Include="Scripts\Utility\FollowCursor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -57,6 +57,18 @@ public class Controller : Node
 
 	// ================================================================
 
+	public static void SetFlag(string flag, int value)
+	{
+		Controller.singleton.flag[flag] = value;
+	}
+
+
+	public static int Flag(string flag)
+	{
+		return Controller.singleton.flag[flag];
+	}
+	
+
 	public static void PlaySoundBurst(AudioStream sound, float volume = 0f, float pitch = 1f)
 	{
 		var sb = (AudioStreamPlayer)Controller.singleton.soundBurstRef.Instance();

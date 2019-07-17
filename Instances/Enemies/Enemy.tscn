@@ -1,8 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Battle/Enemy.cs" type="Script" id=1]
+[ext_resource path="res://Audio/Poof.ogg" type="AudioStream" id=2]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "Die"
 length = 1.5
 tracks/0/type = "value"
@@ -32,6 +33,7 @@ tracks/1/keys = {
 
 [node name="Enemy" type="KinematicBody"]
 script = ExtResource( 1 )
+deathSound = ExtResource( 2 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 shaded = true
@@ -39,9 +41,14 @@ shaded = true
 [node name="CollisionShape" type="CollisionShape" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Die = SubResource( 2 )
+anims/Die = SubResource( 1 )
 
 [node name="TimerDie" type="Timer" parent="."]
 one_shot = true
 
+[node name="TimerDie2" type="Timer" parent="."]
+wait_time = 1.1
+one_shot = true
+
 [connection signal="timeout" from="TimerDie" to="." method="Die2"]
+[connection signal="timeout" from="TimerDie2" to="." method="Die2"]

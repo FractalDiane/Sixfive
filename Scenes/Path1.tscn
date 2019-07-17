@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Textures/Props/Wall.png" type="Texture" id=1]
 [ext_resource path="res://Textures/Props/RoofBorder.png" type="Texture" id=2]
@@ -63,6 +63,7 @@ spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.5
 initial_velocity_random = 0.25
+angular_velocity = -0.00905867
 scale = 0.01
 scale_random = 0.3
 color_ramp = SubResource( 11 )
@@ -94,16 +95,19 @@ albedo_color = Color( 0.517647, 0, 0.168627, 1 )
 [sub_resource type="BoxShape" id=18]
 extents = Vector3( 0.5, 2, 0.4 )
 
+[sub_resource type="BoxShape" id=26]
+extents = Vector3( 0.214413, 1, 0.174315 )
+
 [sub_resource type="SpatialMaterial" id=19]
 albedo_color = Color( 0.364706, 0.305882, 0.266667, 1 )
 
-[sub_resource type="BoxShape" id=21]
+[sub_resource type="BoxShape" id=20]
 extents = Vector3( 3.5, 1, 1 )
 
-[sub_resource type="BoxShape" id=22]
+[sub_resource type="BoxShape" id=21]
 extents = Vector3( 2, 1, 1 )
 
-[sub_resource type="SpriteFrames" id=23]
+[sub_resource type="SpriteFrames" id=22]
 animations = [ {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
@@ -111,7 +115,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="BoxShape" id=26]
+[sub_resource type="BoxShape" id=23]
 extents = Vector3( 0.179406, 0.153031, 0.0331052 )
 
 [sub_resource type="BoxShape" id=24]
@@ -387,6 +391,10 @@ neutralArea = true
 dialogue = [ PoolStringArray( "Are you a lowly prince who’s forgotten the basics of interdimensional combat\? Just follow these signs!", "Every self-respecting prince carries around a deck of cards, and each suit does something different.", "Spades deal damage to the enemy.                 Clubs increase your defense.                Hearts heal you.                         Diamonds... Who knows\? They\'re wild cards.", "The number on the face of a card shows how effective it’ll be." ) ]
 advanceSet = false
 
+[node name="CollisionShape" parent="NPC/InteractionArea" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2 )
+shape = SubResource( 26 )
+
 [node name="Sign" type="CSGCombiner" parent="NPC"]
 use_collision = true
 
@@ -408,23 +416,23 @@ material = SubResource( 19 )
 
 [node name="CollisionShape" type="CollisionShape" parent="WallsColl"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
-shape = SubResource( 21 )
+shape = SubResource( 20 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="WallsColl"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
-shape = SubResource( 21 )
+shape = SubResource( 20 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="WallsColl"]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -4.5, 0, -1.5 )
-shape = SubResource( 21 )
+shape = SubResource( 20 )
 
 [node name="CollisionShape4" type="CollisionShape" parent="WallsColl"]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 4.5, 0, 2.4 )
-shape = SubResource( 22 )
+shape = SubResource( 21 )
 
 [node name="CollisionShape5" type="CollisionShape" parent="WallsColl"]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 4.5, 0, -2.4 )
-shape = SubResource( 22 )
+shape = SubResource( 21 )
 
 [node name="FieldEnemy" parent="." instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 0.269099, 0 )
@@ -432,11 +440,11 @@ speed = 0.5
 enemy = 1
 
 [node name="Sprite" parent="FieldEnemy" index="0"]
-frames = SubResource( 23 )
+frames = SubResource( 22 )
 
 [node name="CollisionShape" parent="FieldEnemy" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0341795, 0 )
-shape = SubResource( 26 )
+shape = SubResource( 23 )
 
 [node name="CollisionShape" parent="FieldEnemy/VisionArea" index="0"]
 shape = SubResource( 24 )
