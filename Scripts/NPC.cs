@@ -8,6 +8,9 @@ public class NPC : KinematicBody
 	private bool isObject = false;
 
 	[Export]
+	private bool neutralArea = false;
+
+	[Export]
 	private Godot.Collections.Array<string[]> dialogue;
 
 	[Export]
@@ -43,7 +46,7 @@ public class NPC : KinematicBody
 
 	private void SightEntered(Area area)
 	{
-		if (area.IsInGroup("PlayerSight"))
+		if ((area.IsInGroup("PlayerSight") && !neutralArea) || (area.IsInGroup("PlayerBody") && neutralArea))
 		{
 			inArea = true;
 			if (isObject)
@@ -54,7 +57,7 @@ public class NPC : KinematicBody
 
 	private void SightExited(Area area)
 	{
-		if (area.IsInGroup("PlayerSight"))
+		if ((area.IsInGroup("PlayerSight") && !neutralArea) || (area.IsInGroup("PlayerBody") && neutralArea))
 		{
 			inArea = false;
 			if (isObject)

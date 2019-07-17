@@ -289,7 +289,7 @@ public class Player : KinematicBody
 
 	private void ShowUI()
 	{
-		if (!BattleUI.BattleMode)
+		if (!BattleUI.BattleMode && state == ST.Move)
 			BattleUI.ShowUI(true);
 	}
 }

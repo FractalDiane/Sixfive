@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
-[ext_resource path="res://Textures/Transition.png" type="Texture" id=2]
+[ext_resource path="res://Textures/Transition 3.png" type="Texture" id=2]
+[ext_resource path="res://Audio/Transition.ogg" type="AudioStream" id=3]
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -15,13 +16,12 @@ void fragment() {
 	COLOR = value < cutoff ? vec4(COLOR.rgb, 0) : vec4(COLOR.rgb, 1);
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
-shader_param/cutoff = 1.0
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/cutoff = 0.0
 shader_param/transition = ExtResource( 2 )
 
-[sub_resource type="Animation" id=1]
-resource_name = "Fadein"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
 tracks/0/interp = 1
@@ -35,7 +35,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
 tracks/0/interp = 1
@@ -51,6 +51,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "Transition"
+length = 3.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Transition:material:shader_param/cutoff")
 tracks/0/interp = 1
@@ -62,6 +63,54 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/Transition:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 0.00306476, 1 ),
+"update": 1,
+"values": [ Color( 0.211765, 0, 0, 1 ), Color( 1, 1, 1, 0.923076 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer/Transition2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.1, 1.6, 3.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CanvasLayer/Transition2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CanvasLayer/Transition:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [node name="Controller" type="Node"]
@@ -80,16 +129,27 @@ __meta__ = {
 
 [node name="Transition" type="ColorRect" parent="CanvasLayer"]
 visible = false
-material = SubResource( 4 )
+material = SubResource( 2 )
 margin_right = 1280.0
 margin_bottom = 720.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
+color = Color( 1, 1, 1, 0.923076 )
+
+[node name="Transition2" type="ColorRect" parent="CanvasLayer"]
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 2
+color = Color( 1, 1, 1, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Fadein = SubResource( 1 )
-anims/Fadeout = SubResource( 2 )
+anims/Fadein = SubResource( 3 )
+anims/Fadeout = SubResource( 4 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 anims/Transition = SubResource( 5 )
+
+[node name="SoundTransition" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
 

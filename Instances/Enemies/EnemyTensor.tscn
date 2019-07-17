@@ -1,14 +1,20 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Instances/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Battle/Enemies/EnemyTensor.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/Characters/Tensor/Tensor.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Tensor/Tensor_hurt.png" type="Texture" id=4]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "hurt",
 "speed": 5.0
 } ]
 
@@ -19,7 +25,8 @@ extents = Vector3( 0.184867, 0.140005, 0.0365649 )
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite3D" parent="." index="0"]
-frames = SubResource( 3 )
+frames = SubResource( 1 )
+animation = "idle"
 
 [node name="CollisionShape" parent="." index="1"]
 shape = SubResource( 2 )

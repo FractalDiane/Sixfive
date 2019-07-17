@@ -48,7 +48,9 @@ texture = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0 )
 shape = SubResource( 1 )
 
-[node name="Body" type="Area" parent="."]
+[node name="Body" type="Area" parent="." groups=[
+"PlayerBody",
+]]
 
 [node name="CollisionShape" type="CollisionShape" parent="Body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0 )

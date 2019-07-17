@@ -59,7 +59,6 @@ public class FieldEnemy : KinematicBody
 
 	private void Stop()
 	{
-		GD.Print("TEST");
 		vel = Vector3.Zero;
 		timerMove.WaitTime = (float)GD.RandRange(1.5, 4);
 		timerMove.Start();
@@ -68,7 +67,7 @@ public class FieldEnemy : KinematicBody
 
 	private void VisionAreaEntered(Node body)
 	{
-		if (body.IsInGroup("Player"))
+		if (body.IsInGroup("Player")  && Player.State == Player.ST.Move)
 			alert = true;
 	}
 
@@ -82,9 +81,9 @@ public class FieldEnemy : KinematicBody
 
 	private void EncounterAreaEntered(Node body)
 	{
-		if (body.IsInGroup("Player"))
+		if (body.IsInGroup("Player") && Player.State == Player.ST.Move)
 		{
-			BattleUI.BattleStart(enemy);
+			BattleUI.BattleStart(enemy, true, this);
 		}
 	}
 }

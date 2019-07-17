@@ -37,6 +37,9 @@ public class BattleUI : Node2D
 
 	[Export]
 	private AudioStream soundPassClick;
+
+	[Export]
+	private AudioStream battleMusic;
 	
 	public enum Opponent { Blob, Tensor, Magma };
 	private Opponent currentOpponent;
@@ -116,6 +119,7 @@ public class BattleUI : Node2D
 	private bool jokerThisTurn = false;
 
 	private bool victory = false;
+	private bool afterVictory = false;
 	private bool gameover = false;
 
 	// Refs
@@ -266,16 +270,18 @@ public class BattleUI : Node2D
 		{
 			enemyHpLabel.Text = enemyRef.Hp.ToString();
 
-			if (victory && (Input.IsActionJustPressed("click_left" ) || Input.IsActionJustPressed("action") || Input.IsActionJustPressed("move_jump")))
+			if (victory && !afterVictory && (Input.IsActionJustPressed("click_left" ) || Input.IsActionJustPressed("action") || Input.IsActionJustPressed("move_jump")))
 			{
 				animPlayerVictory.Play("Victory Fade");
 				timerEndBattle.Start();
+				afterVictory = true;
 			}
 		}
 			
 
 		if (Input.IsActionJustPressed("debug_1"))
-			BattleStart(Opponent.Blob);
+			//BattleStart(Opponent.Blob);
+			Controller.Transition();
 
 		if (Input.IsActionJustPressed("debug_2"))
 			DeallocateCards();
@@ -286,44 +292,21 @@ public class BattleUI : Node2D
 
 	// ================================================================
 
-	public static void BattleStart(Opponent opponent)
+	public static void BattleStart(Opponent opponent, bool onField, FieldEnemy targetEnemy = null)
 	{
 		Controller.PreBattlePosition = Player.singleton.Translation;
 		Controller.PreBattleFace = new Vector2(1, 1);
 		Controller.PreBattleScene = BattleUI.singleton.GetTree().CurrentScene.Filename;
+		if (onField)
+			Controller.PreBattleEnemy = targetEnemy.GetPath().ToString().Substring(6);
 
 		Player.State = Player.ST.Battle;
-		PlayerMP = Mathf.FloorToInt((float)BattleUI.singleton.playerMPCap / 2f);
-		Controller.GotoScene(BATTLE_SCENE);
-		Player.singleton.Translation = new Vector3(0, 0.35f, 0);
 		Player.Vel = Vector3.Zero;
+
 		BattleUI.singleton.currentOpponent = opponent;
 
-		switch (opponent)
-		{
-			case Opponent.Blob:
-			{
-				var e = (EnemyBlob)BattleUI.singleton.enemyBlob.Instance();
-				e.Initialize();
-				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
-				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
-				BattleUI.singleton.enemyRef = e;
-				break;
-			}
-
-			case Opponent.Tensor:
-			{
-				var e = (EnemyTensor)BattleUI.singleton.enemyTensor.Instance();
-				e.Initialize();
-				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
-				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
-				BattleUI.singleton.enemyRef = e;
-				break;
-			}
-		}
-
-		BattleUI.singleton.battleMode = true;
-		BattleUI.singleton.timerSetup.Start();
+		Controller.Transition();
+		BattleUI.singleton.GetNode<Timer>("TimerBattleTransition").Start();
 	}
 
 
@@ -383,13 +366,19 @@ public class BattleUI : Node2D
 				BattleUI.singleton.enemyRef.Hp = Mathf.Max(BattleUI.singleton.enemyRef.Hp - number, 0);
 				BattleUI.singleton.SpawnParticles(BattleUI.singleton.partsAttackRef, BattleUI.singleton.enemyRef.Translation);
 				BattleUI.singleton.SpawnDamageNumber(number, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(BattleUI.singleton.enemyRef.Translation).x, 400), false);
+				BattleUI.singleton.enemyRef.PlayAnimation("hurt");
+				
 				if (BattleUI.singleton.enemyRef.Hp <= 0)
 				{
-					BattleUI.singleton.Victory();
+					BattleUI.singleton.GetNode<Timer>("TimerEnemyDie").Start();
+					//BattleUI.singleton.victory = true;
 				}
-
-				if (!BattleUI.singleton.victory)
+				else
+				{
+					BattleUI.singleton.GetNode<Timer>("TimerEnemyHurt").Start();
 					BattleUI.singleton.timerEndPlayerTurn.Start();
+				}
+					
 				break;
 			}
 
@@ -418,6 +407,40 @@ public class BattleUI : Node2D
 	}
 
 	// ================================================================
+
+	private void BattleStart2()
+	{
+		Controller.PlayMusic(battleMusic);
+		PlayerMP = Mathf.FloorToInt((float)BattleUI.singleton.playerMPCap / 2f);
+		Controller.GotoScene(BATTLE_SCENE);
+		Player.singleton.Translation = new Vector3(0, 0.35f, 0);
+		
+		switch (currentOpponent)
+		{
+			case Opponent.Blob:
+			{
+				var e = (EnemyBlob)BattleUI.singleton.enemyBlob.Instance();
+				e.Initialize();
+				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
+				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
+				BattleUI.singleton.enemyRef = e;
+				break;
+			}
+
+			case Opponent.Tensor:
+			{
+				var e = (EnemyTensor)BattleUI.singleton.enemyTensor.Instance();
+				e.Initialize();
+				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
+				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
+				BattleUI.singleton.enemyRef = e;
+				break;
+			}
+		}
+
+		BattleUI.singleton.battleMode = true;
+		BattleUI.singleton.timerSetup.Start();
+	}
 
 	private void BattleSetup()
 	{
@@ -674,6 +697,7 @@ public class BattleUI : Node2D
 	{
 		enemyRef.QueueFree();
 		victory = false;
+		afterVictory = false;
 		ShowUI(false);
 		Controller.GotoScene(Controller.PreBattleScene);
 		Player.singleton.Translation = Controller.PreBattlePosition;
@@ -682,6 +706,7 @@ public class BattleUI : Node2D
 		Player.State = Player.ST.Move;
 		battleMode = false;
 		Controller.Fade(false, 0.5f);
+		GetNode<Timer>("TimerDestroyFieldEnemy").Start();
 	}
 
 
@@ -696,5 +721,28 @@ public class BattleUI : Node2D
 	{
 		Controller.GotoScene("res://Scenes/GameOver.tscn");
 		Controller.Fade(false, 1.5f);
+	}
+
+
+	private void EnemyHurtEnd()
+	{
+		enemyRef.PlayAnimation("idle");
+	}
+
+
+	private void EnemyDie()
+	{
+		enemyRef.Die();
+		GetNode<Timer>("TimerVictory").Start();
+	}
+
+
+	private void DestroyFieldEnemy()
+	{
+		if (Controller.PreBattleEnemy != null)
+		{
+			GetTree().GetRoot().GetNode<FieldEnemy>(Controller.PreBattleEnemy).QueueFree();
+			Controller.PreBattleEnemy = null;
+		}
 	}
 }

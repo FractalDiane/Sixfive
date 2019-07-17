@@ -15,9 +15,6 @@ public class Enemy : KinematicBody
 
 	private const float GRAVITY = -0.2f;
 
-	// Refs
-	private Particles partsAttack;
-
 	// ================================================================
 
 	public int Hp { get => hp; set => hp = value; }
@@ -26,7 +23,7 @@ public class Enemy : KinematicBody
 	
 	public override void _Ready()
 	{
-		partsAttack = GetNode<Particles>("PartsAttack");
+
 	}
 
 
@@ -42,5 +39,25 @@ public class Enemy : KinematicBody
 	public void Initialize()
 	{
 		hp = maxHP;
+	}
+
+
+	public void PlayAnimation(string animation)
+	{
+		GetNode<AnimatedSprite3D>("AnimatedSprite3D").Play(animation);
+	}
+
+
+	public void Die()
+	{
+		GetNode<AnimationPlayer>("AnimationPlayer").Play("Die");
+	}
+
+	// ================================================================
+
+	private void Die2()
+	{
+		// play sound
+		
 	}
 }

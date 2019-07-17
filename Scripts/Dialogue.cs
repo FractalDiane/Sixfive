@@ -84,9 +84,7 @@ public class Dialogue : Sprite
 		GetNode<AnimationPlayer>("AnimationPlayer").Play("Appear");
 
 		active = true;
-		GD.Print("TEST");
 		GetNode<Timer>("TimerStartRoll").Start();
-		GD.Print("TEST 2");
 	}
 
 
@@ -134,19 +132,11 @@ public class Dialogue : Sprite
 
 	private void StartRoll()
 	{
-		GD.Print("TEST 3");
 		timerRollText.WaitTime = interval;
 		timerRollText.Start();
 		// target start talking
 		roll = true;
 	}
-
-
-	private void Test()
-	{
-		GD.Print("TEST 3");
-	}
-
 
 	private void RollText()
 	{

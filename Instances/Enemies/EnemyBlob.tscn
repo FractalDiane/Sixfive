@@ -21,7 +21,9 @@ name = "Dark Blob"
 maxHP = 10
 
 [node name="AnimatedSprite3D" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 frames = SubResource( 1 )
+animation = "idle"
 
 [node name="CollisionShape" parent="." index="1"]
 shape = SubResource( 2 )

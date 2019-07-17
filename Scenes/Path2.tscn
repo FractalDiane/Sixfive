@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Instances/FieldEnemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Characters/Tensor/Tensor.png" type="Texture" id=2]
+[ext_resource path="res://Instances/LoadingZone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -38,7 +40,6 @@ spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.5
 initial_velocity_random = 0.25
-angular_velocity = 0.0
 scale = 0.01
 scale_random = 0.3
 color_ramp = SubResource( 7 )
@@ -46,7 +47,7 @@ color_ramp = SubResource( 7 )
 [sub_resource type="QuadMesh" id=9]
 size = Vector2( 0.5, 0.5 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="SpriteFrames" id=23]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
@@ -73,6 +74,15 @@ extents = Vector3( 1.87366, 1, 1 )
 
 [sub_resource type="BoxShape" id=17]
 extents = Vector3( 2.5266, 1, 1 )
+
+[sub_resource type="BoxShape" id=18]
+extents = Vector3( 0.5, 2, 0.4 )
+
+[sub_resource type="BoxShape" id=20]
+extents = Vector3( 0.185041, 1, 0.181533 )
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_color = Color( 0.364706, 0.305882, 0.266667, 1 )
 
 [node name="Scene" type="Spatial"]
 
@@ -207,7 +217,7 @@ enemy = 1
 
 [node name="Sprite" parent="FieldEnemy" index="0"]
 shaded = true
-frames = SubResource( 10 )
+frames = SubResource( 23 )
 
 [node name="CollisionShape" parent="FieldEnemy" index="1"]
 shape = SubResource( 11 )
@@ -242,5 +252,55 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25002, -6.90672 )
 [node name="OmniLight2" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25002, -3.55744 )
 
+[node name="LoadingZone" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.46322, 0, 0 )
+targetScene = "res://Scenes/Path1.tscn"
+targetPosition = Vector3( 3.2, 0.4, 0 )
+
+[node name="CollisionShape" parent="LoadingZone" index="0"]
+shape = SubResource( 18 )
+
+[node name="LoadingZone2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49716, 0, -0.331106 )
+targetScene = "res://Scenes/Path3.tscn"
+targetPosition = Vector3( -1.5, 0.4, 5 )
+
+[node name="CollisionShape" parent="LoadingZone2" index="0"]
+shape = SubResource( 18 )
+
+[node name="NPC" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.48978, -5.96046e-008, -1.26957 )
+isObject = true
+neutralArea = true
+dialogue = [ PoolStringArray( "Ever find yourself in the wrong dimension for the cards you want to use\?", "Use your joker token to swap dimensions instantly!", "Just remember you can only use it once per battle.", "Maybe you\'ll find more of them in the future..." ) ]
+advanceSet = false
+
+[node name="CollisionShape" parent="NPC/InteractionArea" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.202118 )
+shape = SubResource( 20 )
+
+[node name="Sign" type="CSGCombiner" parent="NPC"]
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="NPC/Sign"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593956, 0 )
+width = 0.5
+height = 0.25
+depth = 0.05
+material = SubResource( 19 )
+
+[node name="CSGBox2" type="CSGBox" parent="NPC/Sign"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.311628, 0 )
+width = 0.043145
+height = 0.413574
+depth = 0.05
+material = SubResource( 19 )
+
 
 [editable path="FieldEnemy"]
+
+[editable path="LoadingZone"]
+
+[editable path="LoadingZone2"]
+
+[editable path="NPC"]

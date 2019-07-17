@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+fog_sun_color = Color( 0, 0, 0, 1 )
+glow_strength = 2.0
+adjustment_enabled = true
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.203922, 0.168627, 0.34902, 1 )
+
+[node name="Scene" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Walls" type="CSGCombiner" parent="."]
+
+[node name="CSGBox" type="CSGBox" parent="Walls"]
+width = 12.0
+height = 0.3
+depth = 8.0
+material = SubResource( 2 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.632287, 0.774734, 0, -0.774734, 0.632287, 0, 4.70831, 4.37428 )
+light_energy = 2.0
+shadow_enabled = true
+shadow_bias = 0.2
+spot_range = 12.3
+spot_angle = 95.0
+spot_angle_attenuation = 0.554785
+
