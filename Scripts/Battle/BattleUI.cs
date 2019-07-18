@@ -64,6 +64,9 @@ public class BattleUI : Node2D
 
 	public enum Suit { Spade, Club, Heart, Diamond };
 
+	private Suit currentAttackSuit;
+	private int currentAttackNumber;
+
 	private struct CardStruct
 	{
 		public CardStruct(Suit suit, int number, int manaCost)
@@ -156,6 +159,9 @@ public class BattleUI : Node2D
 
 	private PackedScene enemyBlob = GD.Load<PackedScene>("res://Instances/Enemies/EnemyBlob.tscn");
 	private PackedScene enemyTensor = GD.Load<PackedScene>("res://Instances/Enemies/EnemyTensor.tscn");
+
+	// Animation paths
+	private const string PATH_SPADES1 = "res://Instances/Attack Animations/AnimSpades1.tscn";
 
 	// ================================================================
 
@@ -359,51 +365,9 @@ public class BattleUI : Node2D
 
 		BattleUI.singleton.ShowUIMin(false);
 
-		switch (suit)
-		{
-			case Suit.Spade: // Attack
-			{
-				BattleUI.singleton.enemyRef.Hp = Mathf.Max(BattleUI.singleton.enemyRef.Hp - number, 0);
-				BattleUI.singleton.SpawnParticles(BattleUI.singleton.partsAttackRef, BattleUI.singleton.enemyRef.Translation);
-				BattleUI.singleton.SpawnDamageNumber(number, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(BattleUI.singleton.enemyRef.Translation).x, 400), false);
-				BattleUI.singleton.enemyRef.PlayAnimation("hurt");
-				
-				if (BattleUI.singleton.enemyRef.Hp <= 0)
-				{
-					BattleUI.singleton.GetNode<Timer>("TimerEnemyDie").Start();
-					//BattleUI.singleton.victory = true;
-				}
-				else
-				{
-					BattleUI.singleton.GetNode<Timer>("TimerEnemyHurt").Start();
-					BattleUI.singleton.timerEndPlayerTurn.Start();
-				}
-					
-				break;
-			}
-
-			case Suit.Club: // Defend
-			{
-				BattleUI.singleton.playerDefense = number;
-
-				BattleUI.singleton.timerEndPlayerTurn.Start();
-				break;
-			}
-
-			case Suit.Heart: // Heal
-			{
-				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + number, BattleUI.singleton.playerHPCap);
-				BattleUI.singleton.SpawnDamageNumber(number, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), true);
-
-				BattleUI.singleton.timerEndPlayerTurn.Start();
-				break;
-			}
-
-			case Suit.Diamond: // Wild
-			{
-				break;
-			}
-		}
+		BattleUI.singleton.currentAttackSuit = suit;
+		BattleUI.singleton.currentAttackNumber = number;
+		BattleUI.singleton.GetNode<Timer>("TimerAttackDelay").Start();
 	}
 
 	// ================================================================
@@ -495,6 +459,82 @@ public class BattleUI : Node2D
 			cardInst.Position = new Vector2(360 + 212 * hand[i].Item2, 900);
 			instancedCards.Add(cardInst);
 			GetTree().GetRoot().AddChild(cardInst);
+		}
+	}
+
+
+	private void PlayerAttack()
+	{
+		int num = currentAttackNumber;
+
+		switch (currentAttackSuit)
+		{
+			case Suit.Spade: // Attack
+			{
+				string path;
+				Vector3 pos;
+				switch (Mathf.RoundToInt((float)GD.RandRange(0, 2)))
+				{
+					case 0:
+						path = PATH_SPADES1;
+						pos = new Vector3(enemyRef.Translation.x, enemyRef.Translation.y, enemyRef.Translation.z + 0.03f);
+						break;
+
+					default:
+						path = PATH_SPADES1;
+						pos = new Vector3(enemyRef.Translation.x, enemyRef.Translation.y, enemyRef.Translation.z + 0.03f);
+						break;
+				}
+
+				var anim = (Spatial)GD.Load<PackedScene>(path).Instance();
+				anim.Translation = pos;
+				anim.GetNode<Timer>("TimerDamage").Connect("timeout", this, "DamageEnemy");
+				anim.GetNode<AnimationPlayer>("AnimationPlayer").Play("Animation");
+				GetTree().GetRoot().AddChild(anim);
+				
+				break;
+			}
+
+			case Suit.Club: // Defend
+			{
+				BattleUI.singleton.playerDefense = num;
+
+				BattleUI.singleton.timerEndPlayerTurn.Start();
+				break;
+			}
+
+			case Suit.Heart: // Heal
+			{
+				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + num, BattleUI.singleton.playerHPCap);
+				BattleUI.singleton.SpawnDamageNumber(num, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), true);
+
+				BattleUI.singleton.timerEndPlayerTurn.Start();
+				break;
+			}
+
+			case Suit.Diamond: // Wild
+			{
+				break;
+			}
+		}
+	}
+
+
+	private void DamageEnemy()
+	{
+		BattleUI.singleton.enemyRef.Hp = Mathf.Max(BattleUI.singleton.enemyRef.Hp - currentAttackNumber, 0);
+		BattleUI.singleton.SpawnParticles(BattleUI.singleton.partsAttackRef, BattleUI.singleton.enemyRef.Translation);
+		BattleUI.singleton.SpawnDamageNumber(currentAttackNumber, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(BattleUI.singleton.enemyRef.Translation).x, 400), false);
+		BattleUI.singleton.enemyRef.PlayAnimation("hurt");
+				
+		if (BattleUI.singleton.enemyRef.Hp <= 0)
+		{
+			BattleUI.singleton.GetNode<Timer>("TimerEnemyDie").Start();
+		}
+		else
+		{
+			BattleUI.singleton.GetNode<Timer>("TimerEnemyHurt").Start();
+			BattleUI.singleton.timerEndPlayerTurn.Start();
 		}
 	}
 

@@ -846,6 +846,10 @@ one_shot = true
 [node name="TimerUIBuffer" type="Timer" parent="."]
 one_shot = true
 
+[node name="TimerAttackDelay" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
 [node name="TimerEndPlayerTurn" type="Timer" parent="."]
 one_shot = true
 
@@ -893,6 +897,7 @@ one_shot = true
 [connection signal="timeout" from="TimerBattleTransition" to="." method="BattleStart2"]
 [connection signal="timeout" from="TimerBattleSetup" to="." method="BattleSetup"]
 [connection signal="timeout" from="TimerUIBuffer" to="." method="ResetBuffer"]
+[connection signal="timeout" from="TimerAttackDelay" to="." method="PlayerAttack"]
 [connection signal="timeout" from="TimerEndPlayerTurn" to="." method="EnemyTurn"]
 [connection signal="timeout" from="TimerEndEnemyTurn" to="." method="PlayerTurn"]
 [connection signal="timeout" from="TimerEndBattle" to="." method="EndBattle"]
