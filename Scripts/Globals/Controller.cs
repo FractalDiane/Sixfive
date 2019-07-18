@@ -20,6 +20,9 @@ public class Controller : Node
 	private Vector2 preBattleFace;
 	private string preBattleScene;
 	private NodePath preBattleEnemy = null;
+	private AudioStream prebattleMusic;
+
+	private AudioStream currentMusic;
 
 	// Refs
 	private PackedScene soundBurstRef = GD.Load<PackedScene>("res://Instances/SoundBurst.tscn");
@@ -36,6 +39,8 @@ public class Controller : Node
 	public static Vector2 PreBattleFace { get => Controller.singleton.preBattleFace; set => Controller.singleton.preBattleFace = value; }
 	public static string PreBattleScene { get => Controller.singleton.preBattleScene; set => Controller.singleton.preBattleScene = value; }
 	public static NodePath PreBattleEnemy { get => Controller.singleton.preBattleEnemy; set => Controller.singleton.preBattleEnemy = value; }
+	public static AudioStream PreBattleMusic { get => Controller.singleton.prebattleMusic; set => Controller.singleton.prebattleMusic = value; }
+	public static AudioStream CurrentMusic { get => Controller.singleton.currentMusic; set => Controller.singleton.currentMusic = value; }
 
 	// ================================================================
 	

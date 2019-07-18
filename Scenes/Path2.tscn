@@ -1,9 +1,11 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Instances/FieldEnemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Characters/Tensor/Tensor.png" type="Texture" id=2]
 [ext_resource path="res://Instances/LoadingZone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Audio/Music/SimpleEuclidea.ogg" type="AudioStream" id=6]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -40,7 +42,6 @@ spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.5
 initial_velocity_random = 0.25
-angular_velocity = 0.0
 scale = 0.01
 scale_random = 0.3
 color_ramp = SubResource( 7 )
@@ -77,12 +78,14 @@ extents = Vector3( 1.87366, 1, 1 )
 extents = Vector3( 2.5266, 1, 1 )
 
 [sub_resource type="BoxShape" id=18]
-extents = Vector3( 0.5, 2, 0.4 )
 
 [sub_resource type="BoxShape" id=19]
+extents = Vector3( 0.5, 2, 0.4 )
+
+[sub_resource type="BoxShape" id=20]
 extents = Vector3( 0.185041, 1, 0.181533 )
 
-[sub_resource type="SpatialMaterial" id=20]
+[sub_resource type="SpatialMaterial" id=21]
 albedo_color = Color( 0.364706, 0.305882, 0.266667, 1 )
 
 [node name="Scene" type="Spatial"]
@@ -90,16 +93,16 @@ albedo_color = Color( 0.364706, 0.305882, 0.266667, 1 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
-[node name="CSGCombiner" type="CSGCombiner" parent="."]
+[node name="Walls" type="CSGCombiner" parent="."]
 use_collision = true
 
-[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox" type="CSGBox" parent="Walls"]
 width = 12.0
 height = 0.3
 depth = 4.0
 material = SubResource( 2 )
 
-[node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox2" type="CSGBox" parent="Walls"]
 transform = Transform( 0.924291, 0, -0.381689, 0, 1, 0, 0.381689, 0, 0.924291, -5.16735, 2.38419e-007, 2.3591 )
 operation = 2
 width = 2.95763
@@ -107,7 +110,7 @@ height = 0.760969
 depth = 1.83119
 material = SubResource( 3 )
 
-[node name="CSGBox3" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox3" type="CSGBox" parent="Walls"]
 transform = Transform( 0.870089, 0, -0.492894, 0, 1, 0, 0.492894, 0, 0.870089, -1.80474, 2.38419e-007, 2.5909 )
 operation = 2
 width = 3.33692
@@ -115,7 +118,7 @@ height = 0.760969
 depth = 1.83119
 material = SubResource( 3 )
 
-[node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox4" type="CSGBox" parent="Walls"]
 transform = Transform( 0.997812, 0, 0.066114, 0, 1, 0, -0.066114, 0, 0.997812, 0.436517, 2.38419e-007, 2.64825 )
 operation = 2
 width = 3.33692
@@ -123,7 +126,7 @@ height = 0.760969
 depth = 1.83119
 material = SubResource( 3 )
 
-[node name="CSGBox5" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox5" type="CSGBox" parent="Walls"]
 transform = Transform( 0.997812, 0, 0.066114, 0, 1, 0, -0.066114, 0, 0.997812, 4.07445, 3.57628e-007, 1.95134 )
 operation = 2
 width = 4.93096
@@ -131,63 +134,63 @@ height = 0.760969
 depth = 1.83119
 material = SubResource( 3 )
 
-[node name="CSGBox6" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox6" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.45967, 0, 0 )
 width = 1.0
 height = 0.3
 depth = 0.75
 material = SubResource( 4 )
 
-[node name="CSGBox7" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox7" type="CSGBox" parent="Walls"]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 5.5228e-008, 0, -3.72266 )
 width = 4.66767
 height = 0.3
 depth = 3.0
 material = SubResource( 2 )
 
-[node name="CSGBox8" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox8" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75146, 0.489161, -4 )
 width = 4.50212
 height = 5.40126
 depth = 4.0
 material = SubResource( 2 )
 
-[node name="CSGBox9" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox9" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.73706, 0.489161, -4 )
 width = 4.50212
 height = 5.40126
 depth = 4.0
 material = SubResource( 2 )
 
-[node name="CSGBox10" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox10" type="CSGBox" parent="Walls"]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -1.43617e-007, 0, -8.27171 )
 width = 4.53985
 height = 0.3
 depth = 6.42974
 material = SubResource( 2 )
 
-[node name="CSGBox11" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox11" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4317, 0.489161, -8.00411 )
 width = 4.50212
 height = 5.40126
 depth = 5.53902
 material = SubResource( 2 )
 
-[node name="CSGBox12" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox12" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18923, 0.489161, -8.00411 )
 width = 4.50212
 height = 5.40126
 depth = 5.53902
 material = SubResource( 2 )
 
-[node name="CSGBox13" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox13" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.276212, 0.489161, -11.7972 )
 width = 8.30401
 height = 5.40126
 depth = 5.53902
 material = SubResource( 2 )
 
-[node name="CSGBox14" type="CSGBox" parent="CSGCombiner"]
+[node name="CSGBox14" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.47696, 0, -0.320544 )
 width = 1.0
 height = 0.3
@@ -229,23 +232,39 @@ shape = SubResource( 12 )
 [node name="CollisionShape" parent="FieldEnemy/EncounterArea" index="0"]
 shape = SubResource( 13 )
 
-[node name="Walls" type="StaticBody" parent="."]
+[node name="WallsColl" type="StaticBody" parent="."]
 
-[node name="CollisionShape" type="CollisionShape" parent="Walls"]
+[node name="CollisionShape" type="CollisionShape" parent="WallsColl"]
 transform = Transform( 0.924291, 0, -0.381689, 0, 1, 0, 0.381689, 0, 0.924291, -5.16735, 2.38419e-007, 2.3591 )
 shape = SubResource( 14 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="Walls"]
+[node name="CollisionShape2" type="CollisionShape" parent="WallsColl"]
 transform = Transform( 0.870089, 0, -0.492894, 0, 1, 0, 0.492894, 0, 0.870089, -1.80474, 2.38419e-007, 2.5909 )
 shape = SubResource( 15 )
 
-[node name="CollisionShape3" type="CollisionShape" parent="Walls"]
+[node name="CollisionShape3" type="CollisionShape" parent="WallsColl"]
 transform = Transform( 0.997812, 0, 0.066114, 0, 1, 0, -0.066114, 0, 0.997812, 0.436517, 2.38419e-007, 2.64825 )
 shape = SubResource( 16 )
 
-[node name="CollisionShape4" type="CollisionShape" parent="Walls"]
+[node name="CollisionShape4" type="CollisionShape" parent="WallsColl"]
 transform = Transform( 0.997812, 0, 0.066114, 0, 1, 0, -0.066114, 0, 0.997812, 4.07445, 3.57628e-007, 1.95134 )
 shape = SubResource( 17 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 1.36235 )
+shape = SubResource( 18 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -1.3551 )
+shape = SubResource( 18 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1.67899 )
+shape = SubResource( 18 )
+
+[node name="CollisionShape8" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1.03846 )
+shape = SubResource( 18 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25002, -6.90672 )
@@ -259,7 +278,7 @@ targetScene = "res://Scenes/Path1.tscn"
 targetPosition = Vector3( 3.2, 0.4, 0 )
 
 [node name="CollisionShape" parent="LoadingZone" index="0"]
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="LoadingZone2" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49716, 0, -0.331106 )
@@ -267,7 +286,7 @@ targetScene = "res://Scenes/Path3.tscn"
 targetPosition = Vector3( -1.5, 0.4, 5 )
 
 [node name="CollisionShape" parent="LoadingZone2" index="0"]
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="NPC" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.48978, -5.96046e-008, -1.26957 )
@@ -278,7 +297,7 @@ advanceSet = false
 
 [node name="CollisionShape" parent="NPC/InteractionArea" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.202118 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="Sign" type="CSGCombiner" parent="NPC"]
 use_collision = true
@@ -288,14 +307,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593956, 0 )
 width = 0.5
 height = 0.25
 depth = 0.05
-material = SubResource( 20 )
+material = SubResource( 21 )
 
 [node name="CSGBox2" type="CSGBox" parent="NPC/Sign"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.311628, 0 )
 width = 0.043145
 height = 0.413574
 depth = 0.05
-material = SubResource( 20 )
+material = SubResource( 21 )
+
+[node name="SceneTag" parent="." instance=ExtResource( 5 )]
+sceneName = "Prince's Path"
+sceneMusic = ExtResource( 6 )
 
 
 [editable path="FieldEnemy"]

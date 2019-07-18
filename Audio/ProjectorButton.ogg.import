@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ProjectorButton.ogg-579406cc95f7079f7a01f69081d57b01.oggstr"
+
+[deps]
+
+source_file="res://Audio/ProjectorButton.ogg"
+dest_files=[ "res://.import/ProjectorButton.ogg-579406cc95f7079f7a01f69081d57b01.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

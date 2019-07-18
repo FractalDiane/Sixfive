@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://Scripts/Scenes/LippoHouse.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Props/TestCrate.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Instances/Door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/Door.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Audio/Music/SimpleEuclidea.ogg" type="AudioStream" id=12]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -521,6 +523,10 @@ shape = SubResource( 31 )
 [node name="MeshInstance" type="MeshInstance" parent="Note"]
 mesh = SubResource( 32 )
 material/0 = null
+
+[node name="SceneTag" parent="." instance=ExtResource( 11 )]
+sceneName = "Lippo's House"
+sceneMusic = ExtResource( 12 )
 
 [connection signal="dialogue_ended" from="Note" to="." method="ReadNote"]
 

@@ -410,6 +410,7 @@ public class BattleUI : Node2D
 
 	private void BattleStart2()
 	{
+		Controller.PreBattleMusic = Controller.CurrentMusic;
 		Controller.PlayMusic(battleMusic);
 		PlayerMP = Mathf.FloorToInt((float)BattleUI.singleton.playerMPCap / 2f);
 		Controller.GotoScene(BATTLE_SCENE);
@@ -702,6 +703,7 @@ public class BattleUI : Node2D
 		Controller.GotoScene(Controller.PreBattleScene);
 		Player.singleton.Translation = Controller.PreBattlePosition;
 		numJokersCurrent = numJokers;
+		Controller.PlayMusic(Controller.PreBattleMusic);
 		// set player face
 		Player.State = Player.ST.Move;
 		battleMode = false;

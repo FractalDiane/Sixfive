@@ -93,7 +93,7 @@ public class Player : KinematicBody
 			SpriteAnimation();
 
 		SightMovement();
-		vel = MoveAndSlide(vel * WALKSPEED, new Vector3(0, 1, 0));
+		MoveAndSlide(vel * WALKSPEED, new Vector3(0, 1, 0));
 
 		// add if here
 		CamreaMovement();

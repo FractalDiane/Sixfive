@@ -8,6 +8,9 @@ public class Dialogue : Sprite
 	[Signal]
 	public delegate void dialogue_ended();
 
+	[Export]
+	private AudioStream typeSound;
+
 	private const int BOX_TARGET_X = 600;
 	private const int BOX_TARGET_Y = 150;
 
@@ -16,12 +19,13 @@ public class Dialogue : Sprite
 
 	private List<string> dlgText = new List<string>();
 	private int textPage = 0;
-	private float interval = 0.02f;
+	private float interval = 0.04f;
 
 	private Spatial target = null;
 
 	private float t = 0;
 	private int disp = 0;
+	private int pageLength;
 	private int sound = 0;
 
 	private float sc = 0;
@@ -37,6 +41,10 @@ public class Dialogue : Sprite
 	//private Sprite pointer;
 	private Label text;
 	private AnimationPlayer animPlayer;
+
+	//private AudioStreamPlayer soundStart;
+	private AudioStreamPlayer soundPage;
+	private AudioStreamPlayer soundEnd;
 
 	private Timer timerStartRoll;
 	private Timer timerRollText;
@@ -58,12 +66,17 @@ public class Dialogue : Sprite
 		text = GetNode<Label>("Text");
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
+		//soundStart = GetNode<AudioStreamPlayer>("SoundStart");
+		soundPage = GetNode<AudioStreamPlayer>("SoundPage");
+		soundEnd = GetNode<AudioStreamPlayer>("SoundEnd");
+
 		timerStartRoll = GetNode<Timer>("TimerStartRoll");
 		timerRollText = GetNode<Timer>("TimerRollText");
 		timerChangePage = GetNode<Timer>("TimerChangePage");
 		timerBuffer = GetNode<Timer>("TimerBuffer");
 		timerDestroy = GetNode<Timer>("TimerDestroy");
 
+		
 		//box.Scale = new Vector2(0, 0);
 	}
 
@@ -80,7 +93,7 @@ public class Dialogue : Sprite
 
 	public void Start()
 	{
-		// sound start play
+		GetNode<AudioStreamPlayer>("SoundStart").Play();
 		GetNode<AnimationPlayer>("AnimationPlayer").Play("Appear");
 
 		active = true;
@@ -109,9 +122,10 @@ public class Dialogue : Sprite
 			}
 			else
 			{
-				// sound advance play
 				if (textPage < dlgText.Count - 1)
 				{
+					soundPage.PitchScale = (float)GD.RandRange(0.9, 1.3);
+					soundPage.Play();
 					textPage++;
 					disp = 0;
 					buffer = true;
@@ -119,7 +133,8 @@ public class Dialogue : Sprite
 				}
 				else
 				{
-					// sound end play
+					//soundEnd.Play();
+					Controller.PlaySoundBurst(soundEnd.Stream);
 					animPlayer.Play("Disappear");
 					disp = 0;
 					active = false;
@@ -132,6 +147,7 @@ public class Dialogue : Sprite
 
 	private void StartRoll()
 	{
+		pageLength = dlgText[textPage].Replace(" ", "").Length;
 		timerRollText.WaitTime = interval;
 		timerRollText.Start();
 		// target start talking
@@ -142,8 +158,8 @@ public class Dialogue : Sprite
 	{
 		if (active && disp < dlgText[textPage].Length)
 		{
-			// sound type set pitch scale
-			// sound type play
+			if (disp < pageLength)
+				Controller.PlaySoundBurst(typeSound, pitch: (float)GD.RandRange(0.9, 1.1));
 			/* if (dlgText[textPage][disp] == '|' || dlgText[textPage][disp] == '{')
 				if (dlgText[textPage][disp] == '|')
 					// timer wait set wait time 0.15
