@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="String Theory"
+config/name="Sixfive"
 run/main_scene="res://Scenes/2D/Start.tscn"
 boot_splash/image="res://Splash2.png"
 config/icon="res://iconsf.png"

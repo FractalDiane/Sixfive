@@ -6,8 +6,8 @@
     <ProjectGuid>{1639E98A-DE90-466F-9B92-DF90AE1219E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <OutputPath>.mono\temp\bin\$(Configuration)</OutputPath>
-    <RootNamespace>StringTheory</RootNamespace>
-    <AssemblyName>String Theory</AssemblyName>
+    <RootNamespace>Sixfive</RootNamespace>
+    <AssemblyName>Sixfive</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)</IntermediateOutputPath>
