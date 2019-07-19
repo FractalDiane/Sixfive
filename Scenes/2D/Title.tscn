@@ -47,11 +47,11 @@ extents = Vector2( 120, 40 )
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 70, 40 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=8]
 size = 80
 font_data = ExtResource( 8 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect2:color")
@@ -66,8 +66,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "Fadeout"
+[sub_resource type="Animation" id=10]
 length = 1.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect2:color")
@@ -82,7 +81,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 resource_name = "HideCredits"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Credits:margin_top")
@@ -109,7 +108,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 resource_name = "HideStuff"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Option1:custom_colors/font_color")
@@ -160,8 +159,7 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "ShowCredits"
+[sub_resource type="Animation" id=13]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Credits:margin_top")
 tracks/0/interp = 2
@@ -336,7 +334,7 @@ margin_left = 184.0
 margin_top = 20.0
 margin_right = 1096.0
 margin_bottom = 678.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 8 )
 text = "sixfive
 
 Developed by Duncan Sparks
@@ -357,11 +355,11 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Fadein"
-anims/Fadein = SubResource( 8 )
-anims/Fadeout = SubResource( 9 )
-anims/HideCredits = SubResource( 12 )
-anims/HideStuff = SubResource( 13 )
-anims/ShowCredits = SubResource( 11 )
+anims/Fadein = SubResource( 9 )
+anims/Fadeout = SubResource( 10 )
+anims/HideCredits = SubResource( 11 )
+anims/HideStuff = SubResource( 12 )
+anims/ShowCredits = SubResource( 13 )
 anims/ShowStuff = SubResource( 14 )
 
 [node name="TimerStart" type="Timer" parent="."]

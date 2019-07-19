@@ -66,6 +66,7 @@
     <Compile Include="Scripts\LoadingZone.cs" />
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Scenes\LippoHouse.cs" />
+    <Compile Include="Scripts\Scenes\Start.cs" />
     <Compile Include="Scripts\Scenes\Title.cs" />
     <Compile Include="Scripts\Utility\FollowCursor.cs" />
     <Compile Include="Scripts\Utility\SceneTag.cs" />
