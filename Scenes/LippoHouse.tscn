@@ -11,7 +11,7 @@
 [ext_resource path="res://Audio/Door.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Audio/Music/SimpleEuclidea.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Audio/Music/EuclideanRainbow.ogg" type="AudioStream" id=12]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -527,6 +527,9 @@ material/0 = null
 [node name="SceneTag" parent="." instance=ExtResource( 11 )]
 sceneName = "Lippo's House"
 sceneMusic = ExtResource( 12 )
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07739, 0.4652, -0.957129 )
 
 [connection signal="dialogue_ended" from="Note" to="." method="ReadNote"]
 

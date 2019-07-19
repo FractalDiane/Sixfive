@@ -29,7 +29,7 @@ public class Player : KinematicBody
 	private float sightStartX;
 	private float sightStartZ;
 
-	public enum ST { Move, Battle, NoInput };
+	public enum ST { Move, Battle, Cutscene, NoInput };
 	private ST state = ST.Move;
 
 	// Refs
@@ -89,7 +89,7 @@ public class Player : KinematicBody
 		vel.y += GRAVITY * delta * 60f;
 		spr.RotationDegrees = new Vector3(spr.RotationDegrees.x, Mathf.Clamp(spr.RotationDegrees.y + rotSpeed * Mathf.Abs(spr.RotationDegrees.y - targetAngle) * rotDir, 0, 179), spr.RotationDegrees.z);
 	
-		if (state != ST.Battle)
+		if (state != ST.Battle && state != ST.Cutscene)
 			SpriteAnimation();
 
 		SightMovement();

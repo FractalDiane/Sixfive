@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="String Theory"
-run/main_scene="res://Scenes/LippoHouse.tscn"
+run/main_scene="res://Scenes/2D/Title.tscn"
 config/icon="res://iconsf.png"
 
 [autoload]

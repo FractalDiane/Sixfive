@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/EuclideanRainbow.ogg-7ab9ab47b61f980ad7b324398556b76e.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/EuclideanRainbow.ogg"
+dest_files=[ "res://.import/EuclideanRainbow.ogg-7ab9ab47b61f980ad7b324398556b76e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
