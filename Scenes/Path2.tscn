@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Instances/FieldEnemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Characters/Tensor/Tensor.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Audio/Music/SimpleEuclidea.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Sprites/Characters/Magma/Magma.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Magma/Magma 3.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Magma/Magma 2.png" type="Texture" id=9]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -87,6 +90,39 @@ extents = Vector3( 0.185041, 1, 0.181533 )
 
 [sub_resource type="SpatialMaterial" id=21]
 albedo_color = Color( 0.364706, 0.305882, 0.266667, 1 )
+
+[sub_resource type="SpriteFrames" id=22]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="BoxShape" id=26]
+extents = Vector3( 0.15, 0.1, 0.05 )
+
+[sub_resource type="BoxShape" id=24]
+
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 0.2, 0.2, 0.2 )
+
+[sub_resource type="Animation" id=23]
+resource_name = "Idle"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.322497, 0 ), Vector3( 0, 0.5, 0 ) ]
+}
 
 [node name="Scene" type="Spatial"]
 
@@ -320,6 +356,32 @@ material = SubResource( 21 )
 sceneName = "Prince's Path"
 sceneMusic = ExtResource( 6 )
 
+[node name="FieldEnemy2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.75223 )
+enemy = 2
+
+[node name="Sprite" parent="FieldEnemy2" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.322497, 0 )
+frames = SubResource( 22 )
+frame = 1
+playing = true
+
+[node name="CollisionShape" parent="FieldEnemy2" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.337888, 0 )
+shape = SubResource( 26 )
+
+[node name="CollisionShape" parent="FieldEnemy2/VisionArea" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.343375, 0 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape" parent="FieldEnemy2/EncounterArea" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.321555, 0 )
+shape = SubResource( 25 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FieldEnemy2"]
+autoplay = "Idle"
+anims/Idle = SubResource( 23 )
+
 
 [editable path="FieldEnemy"]
 
@@ -328,3 +390,5 @@ sceneMusic = ExtResource( 6 )
 [editable path="LoadingZone2"]
 
 [editable path="NPC"]
+
+[editable path="FieldEnemy2"]

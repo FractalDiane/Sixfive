@@ -1,8 +1,13 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Instances/LoadingZone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Audio/Music/SimpleEuclidea.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Instances/FieldEnemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/FieldEnemy.cs" type="Script" id=5]
+[ext_resource path="res://Sprites/Characters/Magma/Magma.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Magma/Magma 3.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Magma/Magma 2.png" type="Texture" id=8]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -34,6 +39,39 @@ extents = Vector3( 1.32044, 1, 1.28174 )
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.588868, 1, 1.02161 )
 
+[sub_resource type="SpriteFrames" id=27]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="BoxShape" id=26]
+extents = Vector3( 0.15, 0.1, 0.05 )
+
+[sub_resource type="BoxShape" id=24]
+
+[sub_resource type="BoxShape" id=25]
+extents = Vector3( 0.2, 0.2, 0.2 )
+
+[sub_resource type="Animation" id=23]
+resource_name = "Idle"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.322497, 0 ), Vector3( 0, 0.5, 0 ) ]
+}
+
 [node name="Scene" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -60,6 +98,30 @@ transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0.026
 width = 1.0
 height = 0.3
 depth = 0.75
+material = SubResource( 3 )
+
+[node name="Pillars" type="CSGCombiner" parent="."]
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="Pillars"]
+transform = Transform( 0.945351, 0, 0.326056, 0, 1, 0, -0.326056, 0, 0.945351, -0.65873, 1.98697, 1.58181 )
+width = 1.0
+height = 4.0
+depth = 1.0
+material = SubResource( 3 )
+
+[node name="CSGBox2" type="CSGBox" parent="Pillars"]
+transform = Transform( 0.961683, 0, -0.274164, 0, 1, 0, 0.274164, 0, 0.961683, 0.811403, 1.98697, -1.30794 )
+width = 1.0
+height = 4.0
+depth = 1.0
+material = SubResource( 3 )
+
+[node name="CSGBox3" type="CSGBox" parent="Pillars"]
+transform = Transform( 0.758964, 0, 0.651132, 0, 1, 0, -0.651132, 0, 0.758964, 0.801592, 1.98697, 5.26008 )
+width = 1.0
+height = 4.0
+depth = 1.0
 material = SubResource( 3 )
 
 [node name="SpotLight" type="SpotLight" parent="."]
@@ -122,5 +184,45 @@ shape = SubResource( 9 )
 sceneName = "Prince's Path"
 sceneMusic = ExtResource( 3 )
 
+[node name="FieldEnemy2" type="KinematicBody" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.64954 )
+script = ExtResource( 5 )
+enemy = 2
+
+[node name="Sprite" type="AnimatedSprite3D" parent="FieldEnemy2" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.322497, 0 )
+alpha_cut = 2
+frames = SubResource( 27 )
+playing = true
+
+[node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.337888, 0 )
+shape = SubResource( 26 )
+
+[node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2/VisionArea" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.343375, 0 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2/EncounterArea" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.321555, 0 )
+shape = SubResource( 25 )
+
+[node name="TimerMove" type="Timer" parent="FieldEnemy2" index="4"]
+one_shot = true
+
+[node name="TimerStop" type="Timer" parent="FieldEnemy2" index="5"]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FieldEnemy2"]
+autoplay = "Idle"
+anims/Idle = SubResource( 23 )
+
+[connection signal="body_entered" from="FieldEnemy2/VisionArea" to="FieldEnemy2" method="VisionAreaEntered"]
+[connection signal="body_exited" from="FieldEnemy2/VisionArea" to="FieldEnemy2" method="VisionAreaExited"]
+[connection signal="body_entered" from="FieldEnemy2/EncounterArea" to="FieldEnemy2" method="EncounterAreaEntered"]
+[connection signal="timeout" from="FieldEnemy2/TimerMove" to="FieldEnemy2" method="Move"]
+[connection signal="timeout" from="FieldEnemy2/TimerStop" to="FieldEnemy2" method="Stop"]
 
 [editable path="LoadingZone"]
+
+[editable path="FieldEnemy2"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scripts/Battle/BattleUI.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Backgrounds/Six background.png" type="Texture" id=2]
@@ -17,8 +17,9 @@
 [ext_resource path="res://Sprites/Battle UI/EnemyHP.png" type="Texture" id=15]
 [ext_resource path="res://Sprites/Battle UI/DrawButton.png" type="Texture" id=16]
 [ext_resource path="res://Sprites/Battle UI/JokerToken.png" type="Texture" id=17]
-[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=18]
-[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/Battle UI/CardCount.png" type="Texture" id=18]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=19]
+[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=20]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -49,7 +50,7 @@ font_data = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 200
-font_data = ExtResource( 18 )
+font_data = ExtResource( 19 )
 
 [sub_resource type="Animation" id=8]
 tracks/0/type = "value"
@@ -549,7 +550,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1, 1.4, 1.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1.86607, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ), ExtResource( 19 ), ExtResource( 17 ), ExtResource( 19 ), ExtResource( 17 ), ExtResource( 19 ), ExtResource( 17 ) ]
+"values": [ ExtResource( 17 ), ExtResource( 20 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 17 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Joker:rotation_degrees")
@@ -659,7 +660,7 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 
 [node name="Healthbar" type="Sprite" parent="."]
-position = Vector2( 164.295, -129.856 )
+position = Vector2( 164.295, 88.1435 )
 texture = ExtResource( 11 )
 
 [node name="Label" type="Label" parent="Healthbar"]
@@ -673,7 +674,7 @@ text = "100"
 align = 1
 
 [node name="Manabar" type="Sprite" parent="."]
-position = Vector2( 226.408, -62 )
+position = Vector2( 226.408, 155.104 )
 texture = ExtResource( 13 )
 
 [node name="Label" type="Label" parent="Manabar"]
@@ -687,7 +688,7 @@ text = "3/5"
 align = 1
 
 [node name="Defensebar" type="Sprite" parent="."]
-position = Vector2( 368, -132 )
+position = Vector2( 368, 86 )
 texture = ExtResource( 14 )
 
 [node name="Label" type="Label" parent="Defensebar"]
@@ -701,7 +702,7 @@ text = "0"
 align = 1
 
 [node name="EnemyHealthbar" type="Sprite" parent="."]
-position = Vector2( 1055, -140 )
+position = Vector2( 1055, 90 )
 texture = ExtResource( 15 )
 __meta__ = {
 "_edit_group_": true
@@ -718,7 +719,7 @@ text = "100"
 align = 1
 
 [node name="DrawButton" type="Sprite" parent="."]
-position = Vector2( 125, 810 )
+position = Vector2( 125, 563 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 16 )
 __meta__ = {
@@ -734,7 +735,7 @@ custom_fonts/font = SubResource( 3 )
 text = "Draw"
 
 [node name="PassButton" type="Sprite" parent="."]
-position = Vector2( 125, 905 )
+position = Vector2( 125, 658 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 16 )
 __meta__ = {
@@ -750,7 +751,7 @@ custom_fonts/font = SubResource( 3 )
 text = "Pass"
 
 [node name="Joker" type="Sprite" parent="."]
-position = Vector2( -133.88, 455.863 )
+position = Vector2( 82.1204, 455.863 )
 scale = Vector2( 0.53, 0.53 )
 texture = ExtResource( 17 )
 __meta__ = {
@@ -785,10 +786,22 @@ __meta__ = {
 shape = SubResource( 5 )
 
 [node name="JokerLabel" type="Label" parent="."]
-margin_left = -80.0
+margin_left = 152.79
 margin_top = 435.748
 margin_right = 36.7898
 margin_bottom = 519.748
+custom_fonts/font = SubResource( 6 )
+text = "x 1"
+
+[node name="CardCount" type="Sprite" parent="."]
+position = Vector2( 79.6652, 321.72 )
+texture = ExtResource( 18 )
+
+[node name="CardCountLabel" type="Label" parent="CardCount"]
+margin_left = 47.7657
+margin_top = -17.1561
+margin_right = 111.766
+margin_bottom = 66.8439
 custom_fonts/font = SubResource( 6 )
 text = "x 1"
 

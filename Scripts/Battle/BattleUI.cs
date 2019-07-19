@@ -51,8 +51,8 @@ public class BattleUI : Node2D
 	private bool uiBuffer = false;
 
 	// PLAYER STATS
-	private int playerHPCap = 20;
-	private int playerHP = 20;
+	private int playerHPCap = 10;
+	private int playerHP = 10;
 	private int playerMPCap = 5;
 	private int playerMP = 0;
 	private int playerDefense = 0;
@@ -138,6 +138,7 @@ public class BattleUI : Node2D
 	private Timer timerEndEnemyTurn;
 	private Timer timerEndBattle;
 	private Sprite sprJoker;
+	private Sprite sprCards;
 	private Sprite sprDraw;
 	private Sprite sprPass;
 	private Sprite sprFive;
@@ -147,6 +148,7 @@ public class BattleUI : Node2D
 	private Label hpLabel;
 	private Label mpLabel;
 	private Label defenseLabel;
+	private Label cardsLabel;
 	private Label enemyHpLabel;
 
 	private Enemy enemyRef;
@@ -159,6 +161,7 @@ public class BattleUI : Node2D
 
 	private PackedScene enemyBlob = GD.Load<PackedScene>("res://Instances/Enemies/EnemyBlob.tscn");
 	private PackedScene enemyTensor = GD.Load<PackedScene>("res://Instances/Enemies/EnemyTensor.tscn");
+	private PackedScene enemyMagma = GD.Load<PackedScene>("res://Instances/Enemies/EnemyMagma.tscn");
 
 	// Animation paths
 	private const string PATH_SPADES1 = "res://Instances/Attack Animations/AnimSpades1.tscn";
@@ -188,12 +191,14 @@ public class BattleUI : Node2D
 		timerEndEnemyTurn = GetNode<Timer>("TimerEndEnemyTurn");
 		timerEndBattle = GetNode<Timer>("TimerEndBattle");
 		sprJoker = GetNode<Sprite>("Joker");
+		sprCards = GetNode<Sprite>("CardCount");
 		sprDraw = GetNode<Sprite>("DrawButton");
 		sprPass = GetNode<Sprite>("PassButton");
 		sprFive = GetNode<Sprite>("Five");
 		sprSix = GetNode<Sprite>("Six");
 		sprEnemyHealth = GetNode<Sprite>("EnemyHealthbar");
 		jokerLabel = GetNode<Label>("JokerLabel");
+		cardsLabel = GetNode<Sprite>("CardCount").GetNode<Label>("CardCountLabel");
 		hpLabel = GetNode<Sprite>("Healthbar").GetNode<Label>("Label");
 		mpLabel = GetNode<Sprite>("Manabar").GetNode<Label>("Label");
 		defenseLabel = GetNode<Sprite>("Defensebar").GetNode<Label>("Label");
@@ -204,6 +209,7 @@ public class BattleUI : Node2D
 	public override void _Process(float delta)
 	{
 		sprDraw.Visible = battleMode;
+		sprCards.Visible = battleMode;
 		sprPass.Visible = battleMode;
 		sprFive.Visible = battleMode;
 		sprSix.Visible = battleMode;
@@ -268,6 +274,7 @@ public class BattleUI : Node2D
 
 		// UI update stuff
 		jokerLabel.Text = $"x {numJokersCurrent.ToString()}";
+		cardsLabel.Text = $"x {BattleUI.singleton.cardStashCurrentBattle.Count.ToString()}";
 		hpLabel.Text = playerHP.ToString();
 		mpLabel.Text = $"{playerMP.ToString()}/{playerMPCap}";
 		defenseLabel.Text = playerDefense.ToString();
@@ -395,6 +402,16 @@ public class BattleUI : Node2D
 			case Opponent.Tensor:
 			{
 				var e = (EnemyTensor)BattleUI.singleton.enemyTensor.Instance();
+				e.Initialize();
+				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
+				BattleUI.singleton.GetTree().GetRoot().AddChild(e);
+				BattleUI.singleton.enemyRef = e;
+				break;
+			}
+
+			case Opponent.Magma:
+			{
+				var e = (EnemyMagma)BattleUI.singleton.enemyMagma.Instance();
 				e.Initialize();
 				e.Translation = new Vector3(ENEMY_X, ENEMY_Y, ENEMY_Z);
 				BattleUI.singleton.GetTree().GetRoot().AddChild(e);

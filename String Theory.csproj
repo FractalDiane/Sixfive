@@ -54,6 +54,7 @@
     <Compile Include="Scripts\Battle\BattleUI.cs" />
     <Compile Include="Scripts\Battle\Card.cs" />
     <Compile Include="Scripts\Battle\Enemies\EnemyBlob.cs" />
+    <Compile Include="Scripts\Battle\Enemies\EnemyMagma.cs" />
     <Compile Include="Scripts\Battle\Enemies\EnemyTensor.cs" />
     <Compile Include="Scripts\Battle\Enemy.cs" />
     <Compile Include="Scripts\Dialogue.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Scripts\LoadingZone.cs" />
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\Scenes\LippoHouse.cs" />
+    <Compile Include="Scripts\Scenes\Title.cs" />
     <Compile Include="Scripts\Utility\FollowCursor.cs" />
     <Compile Include="Scripts\Utility\SceneTag.cs" />
   </ItemGroup>

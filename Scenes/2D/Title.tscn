@@ -1,15 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scripts/Utility/FollowCursor.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Scenes/Title.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Utility/FollowCursor.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/Logo.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=4]
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.497268, 1 )
 colors = PoolColorArray( 1, 0.917647, 0.666667, 0, 1, 0.917647, 0.666667, 1, 1, 0.917647, 0.666667, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 640, 360, 1 )
 flag_disable_z = true
 spread = 180.0
 flatness = 1.0
@@ -23,11 +28,120 @@ angle = 360.0
 angle_random = 1.0
 scale = 30.0
 scale_random = 0.4
-color_ramp = SubResource( 3 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 80
+font_data = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 90, 40 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 120, 40 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 70, 40 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Fadein"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
 
 [node name="Scene" type="Node2D"]
+script = ExtResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 2
+color = Color( 0.137255, 0.137255, 0.137255, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 640, 360 )
+lifetime = 1.5
+speed_scale = 0.5
+local_coords = false
+process_material = SubResource( 3 )
+script = ExtResource( 2 )
+
+[node name="Logo" type="Sprite" parent="."]
+position = Vector2( 640, 180 )
+texture = ExtResource( 3 )
+
+[node name="Option1" type="Label" parent="."]
+margin_left = 555.0
+margin_top = 361.0
+margin_right = 726.0
+margin_bottom = 449.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Start"
+align = 1
+
+[node name="Area2D" type="Area2D" parent="Option1"]
+position = Vector2( 85, 39 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Option1/Area2D"]
+shape = SubResource( 6 )
+
+[node name="Area2D2" type="Area2D" parent="Option1"]
+position = Vector2( 85, 145 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Option1/Area2D2"]
+shape = SubResource( 7 )
+
+[node name="Area2D3" type="Area2D" parent="Option1"]
+position = Vector2( 85, 245 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Option1/Area2D3"]
+shape = SubResource( 8 )
+
+[node name="Option2" type="Label" parent="."]
+margin_left = 527.0
+margin_top = 460.0
+margin_right = 761.0
+margin_bottom = 548.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Credits"
+align = 1
+
+[node name="Option3" type="Label" parent="."]
+margin_left = 527.0
+margin_top = 560.0
+margin_right = 761.0
+margin_bottom = 648.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Exit"
+align = 1
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
 margin_right = 1280.0
 margin_bottom = 720.0
 mouse_filter = 2
@@ -36,12 +150,13 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( 644.571, 299.966 )
-amount = 2
-lifetime = 1.5
-speed_scale = 0.5
-local_coords = false
-process_material = SubResource( 1 )
-script = ExtResource( 1 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Fadein"
+anims/Fadein = SubResource( 5 )
 
+[connection signal="mouse_entered" from="Option1/Area2D" to="." method="HoverStartStart"]
+[connection signal="mouse_exited" from="Option1/Area2D" to="." method="HoverStartEnd"]
+[connection signal="mouse_entered" from="Option1/Area2D2" to="." method="HoverCreditsStart"]
+[connection signal="mouse_exited" from="Option1/Area2D2" to="." method="HoverCreditsEnd"]
+[connection signal="mouse_entered" from="Option1/Area2D3" to="." method="HoverExitStart"]
+[connection signal="mouse_exited" from="Option1/Area2D3" to="." method="HoverExitEnd"]

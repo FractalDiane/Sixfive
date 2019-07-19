@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Audio/Music/SimpleEuclidea.ogg" type="AudioStream" id=2]
@@ -12,18 +12,29 @@ adjustment_enabled = true
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.203922, 0.168627, 0.34902, 1 )
 
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.203922, 0.168627, 0.34902, 1 )
+
 [node name="Scene" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
 [node name="Walls" type="CSGCombiner" parent="."]
+use_collision = true
 
 [node name="CSGBox" type="CSGBox" parent="Walls"]
 width = 12.0
 height = 0.3
 depth = 8.0
 material = SubResource( 2 )
+
+[node name="CSGBox2" type="CSGBox" parent="Walls"]
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 0.0260999, 4.76837e-007, 4.4504 )
+width = 1.0
+height = 0.3
+depth = 0.75
+material = SubResource( 3 )
 
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.632287, 0.774734, 0, -0.774734, 0.632287, 0, 4.70831, 4.37428 )
