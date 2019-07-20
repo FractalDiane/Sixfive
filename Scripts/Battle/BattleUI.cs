@@ -81,22 +81,31 @@ public class BattleUI : Node2D
 		public int manaCost;
 	}
 
-	private List<CardStruct> cardStash = new List<CardStruct>()//;
+	private List<CardStruct> cardStash = new List<CardStruct>()
 	{
 		new CardStruct(Suit.Spade, 2, 1),
 		new CardStruct(Suit.Spade, 2, 1),
 		new CardStruct(Suit.Spade, 2, 1),
+		new CardStruct(Suit.Spade, 2, 1),
+		new CardStruct(Suit.Spade, 2, 2),
+		new CardStruct(Suit.Spade, 2, 2),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 2),
+		new CardStruct(Suit.Spade, 3, 2),
+		new CardStruct(Suit.Spade, 3, 3),
 		new CardStruct(Suit.Heart, 3, 3),
 		new CardStruct(Suit.Heart, 3, 3),
+		new CardStruct(Suit.Heart, 3, 2),
 		new CardStruct(Suit.Heart, 3, 2),
 		new CardStruct(Suit.Club, 1, 1),
 		new CardStruct(Suit.Club, 1, 1),
 		new CardStruct(Suit.Club, 2, 2),
-		new CardStruct(Suit.Diamond, 2, 3),
-		new CardStruct(Suit.Diamond, 2, 3),
-		new CardStruct(Suit.Diamond, 2, 3),
+		new CardStruct(Suit.Club, 2, 1),
+		new CardStruct(Suit.Diamond, 2, 1),
+		new CardStruct(Suit.Diamond, 2, 1),
+		new CardStruct(Suit.Diamond, 2, 2),
+		new CardStruct(Suit.Diamond, 3, 2),
+		new CardStruct(Suit.Diamond, 3, 3),
 	};
 
 	private List<CardStruct> cardStashCurrentBattle = new List<CardStruct>();

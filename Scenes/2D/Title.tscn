@@ -1,13 +1,14 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scripts/Scenes/Title.cs" type="Script" id=1]
-[ext_resource path="res://Audio/Menu1.ogg" type="AudioStream" id=2]
-[ext_resource path="res://Audio/Menu2.ogg" type="AudioStream" id=3]
-[ext_resource path="res://Audio/Menu3.ogg" type="AudioStream" id=4]
-[ext_resource path="res://Audio/Select.ogg" type="AudioStream" id=5]
-[ext_resource path="res://Scripts/Utility/FollowCursor.cs" type="Script" id=6]
-[ext_resource path="res://Sprites/Logo.png" type="Texture" id=7]
-[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=8]
+[ext_resource path="res://Audio/Music/ForgottenSong.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Audio/Menu1.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Menu2.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Audio/Menu3.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Audio/Select.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Scripts/Utility/FollowCursor.cs" type="Script" id=7]
+[ext_resource path="res://Sprites/Logo.png" type="Texture" id=8]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=9]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.497268, 1 )
@@ -36,7 +37,7 @@ color_ramp = SubResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 80
-font_data = ExtResource( 8 )
+font_data = ExtResource( 9 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 90, 40 )
@@ -49,7 +50,7 @@ extents = Vector2( 70, 40 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 80
-font_data = ExtResource( 8 )
+font_data = ExtResource( 9 )
 
 [sub_resource type="Animation" id=9]
 length = 3.0
@@ -243,10 +244,11 @@ __meta__ = {
 }
 startScene = "res://Scenes/LippoHouse.tscn"
 startPosition = Vector3( -2.077, 0.4, -0.957 )
-soundMenu1 = ExtResource( 2 )
-soundMenu2 = ExtResource( 3 )
-soundMenu3 = ExtResource( 4 )
-soundSelect = ExtResource( 5 )
+menuMusic = ExtResource( 2 )
+soundMenu1 = ExtResource( 3 )
+soundMenu2 = ExtResource( 4 )
+soundMenu3 = ExtResource( 5 )
+soundSelect = ExtResource( 6 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 1280.0
@@ -263,11 +265,11 @@ lifetime = 1.5
 speed_scale = 0.5
 local_coords = false
 process_material = SubResource( 3 )
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="Logo" type="Sprite" parent="."]
 position = Vector2( 640, 180 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="Option1" type="Label" parent="."]
 margin_left = 555.0

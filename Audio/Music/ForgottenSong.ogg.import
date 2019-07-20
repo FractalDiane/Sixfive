@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ForgottenSong.ogg-7df8960ebfda33d6897f20748fe9f02f.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/ForgottenSong.ogg"
+dest_files=[ "res://.import/ForgottenSong.ogg-7df8960ebfda33d6897f20748fe9f02f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -86,7 +86,9 @@ public class Player : KinematicBody
 			
 
 		jumping = !IsOnFloor();
-		vel.y += GRAVITY * delta * 60f;
+		if (!IsOnFloor())
+			vel.y += GRAVITY * delta * 60f;
+			
 		spr.RotationDegrees = new Vector3(spr.RotationDegrees.x, Mathf.Clamp(spr.RotationDegrees.y + rotSpeed * Mathf.Abs(spr.RotationDegrees.y - targetAngle) * rotDir, 0, 179), spr.RotationDegrees.z);
 	
 		if (state != ST.Battle && state != ST.Cutscene)
@@ -125,6 +127,13 @@ public class Player : KinematicBody
 	public static void ShowInteract(bool show)
 	{
 		Player.singleton.interact.Visible = show;
+	}
+
+
+	public static void Jump()
+	{
+		Player.singleton.vel.y = JUMP_FORCE;
+		Player.singleton.jumping = true;
 	}
 
 	// ================================================================

@@ -9,14 +9,23 @@ public class SceneTag : Node
 	[Export]
 	private AudioStream sceneMusic;
 
+	[Export]
+	private bool startSilent = false;
+
+	[Export]
+	private string musicConditionFlag = string.Empty;
+
 	// ================================================================
 	
 	public override void _Ready()
 	{
 		if (sceneMusic != Controller.CurrentMusic)
 		{
-			Controller.PlayMusic(sceneMusic);
-			Controller.CurrentMusic = sceneMusic;
+			if ((startSilent && Controller.Flag(musicConditionFlag) == 1) || !startSilent)
+			{
+				Controller.PlayMusic(sceneMusic);
+				Controller.CurrentMusic = sceneMusic;
+			}
 		}
 	}
 }

@@ -1,17 +1,19 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Scripts/Scenes/LippoHouse.cs" type="Script" id=1]
-[ext_resource path="res://Textures/Props/TestCrate.png" type="Texture" id=2]
-[ext_resource path="res://Textures/Props/Carpet.png" type="Texture" id=3]
-[ext_resource path="res://Textures/Props/Pillar.png" type="Texture" id=4]
-[ext_resource path="res://Textures/Props/Door.png" type="Texture" id=5]
-[ext_resource path="res://Textures/Props/WoodBorder.png" type="Texture" id=6]
-[ext_resource path="res://Textures/Props/Bed.png" type="Texture" id=7]
-[ext_resource path="res://Instances/Door.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Audio/Door.ogg" type="AudioStream" id=9]
-[ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Audio/Music/EuclideanRainbow.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Audio/Knock.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Audio/PaperSlip.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Music/EuclideanRainbow.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Textures/Props/TestCrate.png" type="Texture" id=5]
+[ext_resource path="res://Textures/Props/Carpet.png" type="Texture" id=6]
+[ext_resource path="res://Textures/Props/Pillar.png" type="Texture" id=7]
+[ext_resource path="res://Textures/Props/Door.png" type="Texture" id=8]
+[ext_resource path="res://Textures/Props/WoodBorder.png" type="Texture" id=9]
+[ext_resource path="res://Textures/Props/Bed.png" type="Texture" id=10]
+[ext_resource path="res://Instances/Door.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Audio/Door.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Instances/NPC.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=14]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -36,7 +38,7 @@ material = SubResource( 2 )
 [sub_resource type="CubeMesh" id=8]
 
 [sub_resource type="SpatialMaterial" id=9]
-albedo_texture = ExtResource( 2 )
+albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 3, 2, 1 )
 
 [sub_resource type="BoxShape" id=10]
@@ -53,7 +55,7 @@ emission_on_uv2 = false
 [sub_resource type="CylinderMesh" id=13]
 
 [sub_resource type="SpatialMaterial" id=14]
-albedo_texture = ExtResource( 3 )
+albedo_texture = ExtResource( 6 )
 uv1_scale = Vector3( 2, 2, 1 )
 
 [sub_resource type="SpatialMaterial" id=15]
@@ -85,28 +87,28 @@ color_ramp = SubResource( 17 )
 size = Vector2( 0.5, 0.5 )
 
 [sub_resource type="SpatialMaterial" id=20]
-albedo_texture = ExtResource( 4 )
+albedo_texture = ExtResource( 7 )
 
 [sub_resource type="SpatialMaterial" id=21]
-albedo_texture = ExtResource( 4 )
+albedo_texture = ExtResource( 7 )
 uv1_scale = Vector3( 1, 0.2, 1 )
 uv1_offset = Vector3( 0, 0.5, 0 )
 
 [sub_resource type="SpatialMaterial" id=22]
-albedo_texture = ExtResource( 5 )
+albedo_texture = ExtResource( 8 )
 uv1_scale = Vector3( -1, 1, 1 )
 uv1_offset = Vector3( 0, -0.01, 0 )
 
 [sub_resource type="SpatialMaterial" id=23]
-albedo_texture = ExtResource( 6 )
+albedo_texture = ExtResource( 9 )
 uv1_scale = Vector3( 1, 2, 1 )
 
 [sub_resource type="SpatialMaterial" id=24]
-albedo_texture = ExtResource( 6 )
+albedo_texture = ExtResource( 9 )
 uv1_scale = Vector3( 1, 5, 1 )
 
 [sub_resource type="SpatialMaterial" id=25]
-albedo_texture = ExtResource( 7 )
+albedo_texture = ExtResource( 10 )
 
 [sub_resource type="BoxShape" id=26]
 extents = Vector3( 0.154622, 0.400569, 0.303876 )
@@ -140,6 +142,9 @@ size = Vector3( 0.1, 0.01, 0.12 )
 
 [node name="Scene" type="Spatial"]
 script = ExtResource( 1 )
+soundKnock = ExtResource( 2 )
+soundPaper = ExtResource( 3 )
+sceneMusic = ExtResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
@@ -353,8 +358,8 @@ height = 0.0885067
 depth = 0.49991
 material = SubResource( 25 )
 
-[node name="DoorArea" parent="." instance=ExtResource( 8 )]
-doorSound = ExtResource( 9 )
+[node name="DoorArea" parent="." instance=ExtResource( 11 )]
+doorSound = ExtResource( 12 )
 targetScene = "res://Scenes/Path1.tscn"
 targetPosition = Vector3( -1.5, 0.4, 0.8 )
 
@@ -510,7 +515,7 @@ height = 0.38
 depth = 0.0350854
 material = SubResource( 30 )
 
-[node name="Note" parent="." instance=ExtResource( 10 )]
+[node name="Note" parent="." instance=ExtResource( 13 )]
 transform = Transform( 0.714445, 0, -0.699692, 0, 1, 0, 0.699692, 0, 0.714445, 0.95014, 0.0966561, -0.789575 )
 isObject = true
 neutralArea = true
@@ -524,14 +529,47 @@ shape = SubResource( 31 )
 mesh = SubResource( 32 )
 material/0 = null
 
-[node name="SceneTag" parent="." instance=ExtResource( 11 )]
+[node name="SceneTag" parent="." instance=ExtResource( 14 )]
 sceneName = "Lippo's House"
-sceneMusic = ExtResource( 12 )
+sceneMusic = ExtResource( 4 )
+startSilent = true
+musicConditionFlag = "intro"
 
-[node name="Position3D" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07739, 0.4652, -0.957129 )
+[node name="TimerIntro1" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="TimerIntro2" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="TimerIntro3" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerIntro4" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="TimerIntro5" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="TimerIntro6" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="TimerIntro7" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
 
 [connection signal="dialogue_ended" from="Note" to="." method="ReadNote"]
+[connection signal="timeout" from="TimerIntro1" to="." method="Intro1"]
+[connection signal="timeout" from="TimerIntro2" to="." method="Intro2"]
+[connection signal="timeout" from="TimerIntro3" to="." method="Intro3"]
+[connection signal="timeout" from="TimerIntro4" to="." method="Intro4"]
+[connection signal="timeout" from="TimerIntro5" to="." method="Intro5"]
+[connection signal="timeout" from="TimerIntro6" to="." method="Intro6"]
+[connection signal="timeout" from="TimerIntro7" to="." method="Intro7"]
 
 [editable path="DoorArea"]
 

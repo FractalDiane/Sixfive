@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Transition 3.png" type="Texture" id=2]
@@ -113,6 +113,21 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "Fadeout Music"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -80.0 ]
+}
+
 [node name="Controller" type="Node"]
 script = ExtResource( 1 )
 
@@ -148,8 +163,12 @@ anims/Fadeout = SubResource( 4 )
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 anims/Transition = SubResource( 5 )
 
+[node name="AnimationPlayerMusic" type="AnimationPlayer" parent="."]
+"anims/Fadeout Music" = SubResource( 6 )
+
 [node name="SoundTransition" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 

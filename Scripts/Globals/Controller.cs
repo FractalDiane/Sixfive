@@ -13,6 +13,7 @@ public class Controller : Node
 
 	private Dictionary<string, int> flag = new Dictionary<string, int>()
 	{
+		{"intro", 0},
 		{"read_note", 0}
 	};
 
@@ -120,10 +121,24 @@ public class Controller : Node
 	}
 
 
-	public static void PlayMusic(AudioStream music)
+	public static void PlayMusic(AudioStream music, float offset = 0)
 	{
+		Controller.singleton.music.VolumeDb = 0;
 		Controller.singleton.music.Stream = music;
-		Controller.singleton.music.Play();
+		Controller.singleton.music.Play(offset);
+	}
+
+
+	public static void FadeOutMusic(float time)
+	{
+		Controller.singleton.GetNode<AnimationPlayer>("AnimationPlayerMusic").PlaybackSpeed = 1f / time;
+		Controller.singleton.GetNode<AnimationPlayer>("AnimationPlayerMusic").Play("Fadeout Music");
+	}
+
+
+	public static void StopMusic()
+	{
+		Controller.singleton.music.Stop();
 	}
 
 	// ================================================================

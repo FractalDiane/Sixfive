@@ -10,6 +10,9 @@ public class Title : Node2D
 	private Vector3 startPosition;
 
 	[Export]
+	private AudioStream menuMusic;
+
+	[Export]
 	private AudioStream soundMenu1;
 
 	[Export]
@@ -30,10 +33,11 @@ public class Title : Node2D
 
 	private const float COLOR_LOWER = 0.3f;
 	private const float LERP_WEIGHT = 0.05f;
+	private const float SELECT_VOLUME = -12f;
 
-	float col1 = COLOR_LOWER;
-	float col2 = COLOR_LOWER;
-	float col3 = COLOR_LOWER;
+	private float col1 = COLOR_LOWER;
+	private float col2 = COLOR_LOWER;
+	private float col3 = COLOR_LOWER;
 
 	// Refs
 	private Label option1;
@@ -49,6 +53,8 @@ public class Title : Node2D
 		option3 = GetNode<Label>("Option3");
 
 		Player.State = Player.ST.Cutscene;
+
+		Controller.PlayMusic(menuMusic, 6.6f);
 	}
 
 
@@ -68,6 +74,7 @@ public class Title : Node2D
 				selected = true;
 				Controller.PlaySoundBurst(soundSelect);
 				//GetNode<AnimationPlayer>("AnimationPlayer").Play("Fadeout");
+				Controller.FadeOutMusic(3f);
 				Controller.Fade(true, 1.5f);
 				GetNode<Timer>("TimerStart").Start();
 				hover1 = false;
@@ -87,6 +94,7 @@ public class Title : Node2D
 			{
 				selected = true;
 				Controller.PlaySoundBurst(soundSelect);
+				Controller.FadeOutMusic(2f);
 				GetNode<AnimationPlayer>("AnimationPlayer").Play("Fadeout");
 				GetNode<Timer>("TimerQuit").Start();
 				hover3 = false;
@@ -107,7 +115,7 @@ public class Title : Node2D
 	{
 		if (!selected && !creditsOpen)
 		{
-			Controller.PlaySoundBurst(soundMenu1, -24f);
+			Controller.PlaySoundBurst(soundMenu1, SELECT_VOLUME);
 			hover1 = true;
 		}
 	}
@@ -124,7 +132,7 @@ public class Title : Node2D
 	{
 		if (!selected && !creditsOpen)
 		{
-			Controller.PlaySoundBurst(soundMenu2, -24f);
+			Controller.PlaySoundBurst(soundMenu2, SELECT_VOLUME);
 			hover2 = true;
 		}
 	}
@@ -141,7 +149,7 @@ public class Title : Node2D
 	{
 		if (!selected && !creditsOpen)
 		{
-			Controller.PlaySoundBurst(soundMenu3, -24f);
+			Controller.PlaySoundBurst(soundMenu3, SELECT_VOLUME);
 			hover3 = true;
 		}
 	}
@@ -161,6 +169,7 @@ public class Title : Node2D
 		Player.singleton.RotationDegrees = new Vector3(90, 90, 0);
 		Player.PlayAnimation("asleep");
 		BattleUI.ShowUI(false);
+		Player.SnapCamera();
 		Controller.Fade(false, 3f);
 	}
 
