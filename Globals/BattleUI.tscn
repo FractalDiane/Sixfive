@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scripts/Battle/BattleUI.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Backgrounds/Six background.png" type="Texture" id=2]
@@ -8,33 +8,34 @@
 [ext_resource path="res://Audio/Paper.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Audio/Select.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Audio/Music/IntroduceYourself.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Sprites/Battle UI/Six.png" type="Texture" id=9]
-[ext_resource path="res://Sprites/Battle UI/Five.png" type="Texture" id=10]
-[ext_resource path="res://Sprites/Battle UI/LippoHP.png" type="Texture" id=11]
-[ext_resource path="res://Fonts/EthBlackEthon.TTF" type="DynamicFontData" id=12]
-[ext_resource path="res://Sprites/Battle UI/LippoMP.png" type="Texture" id=13]
-[ext_resource path="res://Sprites/Battle UI/LippoDEF.png" type="Texture" id=14]
-[ext_resource path="res://Sprites/Battle UI/EnemyHP.png" type="Texture" id=15]
-[ext_resource path="res://Sprites/Battle UI/DrawButton.png" type="Texture" id=16]
-[ext_resource path="res://Sprites/Battle UI/JokerToken.png" type="Texture" id=17]
-[ext_resource path="res://Sprites/Battle UI/CardCount.png" type="Texture" id=18]
-[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=19]
-[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=20]
+[ext_resource path="res://Audio/Music/ProperlyIntroduced.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Sprites/Battle UI/Six.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Battle UI/Five.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Battle UI/LippoHP.png" type="Texture" id=12]
+[ext_resource path="res://Fonts/EthBlackEthon.TTF" type="DynamicFontData" id=13]
+[ext_resource path="res://Sprites/Battle UI/LippoMP.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Battle UI/LippoDEF.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Battle UI/EnemyHP.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Battle UI/DrawButton.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/Battle UI/JokerToken.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/Battle UI/CardCount.png" type="Texture" id=19]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=20]
+[ext_resource path="res://Sprites/Battle UI/JokerTokenBack.png" type="Texture" id=21]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
 use_filter = true
-font_data = ExtResource( 12 )
+font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
 use_filter = true
-font_data = ExtResource( 12 )
+font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 68
 use_filter = true
-font_data = ExtResource( 12 )
+font_data = ExtResource( 13 )
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 115.391
@@ -46,11 +47,11 @@ extents = Vector2( 113.93, 64.8336 )
 size = 50
 use_filter = true
 extra_spacing_char = 2
-font_data = ExtResource( 12 )
+font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 200
-font_data = ExtResource( 19 )
+font_data = ExtResource( 20 )
 
 [sub_resource type="Animation" id=8]
 tracks/0/type = "value"
@@ -550,7 +551,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1, 1.4, 1.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1.86607, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ), ExtResource( 20 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 17 ) ]
+"values": [ ExtResource( 18 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 18 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Joker:rotation_degrees")
@@ -649,20 +650,21 @@ soundDrawClick = ExtResource( 7 )
 soundPassHover = ExtResource( 6 )
 soundPassClick = ExtResource( 7 )
 battleMusic = ExtResource( 8 )
+bossMusic = ExtResource( 9 )
 
 [node name="Six" type="Sprite" parent="."]
 position = Vector2( 1012, 618 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 
 [node name="Five" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 1178, 542 )
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 
 [node name="Healthbar" type="Sprite" parent="."]
 position = Vector2( 164.295, -129.856 )
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 
 [node name="Label" type="Label" parent="Healthbar"]
 margin_left = -11.3961
@@ -676,7 +678,7 @@ align = 1
 
 [node name="Manabar" type="Sprite" parent="."]
 position = Vector2( 226.408, -62 )
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 
 [node name="Label" type="Label" parent="Manabar"]
 margin_left = -24.3972
@@ -690,7 +692,7 @@ align = 1
 
 [node name="Defensebar" type="Sprite" parent="."]
 position = Vector2( 368, -132 )
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 
 [node name="Label" type="Label" parent="Defensebar"]
 margin_left = -30.3675
@@ -704,7 +706,7 @@ align = 1
 
 [node name="EnemyHealthbar" type="Sprite" parent="."]
 position = Vector2( 1055, -140 )
-texture = ExtResource( 15 )
+texture = ExtResource( 16 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -722,7 +724,7 @@ align = 1
 [node name="DrawButton" type="Sprite" parent="."]
 position = Vector2( 125, 810 )
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 16 )
+texture = ExtResource( 17 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -738,7 +740,7 @@ text = "Draw"
 [node name="PassButton" type="Sprite" parent="."]
 position = Vector2( 125, 905 )
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 16 )
+texture = ExtResource( 17 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -754,7 +756,7 @@ text = "Pass"
 [node name="Joker" type="Sprite" parent="."]
 position = Vector2( -133.88, 455.863 )
 scale = Vector2( 0.53, 0.53 )
-texture = ExtResource( 17 )
+texture = ExtResource( 18 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -796,7 +798,7 @@ text = "x 1"
 
 [node name="CardCount" type="Sprite" parent="."]
 position = Vector2( 79.6652, 321.72 )
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 
 [node name="CardCountLabel" type="Label" parent="CardCount"]
 margin_left = 47.7657
@@ -865,6 +867,7 @@ wait_time = 0.75
 one_shot = true
 
 [node name="TimerEndPlayerTurn" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [node name="TimerEndEnemyTurn" type="Timer" parent="."]
@@ -884,6 +887,10 @@ one_shot = true
 
 [node name="TimerGameOver2" type="Timer" parent="."]
 wait_time = 1.2
+one_shot = true
+
+[node name="TimerPlayerHurt" type="Timer" parent="."]
+wait_time = 1.5
 one_shot = true
 
 [node name="TimerEnemyHurt" type="Timer" parent="."]
@@ -918,6 +925,7 @@ one_shot = true
 [connection signal="timeout" from="TimerEndBattle2" to="." method="EndBattle2"]
 [connection signal="timeout" from="TimerGameOver" to="." method="GameOver"]
 [connection signal="timeout" from="TimerGameOver2" to="." method="GameOver2"]
+[connection signal="timeout" from="TimerPlayerHurt" to="." method="PlayerHurtEnd"]
 [connection signal="timeout" from="TimerEnemyHurt" to="." method="EnemyHurtEnd"]
 [connection signal="timeout" from="TimerEnemyDie" to="." method="EnemyDie"]
 [connection signal="timeout" from="TimerVictory" to="." method="Victory"]

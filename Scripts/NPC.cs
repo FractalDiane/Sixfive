@@ -5,6 +5,9 @@ using System;
 public class NPC : KinematicBody
 {
 	[Signal]
+	public delegate void dialogue_started();
+
+	[Signal]
 	public delegate void dialogue_ended();
 
 	[Export]
@@ -41,6 +44,7 @@ public class NPC : KinematicBody
 			if (isObject)
 				Player.ShowInteract(false);
 
+			EmitSignal(nameof(dialogue_started));
 			Controller.DisplayDialogue(dialogue[dialogueSet], this);
 		}
 	}

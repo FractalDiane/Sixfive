@@ -71,11 +71,11 @@ public class Player : KinematicBody
 				break;
 			}
 
-			case ST.Battle:
+			/* case ST.Battle:
 			{
 				spr.Play("dr_walk");
 				break;
-			}
+			} */
 		}
 
 		if (walking && !BattleUI.BattleMode)

@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Textures/Props/Tile.png" type="Texture" id=1]
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 0, 0, 0, 1, 0.958984, 0.92805, 0.90654, 1 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
 [sub_resource type="Environment" id=3]
 background_mode = 1
@@ -14,13 +14,13 @@ fog_sun_color = Color( 0, 0, 0, 1 )
 glow_strength = 2.0
 adjustment_enabled = true
 adjustment_saturation = 0.01
-adjustment_color_correction = SubResource( 5 )
+adjustment_color_correction = SubResource( 2 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 20, 14, 1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 1.66, 1.75, 1 )
 uv1_offset = Vector3( 0.33, 0.125, 0 )
@@ -37,14 +37,14 @@ use_collision = true
 width = 8.0
 height = 0.3
 depth = 12.0
-material = SubResource( 6 )
+material = SubResource( 5 )
 
 [node name="CSGBox2" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.5 )
 width = 1.0
 height = 0.3
 depth = 1.0
-material = SubResource( 7 )
+material = SubResource( 6 )
 
 [node name="CSGBox3" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.15026, 0 )
