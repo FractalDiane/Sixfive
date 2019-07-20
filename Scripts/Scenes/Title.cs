@@ -55,6 +55,7 @@ public class Title : Node2D
 		Player.State = Player.ST.Cutscene;
 
 		Controller.PlayMusic(menuMusic, 6.6f);
+		//BattleUI.Initialize();
 	}
 
 

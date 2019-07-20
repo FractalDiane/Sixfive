@@ -635,6 +635,7 @@ tracks/1/keys = {
 }
 
 [node name="BattleUI" type="Node2D"]
+visible = false
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_vertical_guides_": [ 640.345 ]
@@ -660,7 +661,7 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 
 [node name="Healthbar" type="Sprite" parent="."]
-position = Vector2( 164.295, 88.1435 )
+position = Vector2( 164.295, -129.856 )
 texture = ExtResource( 11 )
 
 [node name="Label" type="Label" parent="Healthbar"]
@@ -674,7 +675,7 @@ text = "100"
 align = 1
 
 [node name="Manabar" type="Sprite" parent="."]
-position = Vector2( 226.408, 155.104 )
+position = Vector2( 226.408, -62 )
 texture = ExtResource( 13 )
 
 [node name="Label" type="Label" parent="Manabar"]
@@ -688,7 +689,7 @@ text = "3/5"
 align = 1
 
 [node name="Defensebar" type="Sprite" parent="."]
-position = Vector2( 368, 86 )
+position = Vector2( 368, -132 )
 texture = ExtResource( 14 )
 
 [node name="Label" type="Label" parent="Defensebar"]
@@ -702,7 +703,7 @@ text = "0"
 align = 1
 
 [node name="EnemyHealthbar" type="Sprite" parent="."]
-position = Vector2( 1055, 90 )
+position = Vector2( 1055, -140 )
 texture = ExtResource( 15 )
 __meta__ = {
 "_edit_group_": true
@@ -719,7 +720,7 @@ text = "100"
 align = 1
 
 [node name="DrawButton" type="Sprite" parent="."]
-position = Vector2( 125, 563 )
+position = Vector2( 125, 810 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 16 )
 __meta__ = {
@@ -735,7 +736,7 @@ custom_fonts/font = SubResource( 3 )
 text = "Draw"
 
 [node name="PassButton" type="Sprite" parent="."]
-position = Vector2( 125, 658 )
+position = Vector2( 125, 905 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 16 )
 __meta__ = {
@@ -751,7 +752,7 @@ custom_fonts/font = SubResource( 3 )
 text = "Pass"
 
 [node name="Joker" type="Sprite" parent="."]
-position = Vector2( 82.1204, 455.863 )
+position = Vector2( -133.88, 455.863 )
 scale = Vector2( 0.53, 0.53 )
 texture = ExtResource( 17 )
 __meta__ = {
@@ -786,7 +787,7 @@ __meta__ = {
 shape = SubResource( 5 )
 
 [node name="JokerLabel" type="Label" parent="."]
-margin_left = 152.79
+margin_left = -80.0
 margin_top = 435.748
 margin_right = 36.7898
 margin_bottom = 519.748

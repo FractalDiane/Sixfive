@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
 [ext_resource path="res://Textures/Transition 3.png" type="Texture" id=2]
-[ext_resource path="res://Audio/Transition.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Audio/Transition.ogg" type="AudioStream" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -20,6 +21,10 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/cutoff = 0.0
 shader_param/transition = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 60
+font_data = ExtResource( 3 )
 
 [sub_resource type="Animation" id=3]
 tracks/0/type = "value"
@@ -149,12 +154,26 @@ margin_right = 1280.0
 margin_bottom = 720.0
 mouse_filter = 2
 color = Color( 1, 1, 1, 0.923076 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Transition2" type="ColorRect" parent="CanvasLayer"]
 margin_right = 1280.0
 margin_bottom = 720.0
 mouse_filter = 2
 color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="QuitMessage" type="Label" parent="."]
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 291.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 7 )
+text = "Hold to quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fadein = SubResource( 3 )
@@ -167,7 +186,7 @@ anims/Transition = SubResource( 5 )
 "anims/Fadeout Music" = SubResource( 6 )
 
 [node name="SoundTransition" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 4 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 bus = "Music"

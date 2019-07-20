@@ -17,6 +17,12 @@ public class Controller : Node
 		{"read_note", 0}
 	};
 
+	// Save information
+	private string saveScene;
+	private Vector3 savePosition;
+	private AudioStream saveMusic;
+	private Dictionary<string, int> saveFlags = new Dictionary<string, int>();
+
 	private Vector3 preBattlePosition;
 	private Vector2 preBattleFace;
 	private string preBattleScene;
@@ -25,16 +31,25 @@ public class Controller : Node
 
 	private AudioStream currentMusic;
 
+	private float escHoldDuration = 0f;
+	private float quitAlpha = 0;
+
 	// Refs
 	private PackedScene soundBurstRef = GD.Load<PackedScene>("res://Instances/SoundBurst.tscn");
 	private PackedScene dialogueRef = GD.Load<PackedScene>("res://Instances/Dialogue.tscn");
 
+	private Label quitMessage;
 	private AnimationPlayer animPlayer;
 	private AnimationPlayer animPlayer2;
 	private AudioStreamPlayer soundTransition;
 	private AudioStreamPlayer music;
 
 	// ================================================================
+
+	public static string SaveScene { get => Controller.singleton.saveScene; set => Controller.singleton.saveScene = value; }
+	public static Vector3 SavePosition { get => Controller.singleton.savePosition; set => Controller.singleton.savePosition = value; }
+	public static AudioStream SaveMusic { get => Controller.singleton.saveMusic; set => Controller.singleton.saveMusic = value; }
+	public static Dictionary<string, int> SaveFlags { get => Controller.singleton.saveFlags; set => Controller.singleton.saveFlags = value; }
 
 	public static Vector3 PreBattlePosition { get => Controller.singleton.preBattlePosition; set => Controller.singleton.preBattlePosition = value; }
 	public static Vector2 PreBattleFace { get => Controller.singleton.preBattleFace; set => Controller.singleton.preBattleFace = value; }
@@ -48,6 +63,8 @@ public class Controller : Node
 	public override void _Ready()
 	{
 		GD.Randomize();
+		
+		quitMessage = GetNode<Label>("QuitMessage");
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animPlayer2 = GetNode<AnimationPlayer>("AnimationPlayer2");
 		soundTransition = GetNode<AudioStreamPlayer>("SoundTransition");
@@ -59,6 +76,17 @@ public class Controller : Node
 	{
 		if (Input.IsActionJustPressed("sys_fullscreen"))
 			OS.WindowFullscreen ^= true;
+
+		quitAlpha = Mathf.Clamp(quitAlpha + 0.02f * (Input.IsActionPressed("quit") ? 1 : -1), 0, 1);
+		quitMessage.SelfModulate = new Color(1, 1, 1, quitAlpha);
+
+		if (Input.IsActionPressed("quit"))
+			escHoldDuration += delta;
+		else
+			escHoldDuration = 0;
+
+		if (escHoldDuration > 2)
+			GetTree().Quit();
 	}
 
 	// ================================================================
@@ -139,6 +167,24 @@ public class Controller : Node
 	public static void StopMusic()
 	{
 		Controller.singleton.music.Stop();
+	}
+
+
+	public static void SaveGame()
+	{
+		Controller.SaveScene = Controller.singleton.GetTree().CurrentScene.Filename;
+		Controller.SavePosition = Player.singleton.Translation;
+		Controller.SaveMusic = Controller.CurrentMusic;
+		Controller.SaveFlags = Controller.singleton.flag;
+	}
+
+
+	public static void LoadGame()
+	{
+		Controller.GotoScene(Controller.SaveScene);
+		Player.singleton.Translation = Controller.SavePosition;
+		PlayMusic(Controller.SaveMusic);
+		Controller.singleton.flag = Controller.SaveFlags;
 	}
 
 	// ================================================================

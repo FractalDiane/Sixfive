@@ -88,8 +88,9 @@ public class Player : KinematicBody
 		jumping = !IsOnFloor();
 		if (!IsOnFloor())
 			vel.y += GRAVITY * delta * 60f;
-			
-		spr.RotationDegrees = new Vector3(spr.RotationDegrees.x, Mathf.Clamp(spr.RotationDegrees.y + rotSpeed * Mathf.Abs(spr.RotationDegrees.y - targetAngle) * rotDir, 0, 179), spr.RotationDegrees.z);
+
+		if (state != ST.Battle)
+			spr.RotationDegrees = new Vector3(spr.RotationDegrees.x, Mathf.Clamp(spr.RotationDegrees.y + rotSpeed * Mathf.Abs(spr.RotationDegrees.y - targetAngle) * rotDir, 0, 179), spr.RotationDegrees.z);
 	
 		if (state != ST.Battle && state != ST.Cutscene)
 			SpriteAnimation();
@@ -109,6 +110,12 @@ public class Player : KinematicBody
 		Player.singleton.vel.x = 0;
 		Player.singleton.vel.z = 0;
 		Player.singleton.walking = false;
+	}
+
+
+	public static void NeutralizeRotation()
+	{
+		Player.singleton.spr.RotationDegrees = Vector3.Zero;
 	}
 
 

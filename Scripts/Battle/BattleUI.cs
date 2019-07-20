@@ -314,6 +314,11 @@ public class BattleUI : Node2D
 
 	// ================================================================
 
+	public static void Initialize()
+	{
+		BattleUI.singleton.Visible = true;
+	}
+
 	public static void BattleStart(Opponent opponent, bool onField, FieldEnemy targetEnemy = null)
 	{
 		Controller.PreBattlePosition = Player.singleton.Translation;
@@ -395,6 +400,8 @@ public class BattleUI : Node2D
 		PlayerMP = Mathf.FloorToInt((float)BattleUI.singleton.playerMPCap / 2f);
 		Controller.GotoScene(BATTLE_SCENE);
 		Player.singleton.Translation = new Vector3(0, 0.35f, 0);
+		Player.NeutralizeRotation();
+		//Player.singleton.RotationDegrees = new Vector3(0, 0, 0);
 		
 		switch (currentOpponent)
 		{

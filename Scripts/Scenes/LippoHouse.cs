@@ -86,6 +86,7 @@ public class LippoHouse : Spatial
 
 	private void Intro7()
 	{
+		BattleUI.Initialize();
 		Controller.PlayMusic(sceneMusic);
 		Controller.CurrentMusic = sceneMusic;
 		Player.PlayAnimation("dr");
