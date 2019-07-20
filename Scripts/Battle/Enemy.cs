@@ -24,6 +24,7 @@ public class Enemy : KinematicBody
 	// ================================================================
 
 	public int Hp { get => hp; set => hp = value; }
+	public string EnemyName { get => name; }
 
 	// ================================================================
 	

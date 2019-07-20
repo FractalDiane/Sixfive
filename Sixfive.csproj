@@ -67,6 +67,7 @@
     <Compile Include="Scripts\LoadingZone.cs" />
     <Compile Include="Scripts\NPC.cs" />
     <Compile Include="Scripts\SavePoint.cs" />
+    <Compile Include="Scripts\Scenes\GameOver.cs" />
     <Compile Include="Scripts\Scenes\LippoHouse.cs" />
     <Compile Include="Scripts\Scenes\Path4.cs" />
     <Compile Include="Scripts\Scenes\Start.cs" />

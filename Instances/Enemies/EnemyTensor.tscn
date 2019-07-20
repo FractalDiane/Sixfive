@@ -35,6 +35,7 @@ extents = Vector3( 0.184867, 0.140005, 0.0365649 )
 
 [node name="Enemy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+name = "Tensor"
 
 [node name="AnimatedSprite3D" parent="." index="0"]
 frames = SubResource( 1 )

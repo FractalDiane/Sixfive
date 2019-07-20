@@ -3,13 +3,13 @@
 [ext_resource path="res://Sprites/Dialogue box.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Dialogue.cs" type="Script" id=2]
 [ext_resource path="res://Audio/Type.ogg" type="AudioStream" id=3]
-[ext_resource path="res://Fonts/heygorgeous.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Fonts/TechnaSans-Regular.otf" type="DynamicFontData" id=4]
 [ext_resource path="res://Audio/ProjectorClick.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Audio/ProjectorButton.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Audio/ProjectorClick2.ogg" type="AudioStream" id=7]
 
-[sub_resource type="DynamicFont" id=1]
-size = 20
+[sub_resource type="DynamicFont" id=4]
+size = 36
 font_data = ExtResource( 4 )
 
 [sub_resource type="Animation" id=2]
@@ -68,7 +68,7 @@ tracks/1/keys = {
 
 [node name="Dialogue" type="Sprite"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 600, 150 )
+position = Vector2( 640, 150 )
 scale = Vector2( 1e-005, 1e-005 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
@@ -79,7 +79,7 @@ margin_left = -340.0
 margin_top = -115.0
 margin_right = 325.0
 margin_bottom = 98.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Green eggs and spam"
 autowrap = true

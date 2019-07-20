@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Smoke.png-f921d28c47fec5316f23f3ddc26ec86c.stex"
+path="res://.import/Heal.png-71f592c1d6deaf763e1ff0e9b4c49767.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Particles/Smoke.png"
-dest_files=[ "res://.import/Smoke.png-f921d28c47fec5316f23f3ddc26ec86c.stex" ]
+source_file="res://Sprites/Particles/Heal.png"
+dest_files=[ "res://.import/Heal.png-71f592c1d6deaf763e1ff0e9b4c49767.stex" ]
 
 [params]
 

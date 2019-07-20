@@ -145,7 +145,6 @@ public class Player : KinematicBody
 
 	// ================================================================
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void Movement(float delta)
 	{
 		int x1 = Input.IsActionPressed("move_right") ? 1 : 0;
@@ -198,7 +197,6 @@ public class Player : KinematicBody
 	}
 
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void SpriteAnimation()
 	{
 		switch (face.y)
@@ -248,7 +246,6 @@ public class Player : KinematicBody
 	}
 
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void CamreaMovement()
 	{
 		if (camera.Translation.x < Translation.x)

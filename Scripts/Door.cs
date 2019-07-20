@@ -67,7 +67,7 @@ public class Door : Area
 				break;
 		} */
 
-		Player.Face = new Vector2(1, 1);
+		//Player.Face = new Vector2(1, 1);
 
 		Player.SnapCamera();
 		Controller.Fade(false, 0.5f);

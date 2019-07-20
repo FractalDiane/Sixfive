@@ -391,7 +391,7 @@ shape = SubResource( 18 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38978, -5.96046e-008, 0.73043 )
 isObject = true
 neutralArea = true
-dialogue = [ PoolStringArray( "Are you a lowly prince who’s forgotten the basics of interdimensional combat\? Just follow these signs!", "Every self-respecting prince carries around a deck of cards, and each suit does something different.", "Spades deal damage to the enemy.                 Clubs increase your defense.                Hearts heal you.                         Diamonds... Who knows\? They\'re wild cards.", "The number on the face of a card shows how effective it’ll be." ) ]
+dialogue = [ PoolStringArray( "Are you a lowly prince who’s forgotten the basics of interdimensional combat\? Just follow these signs!", "Every self-respecting prince carries around a deck of cards, and each suit does something different.", "Spades deal damage to the enemy.                 Clubs increase your defense.", "Hearts heal you.                                                           Diamonds... Who knows\? They\'re wild cards.", "The number on the face of a card shows how effective it’ll be." ) ]
 advanceSet = false
 
 [node name="CollisionShape" parent="NPC/InteractionArea" index="0"]

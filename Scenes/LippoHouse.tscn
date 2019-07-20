@@ -519,7 +519,7 @@ material = SubResource( 30 )
 transform = Transform( 0.714445, 0, -0.699692, 0, 1, 0, 0.699692, 0, 0.714445, 0.95014, 0.0966561, -0.789575 )
 isObject = true
 neutralArea = true
-dialogue = [ PoolStringArray( "Good morning, Lippo.", "I have a message from the queen. She wants to see you immediately.", "The members of the royal orchestra haven’t shown up this morning, and we have no idea where they could be.", "She thinks the Fifths have something to do with it.", "There are a lot of them roaming the path to the castle. You might have to fight them.", "Nothing the prince of dimension six can’t handle, right\?", "Take these cards and this joker token. You\'ll need them.", "See you at the castle.                         - Nicad" ) ]
+dialogue = [ PoolStringArray( "Good morning, Lippo.", "I have a message from the queen. She wants to see you immediately.", "The members of the royal orchestra haven’t shown up this morning, and we have no idea where they could be.", "She thinks the Fifths have something to do with it.", "There are a lot of them roaming the path to the castle. You might have to fight them.", "Nothing the prince of dimension six can’t handle, right\?", "Take these cards and this joker token. You\'ll need them.", "See you at the castle.                                                              - Nicad" ) ]
 advanceSet = false
 
 [node name="CollisionShape" parent="Note/InteractionArea" index="0"]

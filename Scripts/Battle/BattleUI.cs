@@ -42,6 +42,12 @@ public class BattleUI : Node2D
 	private AudioStream soundHurt;
 
 	[Export]
+	private AudioStream soundHeal;
+
+	[Export]
+	private AudioStream soundDefense;
+
+	[Export]
 	private AudioStream battleMusic;
 
 	[Export]
@@ -59,8 +65,8 @@ public class BattleUI : Node2D
 	private bool uiBuffer = false;
 
 	// PLAYER STATS
-	private int playerHPCap = 10;
-	private int playerHP = 10;
+	private int playerHPCap = 15;
+	private int playerHP = 15;
 	private int playerMPCap = 5;
 	private int playerMP = 0;
 	private int playerDefense = 0;
@@ -93,11 +99,8 @@ public class BattleUI : Node2D
 	{
 		new CardStruct(Suit.Spade, 2, 1),
 		new CardStruct(Suit.Spade, 2, 1),
-		new CardStruct(Suit.Spade, 2, 1),
-		new CardStruct(Suit.Spade, 2, 1),
 		new CardStruct(Suit.Spade, 2, 2),
 		new CardStruct(Suit.Spade, 2, 2),
-		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 3),
@@ -113,7 +116,6 @@ public class BattleUI : Node2D
 		new CardStruct(Suit.Diamond, 2, 1),
 		new CardStruct(Suit.Diamond, 2, 2),
 		new CardStruct(Suit.Diamond, 3, 2),
-		new CardStruct(Suit.Diamond, 3, 3),
 	};
 
 	private List<CardStruct> cardStashCurrentBattle = new List<CardStruct>();
@@ -167,6 +169,7 @@ public class BattleUI : Node2D
 	private Label defenseLabel;
 	private Label cardsLabel;
 	private Label enemyHpLabel;
+	private Label enemyNameLabel;
 
 	private Enemy enemyRef;
 
@@ -175,6 +178,7 @@ public class BattleUI : Node2D
 	private PackedScene cardRef = GD.Load<PackedScene>("res://Instances/Battle/Card.tscn");
 	private PackedScene battleNumberRef = GD.Load<PackedScene>("res://Instances/Battle/BattleNumber.tscn");
 	private PackedScene partsAttackRef = GD.Load<PackedScene>("res://Instances/Particles/PartsAttack.tscn");
+	private PackedScene partsHealRef = GD.Load<PackedScene>("res://Instances/Attack Animations/AnimHeal.tscn");
 
 	private PackedScene enemyBlob = GD.Load<PackedScene>("res://Instances/Enemies/EnemyBlob.tscn");
 	private PackedScene enemyTensor = GD.Load<PackedScene>("res://Instances/Enemies/EnemyTensor.tscn");
@@ -187,10 +191,12 @@ public class BattleUI : Node2D
 	// ================================================================
 
 	public static int PlayerHP { get => BattleUI.singleton.playerHP; set => BattleUI.singleton.playerHP = value; }
+	public static int PlayerHPCap { get => BattleUI.singleton.playerHPCap; set => BattleUI.singleton.playerHPCap = value; }
 	public static int PlayerMP { get => BattleUI.singleton.playerMP; set => BattleUI.singleton.playerMP = value; }
 	public static bool Five { get => BattleUI.singleton.five; }
 	public static int HandSize { get => BattleUI.singleton.handSize; set => BattleUI.singleton.handSize = value; }
-	public static bool BattleMode { get => BattleUI.singleton.battleMode; }
+	public static bool BattleMode { get => BattleUI.singleton.battleMode; set => BattleUI.singleton.battleMode = value; }
+	public static bool Gameover { get => BattleUI.singleton.gameover; set => BattleUI.singleton.gameover = value; }
 	//public static bool UiVisible { get => BattleUI.singleton.uiVisible; }
 
 	// ================================================================
@@ -221,6 +227,7 @@ public class BattleUI : Node2D
 		mpLabel = GetNode<Sprite>("Manabar").GetNode<Label>("Label");
 		defenseLabel = GetNode<Sprite>("Defensebar").GetNode<Label>("Label");
 		enemyHpLabel = GetNode<Sprite>("EnemyHealthbar").GetNode<Label>("Label");
+		enemyNameLabel = GetNode<Sprite>("EnemyHealthbar").GetNode<Label>("Name");
 	}
 
 
@@ -300,22 +307,15 @@ public class BattleUI : Node2D
 		if (battleMode)
 		{
 			enemyHpLabel.Text = enemyRef.Hp.ToString();
+			enemyNameLabel.Text = enemyRef.EnemyName;
 
-			if (victory && !afterVictory && (Input.IsActionJustPressed("click_left" ) || Input.IsActionJustPressed("action") || Input.IsActionJustPressed("move_jump")))
+			if (victory && !afterVictory && (Input.IsActionJustPressed("click_left") || Input.IsActionJustPressed("action") || Input.IsActionJustPressed("move_jump")))
 			{
 				animPlayerVictory.Play("Victory Fade");
 				timerEndBattle.Start();
 				afterVictory = true;
 			}
 		}
-			
-
-		if (Input.IsActionJustPressed("debug_1"))
-			//BattleStart(Opponent.Blob);
-			Controller.Transition();
-
-		if (Input.IsActionJustPressed("debug_2"))
-			DeallocateCards();
 
 		if (Input.IsActionJustPressed("ui_show") && !battleMode && Player.State == Player.ST.Move)
 			ShowUI(!uiVisible);
@@ -469,7 +469,7 @@ public class BattleUI : Node2D
 		ShowUI(true);
 		cardStashCurrentBattle = new List<CardStruct>(cardStash);
 		enemyAttackIndex = EnemySelectAttack();
-		GD.Print($"Selected enemy attack index {enemyAttackIndex}");
+		//GD.Print($"Selected enemy attack index {enemyAttackIndex}");
 		RandomizeHand();
 		InstantiateCardsInHand();
 	}
@@ -525,53 +525,86 @@ public class BattleUI : Node2D
 		switch (currentAttackSuit)
 		{
 			case Suit.Spade: // Attack
-			{
-				string path;
-				Vector3 pos;
-				switch (Mathf.RoundToInt((float)GD.RandRange(0, 2)))
-				{
-					case 0:
-						path = PATH_SPADES1;
-						pos = new Vector3(enemyRef.Translation.x, enemyRef.Translation.y, enemyRef.Translation.z + 0.03f);
-						break;
-
-					default:
-						path = PATH_SPADES1;
-						pos = new Vector3(enemyRef.Translation.x, enemyRef.Translation.y, enemyRef.Translation.z + 0.03f);
-						break;
-				}
-
-				var anim = (Spatial)GD.Load<PackedScene>(path).Instance();
-				anim.Translation = pos;
-				anim.GetNode<Timer>("TimerDamage").Connect("timeout", this, "DamageEnemy");
-				anim.GetNode<AnimationPlayer>("AnimationPlayer").Play("Animation");
-				GetTree().GetRoot().AddChild(anim);
-				
+				SuitSpade();
 				break;
-			}
 
 			case Suit.Club: // Defend
 			{
-				BattleUI.singleton.playerDefense = num;
-
-				BattleUI.singleton.timerEndPlayerTurn.Start();
+				SuitClub();
 				break;
 			}
 
 			case Suit.Heart: // Heal
 			{
-				BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + num, BattleUI.singleton.playerHPCap);
-				BattleUI.singleton.SpawnDamageNumber(num, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), true);
-
-				BattleUI.singleton.timerEndPlayerTurn.Start();
+				SuitHeart();
 				break;
 			}
 
 			case Suit.Diamond: // Wild
 			{
+				switch (Mathf.RoundToInt((float)GD.RandRange(0, 2)))
+				{
+					case 0: // Spade
+						SuitSpade();
+						break;
+
+					case 1: // Club
+						SuitClub();
+						break;
+
+					case 2: // Heart
+						SuitHeart();
+						break;
+				}
+
 				break;
 			}
 		}
+	}
+
+
+	private void SuitSpade()
+	{
+		string path;
+		Vector3 pos;
+		switch (Mathf.RoundToInt((float)GD.RandRange(0, 2)))
+		{
+			case 0:
+				path = PATH_SPADES1;
+				pos = new Vector3(enemyRef.Translation.x, enemyRef.Translation.y, enemyRef.Translation.z + 0.03f);
+				break;
+
+			default:
+				path = PATH_SPADES1;
+				pos = new Vector3(enemyRef.Translation.x, enemyRef.Translation.y, enemyRef.Translation.z + 0.03f);
+				break;
+		}
+
+		var anim = (Spatial)GD.Load<PackedScene>(path).Instance();
+		anim.Translation = pos;
+		anim.GetNode<Timer>("TimerDamage").Connect("timeout", this, "DamageEnemy");
+		anim.GetNode<AnimationPlayer>("AnimationPlayer").Play("Animation");
+		GetTree().GetRoot().AddChild(anim);
+	}
+
+
+	private void SuitClub()
+	{
+		BattleUI.singleton.playerDefense = currentAttackNumber;
+		BattleUI.singleton.timerEndPlayerTurn.Start();
+	}
+
+
+	private void SuitHeart()
+	{
+		Controller.PlaySoundBurst(BattleUI.singleton.soundHeal);
+		var anim = (Spatial)partsHealRef.Instance();
+		anim.Translation = Player.singleton.Translation;
+		GetTree().GetRoot().AddChild(anim);
+
+		BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + currentAttackNumber, BattleUI.singleton.playerHPCap);
+		BattleUI.singleton.SpawnDamageNumber(currentAttackNumber, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), true);
+		BattleUI.singleton.timerEndPlayerTurn.Start();
 	}
 
 
@@ -595,6 +628,12 @@ public class BattleUI : Node2D
 	}
 
 
+	private void DamagePlayer()
+	{
+		Controller.PlaySoundBurst(BattleUI.singleton.soundHurt);
+	}
+
+
 	private int EnemySelectAttack()
 	{
 		switch (currentOpponent)
@@ -604,7 +643,7 @@ public class BattleUI : Node2D
 
 			case Opponent.Tensor:
 			{
-				int num = Mathf.RoundToInt((float)GD.RandRange(0, 2));
+				int num = Mathf.RoundToInt((float)GD.RandRange(0, 4));
 				string anim;
 				switch (num)
 				{
@@ -616,6 +655,12 @@ public class BattleUI : Node2D
 						break;
 					case 2:
 						anim = "prep2";
+						break;
+					case 3:
+						anim = "idle";
+						break;
+					case 4:
+						anim = "idle";
 						break;
 					default:
 						anim = "idle";
@@ -635,9 +680,9 @@ public class BattleUI : Node2D
 	}
 
 
-	private void EnemyAttack(int power)
+	private void EnemyAttack()
 	{
-		int finalPower = Mathf.Max(power - playerDefense, 0);
+		int finalPower = Mathf.Max(currentAttackNumber - playerDefense, 0);
 		playerHP = Mathf.Max(playerHP - finalPower, 0);
 
 		SpawnDamageNumber(finalPower, new Vector2(GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), false);
@@ -656,7 +701,10 @@ public class BattleUI : Node2D
 			gameover = true;
 			GetNode<Timer>("TimerGameOver").Start();
 		}
-			
+		else
+		{
+			BattleUI.singleton.GetNode<Timer>("TimerEndEnemyTurn").Start();
+		}
 	}
 
 
@@ -664,9 +712,10 @@ public class BattleUI : Node2D
 	{
 		DeallocateCards();
 		
+		string path;
 		switch (currentOpponent)
 		{
-			case Opponent.Blob:
+			/* *case Opponent.Blob:
 			{
 				switch (enemyAttackIndex)
 				{
@@ -682,29 +731,59 @@ public class BattleUI : Node2D
 				}
 
 				break;
-			}
+			} */
 
 			case Opponent.Tensor:
 			{
 				switch (enemyAttackIndex)
 				{
 					case 0:
-						EnemyAttack(2);
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
 						break;
 					case 1:
-						EnemyAttack(3);
+						//EnemyAttack(3);
+						currentAttackNumber = 3;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack2.tscn";
 						break;
 					case 2:
-						EnemyAttack(4);
+					//	EnemyAttack(4);
+					currentAttackNumber = 4;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack3.tscn";
+						break;
+					case 3:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					case 4:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					default:
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
 						break;
 				}
 
 				break;
 			}
+
+			default:
+				path = string.Empty;
+				break;
 		}
 
-		if (!gameover)
-			timerEndEnemyTurn.Start();
+		var anim = (Spatial)GD.Load<PackedScene>(path).Instance();
+		anim.Translation = Player.singleton.Translation;
+		anim.GetNode<Timer>("TimerDamage").Connect("timeout", this, "EnemyAttack");
+		anim.GetNode<AnimationPlayer>("AnimationPlayer").Play("Animation");
+		GetTree().GetRoot().AddChild(anim);
+
+		//if (!gameover)
+		//	timerEndEnemyTurn.Start();
 	}
 
 
@@ -716,9 +795,15 @@ public class BattleUI : Node2D
 		drawnThisTurn = false;
 		SwapDimension();
 		ShowUIMin(true);
+		if (hand.Count == 0 && cardStashCurrentBattle.Count == 0)
+		{
+			cardStashCurrentBattle = new List<CardStruct>(cardStash);
+			RandomizeHand();
+		}
+		
 		InstantiateCardsInHand();
 		enemyAttackIndex = EnemySelectAttack();
-		GD.Print($"Player has {cardStashCurrentBattle.Count} cards left");
+		//GD.Print($"Player has {cardStashCurrentBattle.Count} cards left");
 	}
 
 
@@ -853,6 +938,8 @@ public class BattleUI : Node2D
 		Controller.GotoScene(Controller.PreBattleScene);
 		Player.singleton.Translation = Controller.PreBattlePosition;
 		numJokersCurrent = numJokers;
+		drawnThisTurn = false;
+		jokerThisTurn = false;
 		Controller.PlayMusic(Controller.PreBattleMusic);
 		// set player face
 		Player.State = Player.ST.Move;
@@ -864,13 +951,15 @@ public class BattleUI : Node2D
 
 	private void GameOver()
 	{
-		Controller.Fade(true, 1);
+		Controller.FadeOutMusic(1f);
+		Controller.Fade(true, 1f);
 		GetNode<Timer>("TimerGameOver2").Start();
 	}
 
 
 	private void GameOver2()
 	{
+		Controller.PlayMusic(Controller.MusicGameOver);
 		Controller.GotoScene("res://Scenes/GameOver.tscn");
 		Controller.Fade(false, 1.5f);
 	}

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
-[ext_resource path="res://Textures/Transition 3.png" type="Texture" id=2]
-[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=3]
-[ext_resource path="res://Audio/Transition.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Audio/Music/GameOver.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Textures/Transition 3.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=4]
+[ext_resource path="res://Audio/Transition.ogg" type="AudioStream" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -20,13 +21,13 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/cutoff = 0.0
-shader_param/transition = ExtResource( 2 )
+shader_param/transition = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=3]
 size = 60
-font_data = ExtResource( 3 )
+font_data = ExtResource( 4 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
 tracks/0/interp = 1
@@ -40,7 +41,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
 tracks/0/interp = 1
@@ -54,8 +55,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Transition"
+[sub_resource type="Animation" id=6]
 length = 3.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Transition:material:shader_param/cutoff")
@@ -118,8 +118,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Fadeout Music"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Music:volume_db")
 tracks/0/interp = 1
@@ -135,6 +134,7 @@ tracks/0/keys = {
 
 [node name="Controller" type="Node"]
 script = ExtResource( 1 )
+musicGameOver = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -172,21 +172,21 @@ margin_left = 12.0
 margin_top = 12.0
 margin_right = 291.0
 margin_bottom = 78.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 3 )
 text = "Hold to quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Fadein = SubResource( 3 )
-anims/Fadeout = SubResource( 4 )
+anims/Fadein = SubResource( 4 )
+anims/Fadeout = SubResource( 5 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
-anims/Transition = SubResource( 5 )
+anims/Transition = SubResource( 6 )
 
 [node name="AnimationPlayerMusic" type="AnimationPlayer" parent="."]
-"anims/Fadeout Music" = SubResource( 6 )
+"anims/Fadeout Music" = SubResource( 7 )
 
 [node name="SoundTransition" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource( 5 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 bus = "Music"

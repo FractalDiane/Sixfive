@@ -17,6 +17,9 @@ public class Controller : Node
 		{"read_note", 0}
 	};
 
+	[Export]
+	private AudioStream musicGameOver;
+
 	// Save information
 	private string saveScene;
 	private Vector3 savePosition;
@@ -45,6 +48,8 @@ public class Controller : Node
 	private AudioStreamPlayer music;
 
 	// ================================================================
+
+	public static AudioStream MusicGameOver { get => Controller.singleton.musicGameOver; }
 
 	public static string SaveScene { get => Controller.singleton.saveScene; set => Controller.singleton.saveScene = value; }
 	public static Vector3 SavePosition { get => Controller.singleton.savePosition; set => Controller.singleton.savePosition = value; }
@@ -176,15 +181,22 @@ public class Controller : Node
 		Controller.SavePosition = Player.singleton.Translation;
 		Controller.SaveMusic = Controller.CurrentMusic;
 		Controller.SaveFlags = Controller.singleton.flag;
+		BattleUI.PlayerHP = BattleUI.PlayerHPCap;
 	}
 
 
 	public static void LoadGame()
 	{
+		BattleUI.BattleMode = false;
+		BattleUI.Gameover = false;
+		Player.State = Player.ST.Move;
+		BattleUI.PlayerHP = BattleUI.PlayerHPCap;
+		BattleUI.PlayerMP = 0;
 		Controller.GotoScene(Controller.SaveScene);
 		Player.singleton.Translation = Controller.SavePosition;
 		PlayMusic(Controller.SaveMusic);
 		Controller.singleton.flag = Controller.SaveFlags;
+		Controller.Fade(false, 1f);
 	}
 
 	// ================================================================
