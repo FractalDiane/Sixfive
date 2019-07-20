@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/Scenes/Path4.cs" type="Script" id=1]
 [ext_resource path="res://Audio/Music/LiesAreAnswers.ogg" type="AudioStream" id=2]
@@ -27,10 +27,10 @@ albedo_color = Color( 0.203922, 0.168627, 0.34902, 1 )
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 20, 14, 1 )
 
-[sub_resource type="BoxShape" id=10]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=7]
 animations = [ {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -43,6 +43,14 @@ extents = Vector3( 0.25, 0.4, 0.05 )
 
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.4, 1.5, 0.5 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.580082, 1.5, 0.5 )
+
+[sub_resource type="BoxShape" id=10]
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 3, 1, 1 )
 
 [node name="Scene" type="Spatial"]
 script = ExtResource( 1 )
@@ -217,12 +225,12 @@ neutralArea = true
 dialogue = [ PoolStringArray( "Prince Lippo.", "You’re quite dedicated to the queen’s well-being, aren’t you\?", "You’re a considerate soul.", "But I regret to inform you that I’ve lost interest in the chancellor’s cloak.", "The queen has become blind. She devotes her time to all the wrong things. All the wrong people.", "Perhaps she’s become poisoned by the influence of dimension five. I don’t know.", "All I do know is that I cannot allow you to support her any longer.", "It’s a shame, really... I always thought of you as my very own child. But I always saw the possibility of us fighting one day.", "And here we are.", "Chancellor and prince.", "Two members of the royal court, pitted against each other by the whims of fate.", "Forgive me for this, Prince Lippo." ), PoolStringArray(  ) ]
 
 [node name="CollisionShape" parent="NPCZincel/InteractionArea" index="0"]
-shape = SubResource( 10 )
+shape = SubResource( 6 )
 
 [node name="Sprite" type="AnimatedSprite3D" parent="NPCZincel"]
 shaded = true
 alpha_cut = 2
-frames = SubResource( 6 )
+frames = SubResource( 7 )
 animation = "idle"
 
 [node name="CollisionShape" type="CollisionShape" parent="NPCZincel"]
@@ -234,9 +242,34 @@ sceneName = "Castle Exterior"
 [node name="LoadingZone" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.5 )
 targetScene = "res://Scenes/Path3.tscn"
+targetPosition = Vector3( 0, 0.4, -5.5 )
 
 [node name="CollisionShape" parent="LoadingZone" index="0"]
 shape = SubResource( 9 )
+
+[node name="LoadingZone2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.5 )
+targetScene = "res://Scenes/Castle.tscn"
+targetPosition = Vector3( 0, 0.4, -5.5 )
+
+[node name="CollisionShape" parent="LoadingZone2" index="0"]
+shape = SubResource( 11 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 10 )
+
+[node name="WallsColl" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.33864, 0, 5 )
+shape = SubResource( 12 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3964, 0, 5 )
+shape = SubResource( 12 )
 
 [connection signal="dialogue_ended" from="NPCZincel" to="." method="SceneBattle"]
 [connection signal="dialogue_started" from="NPCZincel" to="." method="PlaySceneMusic"]
@@ -244,3 +277,5 @@ shape = SubResource( 9 )
 [editable path="NPCZincel"]
 
 [editable path="LoadingZone"]
+
+[editable path="LoadingZone2"]

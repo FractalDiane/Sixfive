@@ -94,5 +94,6 @@ public class LippoHouse : Spatial
 		var tut = (Sprite)tutorialRef.Instance();
 		GetTree().GetRoot().AddChild(tut);
 		Controller.SetFlag("intro", 1);
+		Controller.SaveGame();
 	}
 }

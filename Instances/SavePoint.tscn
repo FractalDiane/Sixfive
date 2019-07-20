@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/SavePoint.cs" type="Script" id=1]
-[ext_resource path="res://Audio/Save.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Audio/Heal.ogg" type="AudioStream" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.517647, 0.517647, 0.517647, 1 )
@@ -18,11 +18,10 @@ size = Vector3( 0.2, 0.2, 0.2 )
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.15, 0.4, 0.15 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.4, 0.7, 0.4 )
 
-[sub_resource type="Animation" id=4]
-resource_name = "Float"
+[sub_resource type="Animation" id=5]
 length = 6.0
 loop = true
 tracks/0/type = "value"
@@ -67,11 +66,11 @@ shape = SubResource( 3 )
 [node name="InteractionArea" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="InteractionArea"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Float"
-anims/Float = SubResource( 4 )
+anims/Float = SubResource( 5 )
 
 [connection signal="body_entered" from="InteractionArea" to="." method="AreaEntered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="AreaExited"]

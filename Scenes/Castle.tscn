@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Textures/Props/Tile.png" type="Texture" id=1]
+[ext_resource path="res://Instances/LoadingZone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Audio/Music/CastleHalls.ogg" type="AudioStream" id=4]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 0, 0, 0, 1, 0.958984, 0.92805, 0.90654, 1 )
@@ -16,14 +19,20 @@ adjustment_enabled = true
 adjustment_saturation = 0.01
 adjustment_color_correction = SubResource( 2 )
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 20, 14, 1 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 1.66, 1.75, 1 )
 uv1_offset = Vector3( 0.33, 0.125, 0 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 2, 1, 1 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.5, 2, 0.5 )
 
 [node name="Scene" type="Spatial"]
 
@@ -37,14 +46,14 @@ use_collision = true
 width = 8.0
 height = 0.3
 depth = 12.0
-material = SubResource( 5 )
+material = SubResource( 4 )
 
 [node name="CSGBox2" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.5 )
 width = 1.0
 height = 0.3
 depth = 1.0
-material = SubResource( 6 )
+material = SubResource( 5 )
 
 [node name="CSGBox3" type="CSGBox" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.15026, 0 )
@@ -230,3 +239,27 @@ width = 1.47753
 height = 3.0
 depth = 0.4
 
+[node name="WallsColl" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 7 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="WallsColl"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 7 )
+shape = SubResource( 6 )
+
+[node name="LoadingZone" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.5 )
+targetScene = "res://Scenes/Path4.tscn"
+targetPosition = Vector3( 0, 0.4, -3.4 )
+
+[node name="CollisionShape" parent="LoadingZone" index="0"]
+shape = SubResource( 7 )
+
+[node name="SceneTag" parent="." instance=ExtResource( 3 )]
+sceneName = "Castle"
+sceneMusic = ExtResource( 4 )
+
+
+[editable path="LoadingZone"]

@@ -16,6 +16,7 @@ public class FieldEnemy : KinematicBody
 
 	private Timer timerMove;
 	private Timer timerStop;
+	private AnimatedSprite3D spr;
 
 	// ================================================================
 	
@@ -23,6 +24,7 @@ public class FieldEnemy : KinematicBody
 	{
 		timerMove = GetNode<Timer>("TimerMove");
 		timerStop = GetNode<Timer>("TimerStop");
+		spr = GetNode<AnimatedSprite3D>("Sprite");
 
 		timerMove.WaitTime = (float)GD.RandRange(1.5, 2.8);
 		timerMove.Start();
@@ -38,6 +40,8 @@ public class FieldEnemy : KinematicBody
 			vel.z = -transform.basis.z.z;
 			timerMove.Start();
 		}
+
+		spr.FlipH = vel.x > 0;
 
 		//vel.y += GRAVITY * delta * 60f;
 		MoveAndSlide(vel * speed, new Vector3(0, 1, 0));

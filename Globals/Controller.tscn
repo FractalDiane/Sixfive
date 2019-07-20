@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
 [ext_resource path="res://Audio/Music/GameOver.ogg" type="AudioStream" id=2]
@@ -132,6 +132,22 @@ tracks/0/keys = {
 "values": [ 0.0, -80.0 ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "SaveMessage"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("SaveMessage:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="Controller" type="Node"]
 script = ExtResource( 1 )
 musicGameOver = ExtResource( 2 )
@@ -175,6 +191,15 @@ margin_bottom = 78.0
 custom_fonts/font = SubResource( 3 )
 text = "Hold to quit"
 
+[node name="SaveMessage" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 12.0
+margin_top = 64.0
+margin_right = 291.0
+margin_bottom = 130.0
+custom_fonts/font = SubResource( 3 )
+text = "Respawn Point Set"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fadein = SubResource( 4 )
 anims/Fadeout = SubResource( 5 )
@@ -184,6 +209,9 @@ anims/Transition = SubResource( 6 )
 
 [node name="AnimationPlayerMusic" type="AnimationPlayer" parent="."]
 "anims/Fadeout Music" = SubResource( 7 )
+
+[node name="AnimationPlayerSave" type="AnimationPlayer" parent="."]
+anims/SaveMessage = SubResource( 8 )
 
 [node name="SoundTransition" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

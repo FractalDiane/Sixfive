@@ -9,11 +9,12 @@ colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.759563, 1, 1, 1, 0 )
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 spread = 180.0
 initial_velocity = 5.0
-angular_velocity = 0.0
+angular_velocity = 100.0
+angular_velocity_random = 0.5
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 0.3
@@ -36,7 +37,7 @@ emitting = false
 amount = 12
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 3 )
+process_material = SubResource( 6 )
 draw_pass_1 = SubResource( 5 )
 
 [node name="Timer" type="Timer" parent="."]

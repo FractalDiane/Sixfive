@@ -10,7 +10,11 @@ public class Path4 : Spatial
 	
 	public override void _Ready()
 	{
-		
+		if (Controller.Flag("boss") == 1)
+		{
+			GetNode<NPC>("NPCZincel").QueueFree();
+			GetNode<StaticBody>("StaticBody").QueueFree();
+		}
 	}
 
 	// ================================================================

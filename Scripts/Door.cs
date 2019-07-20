@@ -34,7 +34,7 @@ public class Door : Area
 
 	public override void _Process(float delta)
 	{
-		if (Input.IsActionJustPressed("action") && inArea)
+		if (Input.IsActionJustPressed("action") && inArea && !BattleUI.PreBattle)
 		{
 			Player.State = Player.ST.NoInput;
 			Player.Stop();

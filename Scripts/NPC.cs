@@ -32,14 +32,15 @@ public class NPC : KinematicBody
 	
 	public override void _Ready()
 	{
-		
+
 	}
 
 
 	public override void _Process(float delta)
 	{
-		if (Input.IsActionJustPressed("action") && inArea)
+		if (Input.IsActionJustPressed("action") && inArea && !BattleUI.PreBattle)
 		{
+			Player.Stop();
 			inArea = false;
 			if (isObject)
 				Player.ShowInteract(false);
@@ -47,6 +48,8 @@ public class NPC : KinematicBody
 			EmitSignal(nameof(dialogue_started));
 			Controller.DisplayDialogue(dialogue[dialogueSet], this);
 		}
+
+		
 	}
 
 	// ================================================================

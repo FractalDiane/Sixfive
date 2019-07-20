@@ -8,6 +8,9 @@ public class SavePoint : StaticBody
 
 	private bool inArea = false;
 
+	// Refs
+	private PackedScene healParts = GD.Load<PackedScene>("res://Instances/Attack Animations/AnimHeal.tscn");
+
 	// ================================================================
 	
 	public override void _Process(float delta)
@@ -17,6 +20,10 @@ public class SavePoint : StaticBody
 			inArea = false;
 			Player.ShowInteract(false);
 			Controller.PlaySoundBurst(saveSound);
+			var anim = (Spatial)healParts.Instance();
+			anim.Translation = Player.singleton.Translation;
+			GetTree().GetRoot().AddChild(anim);
+			Controller.SaveMessage();
 			Controller.SaveGame();
 		}
 	}

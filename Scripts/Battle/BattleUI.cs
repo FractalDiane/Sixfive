@@ -65,8 +65,8 @@ public class BattleUI : Node2D
 	private bool uiBuffer = false;
 
 	// PLAYER STATS
-	private int playerHPCap = 15;
-	private int playerHP = 15;
+	private int playerHPCap = 20;
+	private int playerHP = 20;
 	private int playerMPCap = 5;
 	private int playerMP = 0;
 	private int playerDefense = 0;
@@ -101,6 +101,10 @@ public class BattleUI : Node2D
 		new CardStruct(Suit.Spade, 2, 1),
 		new CardStruct(Suit.Spade, 2, 2),
 		new CardStruct(Suit.Spade, 2, 2),
+		new CardStruct(Suit.Spade, 2, 2),
+		new CardStruct(Suit.Spade, 2, 2),
+		new CardStruct(Suit.Spade, 2, 3),
+		new CardStruct(Suit.Spade, 3, 3),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 3),
@@ -140,6 +144,7 @@ public class BattleUI : Node2D
 	private bool drawnThisTurn = false;
 	private bool jokerThisTurn = false;
 
+	private bool preBattle = false;
 	private bool victory = false;
 	private bool afterVictory = false;
 	private bool gameover = false;
@@ -190,10 +195,15 @@ public class BattleUI : Node2D
 
 	// ================================================================
 
+	public static bool PreBattle { get => BattleUI.singleton.preBattle; }
+	public static int NumJokers { get => BattleUI.singleton.numJokers; }
+	public static int NumJokersCurrent { set => BattleUI.singleton.numJokersCurrent = value; }
 	public static int PlayerHP { get => BattleUI.singleton.playerHP; set => BattleUI.singleton.playerHP = value; }
 	public static int PlayerHPCap { get => BattleUI.singleton.playerHPCap; set => BattleUI.singleton.playerHPCap = value; }
 	public static int PlayerMP { get => BattleUI.singleton.playerMP; set => BattleUI.singleton.playerMP = value; }
 	public static bool Five { get => BattleUI.singleton.five; }
+	public static bool JokerThisTurn { set => BattleUI.singleton.jokerThisTurn = value; }
+	public static bool DrawThisTurn { set => BattleUI.singleton.drawnThisTurn = value; }
 	public static int HandSize { get => BattleUI.singleton.handSize; set => BattleUI.singleton.handSize = value; }
 	public static bool BattleMode { get => BattleUI.singleton.battleMode; set => BattleUI.singleton.battleMode = value; }
 	public static bool Gameover { get => BattleUI.singleton.gameover; set => BattleUI.singleton.gameover = value; }
@@ -330,6 +340,7 @@ public class BattleUI : Node2D
 
 	public static void BattleStart(Opponent opponent, bool onField, FieldEnemy targetEnemy = null, bool boss = false)
 	{
+		BattleUI.singleton.preBattle = true;
 		Controller.PreBattlePosition = Player.singleton.Translation;
 		Controller.PreBattleFace = new Vector2(1, 1);
 		Controller.PreBattleScene = BattleUI.singleton.GetTree().CurrentScene.Filename;
@@ -338,6 +349,7 @@ public class BattleUI : Node2D
 
 		Player.State = Player.ST.Battle;
 		Player.Vel = Vector3.Zero;
+
 
 		BattleUI.singleton.currentOpponent = opponent;
 		BattleUI.singleton.boss = boss;
@@ -472,6 +484,7 @@ public class BattleUI : Node2D
 		//GD.Print($"Selected enemy attack index {enemyAttackIndex}");
 		RandomizeHand();
 		InstantiateCardsInHand();
+		preBattle = false;
 	}
 
 
@@ -590,8 +603,7 @@ public class BattleUI : Node2D
 
 	private void SuitClub()
 	{
-		BattleUI.singleton.playerDefense = currentAttackNumber;
-		BattleUI.singleton.timerEndPlayerTurn.Start();
+		GetNode<Timer>("TimerShieldDelay").Start();
 	}
 
 
@@ -604,6 +616,16 @@ public class BattleUI : Node2D
 
 		BattleUI.singleton.playerHP = Mathf.Min(BattleUI.singleton.playerHP + currentAttackNumber, BattleUI.singleton.playerHPCap);
 		BattleUI.singleton.SpawnDamageNumber(currentAttackNumber, new Vector2(BattleUI.singleton.GetBattleCamera().UnprojectPosition(Player.singleton.Translation).x, 340), true);
+		BattleUI.singleton.timerEndPlayerTurn.Start();
+	}
+
+
+	private void AnimShield()
+	{
+		BattleUI.singleton.playerDefense = currentAttackNumber;
+		var anim = (Spatial)GD.Load<PackedScene>("res://Instances/Attack Animations/AnimShield.tscn").Instance();
+		anim.Translation = Player.singleton.Translation;
+		GetTree().GetRoot().AddChild(anim);
 		BattleUI.singleton.timerEndPlayerTurn.Start();
 	}
 
@@ -642,6 +664,70 @@ public class BattleUI : Node2D
 				return Mathf.RoundToInt((float)GD.RandRange(0, 2));
 
 			case Opponent.Tensor:
+			{
+				int num = Mathf.RoundToInt((float)GD.RandRange(0, 4));
+				string anim;
+				switch (num)
+				{
+					case 0:
+						anim = "idle";
+						break;
+					case 1:
+						anim = "prep1";
+						break;
+					case 2:
+						anim = "prep2";
+						break;
+					case 3:
+						anim = "idle";
+						break;
+					case 4:
+						anim = "idle";
+						break;
+					default:
+						anim = "idle";
+						break;
+				}
+
+				enemyRef.PlayAnimation(anim);
+				currentEnemyAnim = anim;
+
+				return num;
+			}
+
+			case Opponent.Magma:
+			{
+				int num = Mathf.RoundToInt((float)GD.RandRange(0, 4));
+				string anim;
+				switch (num)
+				{
+					case 0:
+						anim = "idle";
+						break;
+					case 1:
+						anim = "prep1";
+						break;
+					case 2:
+						anim = "prep2";
+						break;
+					case 3:
+						anim = "idle";
+						break;
+					case 4:
+						anim = "idle";
+						break;
+					default:
+						anim = "idle";
+						break;
+				}
+
+				enemyRef.PlayAnimation(anim);
+				currentEnemyAnim = anim;
+
+				return num;
+			}
+
+			case Opponent.BossZincel:
 			{
 				int num = Mathf.RoundToInt((float)GD.RandRange(0, 4));
 				string anim;
@@ -734,6 +820,82 @@ public class BattleUI : Node2D
 			} */
 
 			case Opponent.Tensor:
+			{
+				switch (enemyAttackIndex)
+				{
+					case 0:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					case 1:
+						//EnemyAttack(3);
+						currentAttackNumber = 3;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack2.tscn";
+						break;
+					case 2:
+					//	EnemyAttack(4);
+					currentAttackNumber = 4;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack3.tscn";
+						break;
+					case 3:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					case 4:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					default:
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+				}
+
+				break;
+			}
+
+			case Opponent.Magma:
+			{
+				switch (enemyAttackIndex)
+				{
+					case 0:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					case 1:
+						//EnemyAttack(3);
+						currentAttackNumber = 3;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack2.tscn";
+						break;
+					case 2:
+					//	EnemyAttack(4);
+					currentAttackNumber = 4;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack3.tscn";
+						break;
+					case 3:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					case 4:
+						//EnemyAttack(2);
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+					default:
+						currentAttackNumber = 2;
+						path = "res://Instances/Attack Animations/AnimEnemyAttack1.tscn";
+						break;
+				}
+
+				break;
+			}
+
+			case Opponent.BossZincel:
 			{
 				switch (enemyAttackIndex)
 				{
@@ -934,6 +1096,7 @@ public class BattleUI : Node2D
 		enemyRef.QueueFree();
 		victory = false;
 		afterVictory = false;
+		five = false;
 		ShowUI(false);
 		Controller.GotoScene(Controller.PreBattleScene);
 		Player.singleton.Translation = Controller.PreBattlePosition;

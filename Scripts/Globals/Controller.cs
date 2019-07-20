@@ -14,7 +14,8 @@ public class Controller : Node
 	private Dictionary<string, int> flag = new Dictionary<string, int>()
 	{
 		{"intro", 0},
-		{"read_note", 0}
+		{"read_note", 0},
+		{"boss", 0}
 	};
 
 	[Export]
@@ -189,6 +190,9 @@ public class Controller : Node
 	{
 		BattleUI.BattleMode = false;
 		BattleUI.Gameover = false;
+		BattleUI.JokerThisTurn = false;
+		BattleUI.NumJokersCurrent = BattleUI.NumJokers;
+		BattleUI.DrawThisTurn = false;
 		Player.State = Player.ST.Move;
 		BattleUI.PlayerHP = BattleUI.PlayerHPCap;
 		BattleUI.PlayerMP = 0;
@@ -197,6 +201,12 @@ public class Controller : Node
 		PlayMusic(Controller.SaveMusic);
 		Controller.singleton.flag = Controller.SaveFlags;
 		Controller.Fade(false, 1f);
+	}
+
+
+	public static void SaveMessage()
+	{
+		Controller.singleton.GetNode<AnimationPlayer>("AnimationPlayerSave").Play("SaveMessage");
 	}
 
 	// ================================================================

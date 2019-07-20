@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite3D" parent="."]
+shaded = true
 alpha_cut = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
