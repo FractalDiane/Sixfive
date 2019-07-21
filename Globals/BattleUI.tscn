@@ -34,33 +34,33 @@ size = 50
 use_filter = true
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=3]
 size = 60
 use_filter = true
 font_data = ExtResource( 19 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 68
 use_filter = true
 font_data = ExtResource( 15 )
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=5]
 radius = 115.391
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 113.93, 64.8336 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 50
 use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 200
 font_data = ExtResource( 19 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Healthbar:position")
 tracks/0/interp = 2
@@ -158,7 +158,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1055, 90 ), Vector2( 1055, -140 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:position")
 tracks/0/interp = 2
@@ -208,7 +208,7 @@ tracks/3/keys = {
 "values": [ Vector2( 125, 658 ), Vector2( 125, 905 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Healthbar:position")
 tracks/0/interp = 2
@@ -306,7 +306,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1055, -140 ), Vector2( 1055, 90 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:position")
 tracks/0/interp = 2
@@ -356,7 +356,7 @@ tracks/3/keys = {
 "values": [ Vector2( 125, 905 ), Vector2( 125, 658 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("DrawButton:rotation_degrees")
@@ -371,7 +371,7 @@ tracks/0/keys = {
 "values": [ 0.0, 10.0, -12.0, 10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("PassButton:rotation_degrees")
@@ -386,7 +386,7 @@ tracks/0/keys = {
 "values": [ 0.0, 10.0, -12.0, 10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Six:position")
 tracks/0/interp = 2
@@ -460,7 +460,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Six:position")
 tracks/0/interp = 2
@@ -534,7 +534,7 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.392157 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 2.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:scale")
@@ -573,7 +573,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=18]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Joker:rotation_degrees")
@@ -588,8 +588,7 @@ tracks/0/keys = {
 "values": [ 0.0, 15.0, -20.0, 15.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=18]
-resource_name = "Victory Appear"
+[sub_resource type="Animation" id=19]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Victory:margin_top")
 tracks/0/interp = 2
@@ -615,8 +614,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=19]
-resource_name = "Victory Fade"
+[sub_resource type="Animation" id=20]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Victory:margin_top")
 tracks/0/interp = 2
@@ -736,7 +734,7 @@ margin_left = -521.0
 margin_top = 46.0
 margin_right = 119.0
 margin_bottom = 112.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 3 )
 text = "Some cool enemy individual"
 align = 2
 
@@ -753,7 +751,7 @@ margin_left = -83.0448
 margin_top = -29.0089
 margin_right = 86.9552
 margin_bottom = 41.9911
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Draw"
 
 [node name="PassButton" type="Sprite" parent="."]
@@ -769,7 +767,7 @@ margin_left = -69.7115
 margin_top = -29.0089
 margin_right = 100.289
 margin_bottom = 41.9911
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Pass"
 
 [node name="Joker" type="Sprite" parent="."]
@@ -785,7 +783,7 @@ position = Vector2( 82.1204, 455.863 )
 scale = Vector2( 0.53, 0.53 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoverAreaJoker"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="HoverAreaDraw" type="Area2D" parent="."]
 position = Vector2( 126.061, 563.804 )
@@ -795,7 +793,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoverAreaDraw"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="HoverAreaPass" type="Area2D" parent="."]
 position = Vector2( 126.061, 658.772 )
@@ -805,14 +803,14 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HoverAreaPass"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="JokerLabel" type="Label" parent="."]
 margin_left = -80.0
 margin_top = 435.748
 margin_right = 36.7898
 margin_bottom = 519.748
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "x 1"
 
 [node name="CardCount" type="Sprite" parent="."]
@@ -824,7 +822,7 @@ margin_left = 47.7657
 margin_top = -17.1561
 margin_right = 111.766
 margin_bottom = 66.8439
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "x 1"
 
 [node name="Victory" type="Label" parent="."]
@@ -838,37 +836,37 @@ margin_top = 250.0
 margin_right = 1050.0
 margin_bottom = 400.0
 rect_scale = Vector2( 0.8, 0.8 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "VICTORY"
 align = 1
 
 [node name="AnimationPlayerUI" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Hide UI" = SubResource( 8 )
-"anims/Hide UI Min" = SubResource( 9 )
-"anims/Show UI" = SubResource( 10 )
-"anims/Show UI Min" = SubResource( 11 )
+"anims/Hide UI" = SubResource( 9 )
+"anims/Hide UI Min" = SubResource( 10 )
+"anims/Show UI" = SubResource( 11 )
+"anims/Show UI Min" = SubResource( 12 )
 
 [node name="AnimationPlayerDraw" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Draw Hover" = SubResource( 12 )
+"anims/Draw Hover" = SubResource( 13 )
 
 [node name="AnimationPlayerPass" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Pass Hover" = SubResource( 13 )
+"anims/Pass Hover" = SubResource( 14 )
 
 [node name="AnimationPlayerSixfive" type="AnimationPlayer" parent="."]
-"anims/Switch to Five" = SubResource( 14 )
-"anims/Switch to Six" = SubResource( 15 )
+"anims/Switch to Five" = SubResource( 15 )
+"anims/Switch to Six" = SubResource( 16 )
 
 [node name="AnimationPlayerJoker" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-"anims/Flip Joker" = SubResource( 16 )
-"anims/Joker Hover" = SubResource( 17 )
+"anims/Flip Joker" = SubResource( 17 )
+"anims/Joker Hover" = SubResource( 18 )
 
 [node name="AnimationPlayerVictory" type="AnimationPlayer" parent="."]
-"anims/Victory Appear" = SubResource( 18 )
-"anims/Victory Fade" = SubResource( 19 )
+"anims/Victory Appear" = SubResource( 19 )
+"anims/Victory Fade" = SubResource( 20 )
 
 [node name="TimerBattleTransition" type="Timer" parent="."]
 wait_time = 1.1
@@ -931,6 +929,10 @@ one_shot = true
 wait_time = 0.02
 one_shot = true
 
+[node name="TimerAfterBattleEvent" type="Timer" parent="."]
+wait_time = 0.02
+one_shot = true
+
 [connection signal="mouse_entered" from="HoverAreaJoker" to="." method="JokerHoverStart"]
 [connection signal="mouse_exited" from="HoverAreaJoker" to="." method="JokerHoverEnd"]
 [connection signal="mouse_entered" from="HoverAreaDraw" to="." method="DrawHoverStart"]
@@ -953,3 +955,4 @@ one_shot = true
 [connection signal="timeout" from="TimerEnemyDie" to="." method="EnemyDie"]
 [connection signal="timeout" from="TimerVictory" to="." method="Victory"]
 [connection signal="timeout" from="TimerDestroyFieldEnemy" to="." method="DestroyFieldEnemy"]
+[connection signal="timeout" from="TimerAfterBattleEvent" to="." method="AfterBattleEvent"]

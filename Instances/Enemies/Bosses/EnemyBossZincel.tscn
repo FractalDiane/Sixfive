@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Instances/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Battle/Enemies/EnemyBossZincel.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/Characters/Chancellor/Zincel.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Chancellor/Zincel hurt.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Characters/Chancellor/Zincel prep2.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Characters/Chancellor/Zincel prep1.png" type="Texture" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -10,15 +13,30 @@ animations = [ {
 "loop": true,
 "name": "idle",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "prep2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "prep1",
+"speed": 5.0
 } ]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.2, 0.35, 0.05 )
 
-[node name="Enemy" instance=ExtResource( 1 )]
+[node name="Enemy" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 name = "Chancellor Zincel"
-maxHP = 30
+maxHP = 12
 
 [node name="AnimatedSprite3D" parent="." index="0"]
 frames = SubResource( 1 )

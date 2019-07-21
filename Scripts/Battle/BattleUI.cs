@@ -108,10 +108,10 @@ public class BattleUI : Node2D
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 3),
-		new CardStruct(Suit.Heart, 3, 3),
-		new CardStruct(Suit.Heart, 3, 3),
 		new CardStruct(Suit.Heart, 3, 2),
-		new CardStruct(Suit.Heart, 3, 2),
+		new CardStruct(Suit.Heart, 4, 2),
+		new CardStruct(Suit.Heart, 5, 3),
+		new CardStruct(Suit.Heart, 6, 3),
 		new CardStruct(Suit.Club, 1, 1),
 		new CardStruct(Suit.Club, 1, 1),
 		new CardStruct(Suit.Club, 2, 2),
@@ -195,13 +195,13 @@ public class BattleUI : Node2D
 
 	// ================================================================
 
-	public static bool PreBattle { get => BattleUI.singleton.preBattle; }
+	public static bool PreBattle { get => BattleUI.singleton.preBattle; set => BattleUI.singleton.preBattle = value; }
 	public static int NumJokers { get => BattleUI.singleton.numJokers; }
 	public static int NumJokersCurrent { set => BattleUI.singleton.numJokersCurrent = value; }
 	public static int PlayerHP { get => BattleUI.singleton.playerHP; set => BattleUI.singleton.playerHP = value; }
 	public static int PlayerHPCap { get => BattleUI.singleton.playerHPCap; set => BattleUI.singleton.playerHPCap = value; }
 	public static int PlayerMP { get => BattleUI.singleton.playerMP; set => BattleUI.singleton.playerMP = value; }
-	public static bool Five { get => BattleUI.singleton.five; }
+	public static bool Five { get => BattleUI.singleton.five; set => BattleUI.singleton.five = value; }
 	public static bool JokerThisTurn { set => BattleUI.singleton.jokerThisTurn = value; }
 	public static bool DrawThisTurn { set => BattleUI.singleton.drawnThisTurn = value; }
 	public static int HandSize { get => BattleUI.singleton.handSize; set => BattleUI.singleton.handSize = value; }
@@ -356,6 +356,7 @@ public class BattleUI : Node2D
 
 		Controller.Transition();
 		Controller.FadeOutMusic(1f);
+		BattleUI.Five = false;
 		BattleUI.singleton.GetNode<Timer>("TimerBattleTransition").Start();
 	}
 
@@ -1109,6 +1110,7 @@ public class BattleUI : Node2D
 		battleMode = false;
 		Controller.Fade(false, 0.5f);
 		GetNode<Timer>("TimerDestroyFieldEnemy").Start();
+		GetNode<Timer>("TimerAfterBattleEvent").Start();
 	}
 
 
@@ -1153,6 +1155,17 @@ public class BattleUI : Node2D
 		{
 			GetTree().GetRoot().GetNode<FieldEnemy>(Controller.PreBattleEnemy).QueueFree();
 			Controller.PreBattleEnemy = null;
+		}
+	}
+
+
+	private void AfterBattleEvent()
+	{
+		if (GetTree().CurrentScene.Filename == "res://Scenes/Path4.tscn")
+		{
+			GetTree().GetRoot().GetNode<NPC>("NPCZincel").QueueFree();
+			GetTree().GetRoot().GetNode<StaticBody>("StaticBody").QueueFree();
+			Controller.SetFlag("boss", 1);
 		}
 	}
 }
