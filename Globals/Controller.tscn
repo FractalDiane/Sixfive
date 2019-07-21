@@ -136,13 +136,13 @@ tracks/0/keys = {
 resource_name = "SaveMessage"
 length = 3.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("SaveMessage:modulate")
+tracks/0/path = NodePath("CanvasLayer/SaveMessage:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 2.5, 3 ),
+"times": PoolRealArray( 0, 0.5, 2, 3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -183,7 +183,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="QuitMessage" type="Label" parent="."]
+[node name="QuitMessage" type="Label" parent="CanvasLayer"]
 margin_left = 12.0
 margin_top = 12.0
 margin_right = 291.0
@@ -191,7 +191,7 @@ margin_bottom = 78.0
 custom_fonts/font = SubResource( 3 )
 text = "Hold to quit"
 
-[node name="SaveMessage" type="Label" parent="."]
+[node name="SaveMessage" type="Label" parent="CanvasLayer"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 12.0
 margin_top = 620.0

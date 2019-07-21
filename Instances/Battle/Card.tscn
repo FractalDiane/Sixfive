@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Sprites/Battle UI/CardSpade.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Battle/Card.cs" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Audio/Discard.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Fonts/EthBlackEthon.TTF" type="DynamicFontData" id=9]
 [ext_resource path="res://Sprites/Battle UI/Mana.png" type="Texture" id=10]
+[ext_resource path="res://Fonts/UASQUARE.TTF" type="DynamicFontData" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 100, 150 )
@@ -21,6 +22,10 @@ font_data = ExtResource( 9 )
 [sub_resource type="DynamicFont" id=3]
 size = 50
 font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 46
+font_data = ExtResource( 11 )
 
 [node name="Card" type="Sprite"]
 texture = ExtResource( 1 )
@@ -71,6 +76,16 @@ self_modulate = Color( 0.705882, 0.705882, 0.705882, 1 )
 position = Vector2( 48, -126 )
 scale = Vector2( 0.678571, 0.678571 )
 texture = ExtResource( 10 )
+
+[node name="Instructions" type="Label" parent="."]
+margin_left = -140.0
+margin_top = -270.0
+margin_right = 133.0
+margin_bottom = -163.0
+custom_fonts/font = SubResource( 4 )
+text = "Left - Play
+Right - Discard"
+align = 1
 
 [connection signal="mouse_entered" from="Hoverbox" to="." method="HoverStart"]
 [connection signal="mouse_exited" from="Hoverbox" to="." method="HoverEnd"]

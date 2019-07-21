@@ -1,13 +1,12 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Instances/LoadingZone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Instances/SceneTag.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Audio/Music/EuclideanRainbow.ogg" type="AudioStream" id=3]
 [ext_resource path="res://Instances/FieldEnemy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scripts/FieldEnemy.cs" type="Script" id=5]
-[ext_resource path="res://Sprites/Characters/Magma/Magma.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Characters/Magma/Magma 3.png" type="Texture" id=7]
-[ext_resource path="res://Sprites/Characters/Magma/Magma 2.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Magma/Magma.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Characters/Magma/Magma 3.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Magma/Magma 2.png" type="Texture" id=7]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -44,7 +43,7 @@ extents = Vector3( 0.588868, 1, 1.02161 )
 
 [sub_resource type="SpriteFrames" id=11]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
@@ -73,6 +72,34 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0.322497, 0 ), Vector3( 0, 0.5, 0 ) ]
 }
+
+[sub_resource type="SpatialMaterial" id=16]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+albedo_color = Color( 1, 0.878431, 0.619608, 1 )
+
+[sub_resource type="Gradient" id=17]
+offsets = PoolRealArray( 0, 0.508197, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=18]
+gradient = SubResource( 17 )
+
+[sub_resource type="ParticlesMaterial" id=19]
+emission_shape = 2
+emission_box_extents = Vector3( 2, 2, 2 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.5
+initial_velocity_random = 0.25
+angular_velocity = -0.00905867
+scale = 0.01
+scale_random = 0.3
+color_ramp = SubResource( 18 )
+
+[sub_resource type="QuadMesh" id=20]
+size = Vector2( 0.5, 0.5 )
 
 [node name="Scene" type="Spatial"]
 
@@ -198,22 +225,26 @@ shape = SubResource( 10 )
 sceneName = "Prince's Path"
 sceneMusic = ExtResource( 3 )
 
-[node name="FieldEnemy2" type="KinematicBody" parent="." instance=ExtResource( 4 )]
+[node name="FieldEnemy2" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0419113, 3.74777 )
-script = ExtResource( 5 )
 enemy = 2
 
-[node name="Sprite" type="AnimatedSprite3D" parent="FieldEnemy2" index="0"]
+[node name="Sprite" type="AnimatedSprite3D" parent="FieldEnemy2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.322497, 0 )
 shaded = true
 alpha_cut = 2
 frames = SubResource( 11 )
-frame = 2
 playing = true
 
-[node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2" index="1"]
+[node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.337888, 0 )
 shape = SubResource( 12 )
+
+[node name="TimerMove" type="Timer" parent="FieldEnemy2"]
+one_shot = true
+
+[node name="TimerStop" type="Timer" parent="FieldEnemy2"]
+one_shot = true
 
 [node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2/VisionArea" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.343375, 0 )
@@ -222,12 +253,6 @@ shape = SubResource( 13 )
 [node name="CollisionShape" type="CollisionShape" parent="FieldEnemy2/EncounterArea" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.321555, 0 )
 shape = SubResource( 14 )
-
-[node name="TimerMove" type="Timer" parent="FieldEnemy2" index="4"]
-one_shot = true
-
-[node name="TimerStop" type="Timer" parent="FieldEnemy2" index="5"]
-one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FieldEnemy2"]
 autoplay = "Idle"
@@ -242,11 +267,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01159, 0.87689, -3.375 )
 [node name="OmniLight3" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03332, 0.87689, -6.11037 )
 
-[connection signal="body_entered" from="FieldEnemy2/VisionArea" to="FieldEnemy2" method="VisionAreaEntered"]
-[connection signal="body_exited" from="FieldEnemy2/VisionArea" to="FieldEnemy2" method="VisionAreaExited"]
-[connection signal="body_entered" from="FieldEnemy2/EncounterArea" to="FieldEnemy2" method="EncounterAreaEntered"]
-[connection signal="timeout" from="FieldEnemy2/TimerMove" to="FieldEnemy2" method="Move"]
-[connection signal="timeout" from="FieldEnemy2/TimerStop" to="FieldEnemy2" method="Stop"]
+[node name="Particles" type="Particles" parent="."]
+material_override = SubResource( 16 )
+amount = 12
+lifetime = 3.0
+process_material = SubResource( 19 )
+draw_pass_1 = SubResource( 20 )
+
 
 [editable path="LoadingZone"]
 

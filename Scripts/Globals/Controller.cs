@@ -70,7 +70,7 @@ public class Controller : Node
 	{
 		GD.Randomize();
 		
-		quitMessage = GetNode<Label>("QuitMessage");
+		quitMessage = GetNode<CanvasLayer>("CanvasLayer").GetNode<Label>("QuitMessage");
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animPlayer2 = GetNode<AnimationPlayer>("AnimationPlayer2");
 		soundTransition = GetNode<AudioStreamPlayer>("SoundTransition");

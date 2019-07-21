@@ -46,20 +46,20 @@ uv1_offset = Vector3( 0, -0.01, 0 )
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.157627, 0.418401, 0.267439 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=16]
 flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 albedo_color = Color( 1, 0.878431, 0.619608, 1 )
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.508197, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=18]
+gradient = SubResource( 17 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=19]
 emission_shape = 2
 emission_box_extents = Vector3( 2, 2, 2 )
 spread = 180.0
@@ -69,9 +69,9 @@ initial_velocity_random = 0.25
 angular_velocity = -0.00905867
 scale = 0.01
 scale_random = 0.3
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 18 )
 
-[sub_resource type="QuadMesh" id=13]
+[sub_resource type="QuadMesh" id=20]
 size = Vector2( 0.5, 0.5 )
 
 [sub_resource type="SpatialMaterial" id=14]
@@ -85,23 +85,23 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="SpatialMaterial" id=16]
+[sub_resource type="SpatialMaterial" id=27]
 emission_enabled = true
 emission = Color( 1, 1, 1, 1 )
 emission_energy = 0.75
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="SpatialMaterial" id=17]
+[sub_resource type="SpatialMaterial" id=28]
 albedo_color = Color( 0.517647, 0, 0.168627, 1 )
 
-[sub_resource type="BoxShape" id=18]
+[sub_resource type="BoxShape" id=29]
 extents = Vector3( 0.5, 2, 0.4 )
 
-[sub_resource type="BoxShape" id=19]
+[sub_resource type="BoxShape" id=30]
 extents = Vector3( 0.214413, 1, 0.174315 )
 
-[sub_resource type="SpatialMaterial" id=20]
+[sub_resource type="SpatialMaterial" id=31]
 albedo_color = Color( 0.364706, 0.305882, 0.266667, 1 )
 
 [sub_resource type="BoxShape" id=21]
@@ -215,11 +215,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.55651e-006, 0, 0 )
 shape = SubResource( 8 )
 
 [node name="Particles" type="Particles" parent="."]
-material_override = SubResource( 9 )
+material_override = SubResource( 16 )
 amount = 12
 lifetime = 3.0
-process_material = SubResource( 12 )
-draw_pass_1 = SubResource( 13 )
+process_material = SubResource( 19 )
+draw_pass_1 = SubResource( 20 )
 
 [node name="Window" type="CSGCombiner" parent="."]
 editor/display_folded = true
@@ -345,14 +345,14 @@ use_collision = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0528393, 0 )
 radius = 0.07
 rings = 12
-material = SubResource( 16 )
+material = SubResource( 27 )
 
 [node name="CSGBox" type="CSGBox" parent="Lamp2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0364322, 0 )
 width = 0.03
 height = 0.15
 depth = 0.03
-material = SubResource( 17 )
+material = SubResource( 28 )
 
 [node name="Lamp3" type="CSGCombiner" parent="."]
 editor/display_folded = true
@@ -363,14 +363,14 @@ use_collision = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0528393, 0 )
 radius = 0.07
 rings = 12
-material = SubResource( 16 )
+material = SubResource( 27 )
 
 [node name="CSGBox" type="CSGBox" parent="Lamp3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0364322, 0 )
 width = 0.03
 height = 0.15
 depth = 0.03
-material = SubResource( 17 )
+material = SubResource( 28 )
 
 [node name="OmniLight3" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.932451, 0.89834, 0.14494 )
@@ -385,18 +385,18 @@ targetScene = "res://Scenes/Path2.tscn"
 targetPosition = Vector3( -5.762, 0.4, 0 )
 
 [node name="CollisionShape" parent="LoadingZone" index="0"]
-shape = SubResource( 18 )
+shape = SubResource( 29 )
 
 [node name="NPC" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38978, -5.96046e-008, 0.73043 )
 isObject = true
 neutralArea = true
-dialogue = [ PoolStringArray( "Are you a lowly prince who’s forgotten the basics of interdimensional combat\? Just follow these signs!", "Every self-respecting prince carries around a deck of cards, and each suit does something different.", "Spades deal damage to the enemy.                 Clubs increase your defense.", "Hearts heal you.                                                           Diamonds... Who knows\? They\'re wild cards.", "The number on the face of a card shows how effective it’ll be." ) ]
+dialogue = [ PoolStringArray( "Are you a lowly prince who’s forgotten the basics of interdimensional combat\? Just follow these signs!", "Every self-respecting prince carries around a deck of cards, and each suit does something different.", "Spades deal damage to the enemy.                 Clubs increase your defense.", "Hearts heal you.                                                           Diamonds... Who knows\? They\'re wild cards.", "The number on the face of a card shows how effective it’ll be.", "You can only hold three cards in your hand. Right-click to discard ones you don\'t want." ) ]
 advanceSet = false
 
 [node name="CollisionShape" parent="NPC/InteractionArea" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2 )
-shape = SubResource( 19 )
+shape = SubResource( 30 )
 
 [node name="Sign" type="CSGCombiner" parent="NPC"]
 use_collision = true
@@ -406,14 +406,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593956, 0 )
 width = 0.5
 height = 0.25
 depth = 0.05
-material = SubResource( 20 )
+material = SubResource( 31 )
 
 [node name="CSGBox2" type="CSGBox" parent="NPC/Sign"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.311628, 0 )
 width = 0.043145
 height = 0.413574
 depth = 0.05
-material = SubResource( 20 )
+material = SubResource( 31 )
 
 [node name="NPC2" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01022, -5.96046e-008, -1.46957 )
@@ -424,7 +424,7 @@ advanceSet = false
 
 [node name="CollisionShape" parent="NPC2/InteractionArea" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2 )
-shape = SubResource( 19 )
+shape = SubResource( 30 )
 
 [node name="Sign" type="CSGCombiner" parent="NPC2"]
 use_collision = true
@@ -434,14 +434,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.593956, 0 )
 width = 0.5
 height = 0.25
 depth = 0.05
-material = SubResource( 20 )
+material = SubResource( 31 )
 
 [node name="CSGBox2" type="CSGBox" parent="NPC2/Sign"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.311628, 0 )
 width = 0.043145
 height = 0.413574
 depth = 0.05
-material = SubResource( 20 )
+material = SubResource( 31 )
 
 [node name="WallsColl" type="StaticBody" parent="."]
 

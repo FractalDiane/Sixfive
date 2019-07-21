@@ -36,6 +36,7 @@ public class Card : Sprite
 	private bool selected = false;
 
 	private bool hover = false;
+	private float instrAlpha = 0f;
 
 	private Vector2 startPosition;
 	private float hoverPosition;
@@ -50,6 +51,7 @@ public class Card : Sprite
 	// Refs
 	//private Label numberLabel;
 	//private Label costLabel;
+	private Label instr;
 
 	// ================================================================
 
@@ -65,6 +67,7 @@ public class Card : Sprite
 	{
 	//	numberLabel = GetNode<Label>("Number");
 	//	costLabel = GetNode<Label>("Cost");
+		instr = GetNode<Label>("Instructions");
 
 		startPosition = new Vector2(Position.x, IDLE_Y);
 		hoverPosition = startPosition.y - 50;
@@ -118,6 +121,9 @@ public class Card : Sprite
 			Modulate = selected || (BattleUI.Five && cost <= BattleUI.PlayerMP) ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.33f);
 		else
 			Modulate = selected || (!BattleUI.Five && cost <= BattleUI.PlayerMP) ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.33f);
+	
+		instrAlpha = Mathf.Clamp(instrAlpha + (0.05f * (hover && !discarded && !selected && Clickable() ? 1 : -1)), 0, 1);
+		instr.SelfModulate = new Color(1, 1, 1, instrAlpha);
 	}
 
 	// ================================================================
