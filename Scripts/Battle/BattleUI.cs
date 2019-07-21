@@ -103,7 +103,7 @@ public class BattleUI : Node2D
 		new CardStruct(Suit.Spade, 2, 2),
 		new CardStruct(Suit.Spade, 2, 2),
 		new CardStruct(Suit.Spade, 2, 2),
-		new CardStruct(Suit.Spade, 2, 3),
+		new CardStruct(Suit.Spade, 2, 2),
 		new CardStruct(Suit.Spade, 3, 3),
 		new CardStruct(Suit.Spade, 3, 2),
 		new CardStruct(Suit.Spade, 3, 2),
@@ -118,8 +118,8 @@ public class BattleUI : Node2D
 		new CardStruct(Suit.Club, 2, 1),
 		new CardStruct(Suit.Diamond, 2, 1),
 		new CardStruct(Suit.Diamond, 2, 1),
-		new CardStruct(Suit.Diamond, 2, 2),
 		new CardStruct(Suit.Diamond, 3, 2),
+		new CardStruct(Suit.Diamond, 5, 3),
 	};
 
 	private List<CardStruct> cardStashCurrentBattle = new List<CardStruct>();
@@ -426,6 +426,7 @@ public class BattleUI : Node2D
 		Player.singleton.Translation = new Vector3(0, 0.35f, 0);
 		Player.NeutralizeRotation();
 		Player.PlayAnimation("dr_walk");
+		BattleUI.singleton.animPlayerSixfive.Play("Switch to Six");
 		
 		switch (currentOpponent)
 		{
@@ -952,7 +953,7 @@ public class BattleUI : Node2D
 
 	private void PlayerTurn()
 	{
-		playerMP = Mathf.Min(++playerMP, playerMPCap);
+		playerMP = Mathf.Min(drawnThisTurn ? ++playerMP : playerMP + 2, playerMPCap);
 		playerDefense = 0;
 		jokerThisTurn = false;
 		drawnThisTurn = false;
@@ -1163,8 +1164,8 @@ public class BattleUI : Node2D
 	{
 		if (GetTree().CurrentScene.Filename == "res://Scenes/Path4.tscn")
 		{
-			GetTree().GetRoot().GetNode<NPC>("NPCZincel").QueueFree();
-			GetTree().GetRoot().GetNode<StaticBody>("StaticBody").QueueFree();
+			GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<NPC>("NPCZincel").QueueFree();
+			GetTree().GetRoot().GetNode<Spatial>("Scene").GetNode<StaticBody>("StaticBody").QueueFree();
 			Controller.SetFlag("boss", 1);
 		}
 	}

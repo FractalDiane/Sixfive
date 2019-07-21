@@ -36,7 +36,7 @@ extents = Vector3( 0.2, 0.35, 0.05 )
 [node name="Enemy" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 name = "Chancellor Zincel"
-maxHP = 12
+maxHP = 10
 
 [node name="AnimatedSprite3D" parent="." index="0"]
 frames = SubResource( 1 )

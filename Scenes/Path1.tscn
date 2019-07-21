@@ -419,7 +419,7 @@ material = SubResource( 20 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01022, -5.96046e-008, -1.46957 )
 isObject = true
 neutralArea = true
-dialogue = [ PoolStringArray( "Make sure you have enough mana for the card you want to play!", "You\'ll start each battle with half of your maximum mana and regenerate one per turn.", "And, more importantly: the dimension you\'re in determines what cards you can play.", "Black cards can only be played in dimension six. Red cards can only be played in dimension five.", "The dimension you\'re in will swap each turn." ) ]
+dialogue = [ PoolStringArray( "Make sure you have enough mana for the card you want to play!", "You\'ll start each battle with half of your maximum mana and regenerate one per turn.", "You\'ll get an extra point of mana if you don\'t draw a card.", "And, more importantly: the dimension you\'re in determines what cards you can play.", "Black cards can only be played in dimension six. Red cards can only be played in dimension five.", "The dimension you\'re in will swap each turn." ) ]
 advanceSet = false
 
 [node name="CollisionShape" parent="NPC2/InteractionArea" index="0"]

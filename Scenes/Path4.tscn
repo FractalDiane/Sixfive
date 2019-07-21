@@ -251,7 +251,7 @@ shape = SubResource( 9 )
 [node name="LoadingZone2" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.5 )
 targetScene = "res://Scenes/Castle.tscn"
-targetPosition = Vector3( 0, 0.4, -5.5 )
+targetPosition = Vector3( 0, 0.4, 5.5 )
 
 [node name="CollisionShape" parent="LoadingZone2" index="0"]
 shape = SubResource( 10 )
